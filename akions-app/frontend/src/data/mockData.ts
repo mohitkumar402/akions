@@ -1,0 +1,228 @@
+import { Product, Internship, BlogPost, TeamMember, Value } from '../types';
+
+export const products: Product[] = [
+  {
+    id: '1',
+    title: 'Project Management Tool',
+    description: 'Streamline your projects with this intuitive tool.',
+    image: 'project-management',
+    category: 'Productivity',
+    rating: 4.8,
+  },
+  {
+    id: '2',
+    title: 'E-commerce Platform',
+    description: 'Launch your online store with this powerful platform.',
+    image: 'ecommerce',
+    category: 'E-commerce',
+    rating: 4.6,
+  },
+  {
+    id: '3',
+    title: 'Customer Relationship Manager',
+    description: 'Manage customer interactions effectively.',
+    image: 'crm',
+    category: 'Business',
+    rating: 4.7,
+  },
+  {
+    id: '4',
+    title: 'Data Analytics Dashboard',
+    description: 'Visualize and analyze your data with ease.',
+    image: 'analytics',
+    category: 'Analytics',
+    rating: 4.9,
+  },
+  {
+    id: '5',
+    title: 'Social Media Scheduler',
+    description: 'Schedule and manage your social media posts.',
+    image: 'social-media',
+    category: 'Marketing',
+    rating: 4.5,
+  },
+  {
+    id: '6',
+    title: 'Email Marketing Automation',
+    description: 'Automate your email campaigns for better engagement.',
+    image: 'email-marketing',
+    category: 'Marketing',
+    rating: 4.4,
+  },
+];
+
+export const internships: Internship[] = [
+  {
+    id: '1',
+    title: 'Software Engineering Intern',
+    company: 'Innovation Solutions',
+    location: 'San Francisco, CA',
+    type: 'Remote',
+    duration: '3 months',
+    stipend: '$2000/month',
+    description: 'Work on cutting-edge software projects with our engineering team.',
+    image: 'software-intern',
+  },
+  {
+    id: '2',
+    title: 'Marketing Intern',
+    company: 'Global Marketing Group',
+    location: 'New York, NY',
+    type: 'On-site',
+    duration: '6 months',
+    stipend: '$1900/month',
+    description: 'Assist in developing marketing strategies and campaigns.',
+    image: 'marketing-intern',
+  },
+  {
+    id: '3',
+    title: 'Product Design Intern',
+    company: 'Design Dynamics Inc.',
+    location: 'Los Angeles, CA',
+    type: 'Remote',
+    duration: '4 months',
+    stipend: '$1800/month',
+    description: 'Create innovative product designs and prototypes.',
+    image: 'design-intern',
+  },
+  {
+    id: '4',
+    title: 'Data Analysis Intern',
+    company: 'Data Insights Corp.',
+    location: 'Chicago, IL',
+    type: 'Remote',
+    duration: '3 months',
+    stipend: '$1500/month',
+    description: 'Analyze large datasets and provide actionable insights.',
+    image: 'data-intern',
+  },
+];
+
+export const blogPosts: BlogPost[] = [
+  {
+    id: '1',
+    title: 'The Ultimate Guide to Landing Your Dream Internship',
+    excerpt: 'A comprehensive guide with tips and strategies to help you secure an internship in your desired field.',
+    content: `Building a successful internship program requires careful planning and execution. Start by defining clear goals and objectives for the program. What skills and knowledge do you want interns to gain? What projects will they work on?
+
+Ensure that your internship program provides real value to interns. Provide meaningful learning experiences for the interns. Next, create a structured program with well-defined roles and responsibilities. Assign mentors to guide and support interns throughout their internship. Provide regular feedback and opportunities for growth.
+
+Foster a collaborative and inclusive environment where interns feel valued and can contribute their ideas. Finally, evaluate the program's effectiveness and ask interns to identify areas for improvement. A well-designed internship program can benefit both interns and your company, providing valuable learning experiences and contributing to your talent pipeline.`,
+    author: 'Sarah Jomson',
+    publishedDate: 'January 12, 2024',
+    image: 'internship-guide',
+    category: 'Internships',
+    likes: 12,
+    shares: 5,
+    comments: [
+      {
+        id: '1',
+        author: 'Emily Carter',
+        avatar: 'avatar1',
+        text: 'This is a great article! I\'m currently building an internship program for my company and found these tips very helpful.',
+        timestamp: '2 days ago',
+      },
+      {
+        id: '2',
+        author: 'David Lee',
+        avatar: 'avatar2',
+        text: 'I agree, the points about structured programs and mentorship are crucial for success. We\'ve seen great results with our interns by following these principles.',
+        timestamp: '1 week ago',
+      },
+    ],
+  },
+  {
+    id: '2',
+    title: 'Top 5 Skills Every Product Manager Needs',
+    excerpt: 'Discover the essential skills that every successful product manager should possess to excel in their role.',
+    content: 'Product managers need a diverse skill set including strategic thinking, communication, technical knowledge, user empathy, and data analysis capabilities.',
+    author: 'Michael Chen',
+    publishedDate: 'February 8, 2024',
+    image: 'product-skills',
+    category: 'Products',
+    likes: 18,
+    shares: 9,
+    comments: [],
+  },
+  {
+    id: '3',
+    title: 'How to Successfully Manage Custom Projects',
+    excerpt: 'Learn effective strategies for managing custom projects, from planning to execution and delivery.',
+    content: 'Managing custom projects requires clear communication, flexible planning, regular check-ins, and a strong focus on client requirements.',
+    author: 'Jennifer White',
+    publishedDate: 'March 15, 2024',
+    image: 'custom-projects',
+    category: 'Projects',
+    likes: 15,
+    shares: 7,
+    comments: [],
+  },
+  {
+    id: '4',
+    title: 'Industry Trends: The Future of Work',
+    excerpt: 'Explore the latest trends shaping the future of work, including remote work, AI, and the gig economy.',
+    content: 'The future of work is being shaped by technology, changing employee expectations, and new models of collaboration and productivity.',
+    author: 'Robert Taylor',
+    publishedDate: 'April 3, 2024',
+    image: 'future-work',
+    category: 'Industry Insights',
+    likes: 22,
+    shares: 11,
+    comments: [],
+  },
+  {
+    id: '5',
+    title: 'Akions New Features: What\'s New?',
+    excerpt: 'Stay updated with the latest features and improvements on the Akions platform designed to enhance your experience.',
+    content: 'We\'ve added new search capabilities, improved performance, and enhanced the user interface across all our platforms.',
+    author: 'Akions Team',
+    publishedDate: 'May 1, 2024',
+    image: 'new-features',
+    category: 'Akions Updates',
+    likes: 28,
+    shares: 14,
+    comments: [],
+  },
+];
+
+export const teamMembers: TeamMember[] = [
+  {
+    id: '1',
+    name: 'Mohit Kumar',
+    role: 'Founder & Developer',
+    avatar: 'mohit',
+  },
+  {
+    id: '2',
+    name: 'Yogesh Gupta',
+    role: 'Founder & Developer',
+    avatar: 'yogesh',
+  },
+];
+
+export const values: Value[] = [
+  {
+    id: '1',
+    title: 'Innovation',
+    description: 'We believe in pushing boundaries and embracing new ideas to drive innovation.',
+    icon: 'lightbulb',
+  },
+  {
+    id: '2',
+    title: 'Quality',
+    description: 'We are committed to maintaining the highest standards of quality in everything we do.',
+    icon: 'checkmark',
+  },
+  {
+    id: '3',
+    title: 'Collaboration',
+    description: 'We foster a culture of collaboration and mutual respect, valuing diverse perspectives.',
+    icon: 'people',
+  },
+  {
+    id: '4',
+    title: 'Impact',
+    description: 'We are dedicated to making a positive impact on the tech industry and the communities we serve.',
+    icon: 'heart',
+  },
+];
