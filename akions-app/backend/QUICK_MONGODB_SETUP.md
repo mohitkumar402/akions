@@ -24,7 +24,7 @@
 3. **Create Database User:**
    - Go to "Database Access" (left menu)
    - Click "Add New Database User"
-   - Username: `akions_user` (or any name)
+   - Username: `ekions_user` (or any name)
    - Password: Create a strong password (SAVE IT!)
    - Database User Privileges: "Read and write to any database"
    - Click "Add User"
@@ -47,11 +47,11 @@
    - Open `akions-app/backend/.env`
    - Replace the connection string:
    ```
-   MONGODB_URI=mongodb+srv://akions_user:YOUR_PASSWORD@cluster0.xxxxx.mongodb.net/akions?retryWrites=true&w=majority
+   MONGODB_URI=mongodb+srv://ekions_user:YOUR_PASSWORD@cluster0.xxxxx.mongodb.net/ekions?retryWrites=true&w=majority
    ```
    - Replace `YOUR_PASSWORD` with the password you created
    - Replace `cluster0.xxxxx.mongodb.net` with your actual cluster address
-   - Add `/akions` before the `?` to specify database name
+   - Add `/ekions` before the `?` to specify database name
 
 7. **Restart Backend:**
    - Stop backend (Ctrl+C)
@@ -94,7 +94,7 @@
 
 5. **Update .env (if needed):**
    ```
-   MONGODB_URI=mongodb://localhost:27017/akions
+   MONGODB_URI=mongodb://localhost:27017/ekions
    ```
 
 6. **Restart Backend:**
@@ -124,9 +124,9 @@ After setup, test your connection:
 
 ```powershell
 # Test MongoDB connection
-mongosh "mongodb://localhost:27017/akions"
+mongosh "mongodb://localhost:27017/ekions"
 # Or for Atlas:
-mongosh "mongodb+srv://username:password@cluster.mongodb.net/akions"
+mongosh "mongodb+srv://username:password@cluster.mongodb.net/ekions"
 ```
 
 ---

@@ -29,7 +29,7 @@ export const AdminHeader: React.FC<AdminHeaderProps> = ({ activeSection }) => {
     <View style={styles.header}>
       <View style={styles.headerTop}>
         <View style={styles.headerLeft}>
-          <Text style={styles.logo}>▲ Akions Admin</Text>
+          <Text style={styles.logo}>▲ Ekions Admin</Text>
           <Text style={styles.subtitle}>Content Management System</Text>
         </View>
         <View style={styles.headerRight}>

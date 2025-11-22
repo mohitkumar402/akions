@@ -296,7 +296,7 @@ export const MarketplaceScreen: React.FC<{ navigation: any }> = ({ navigation })
           key: process.env.REACT_APP_RAZORPAY_KEY_ID || 'rzp_test_1234567890',
           amount: orderData.amount,
           currency: orderData.currency,
-          name: 'Akions',
+          name: 'Ekions',
           description: product.title,
           order_id: orderData.orderId,
           handler: async function (response: any) {

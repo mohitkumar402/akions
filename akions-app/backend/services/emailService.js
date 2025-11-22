@@ -38,7 +38,7 @@ const sendApplicationEmail = async (applicationData) => {
     } = applicationData;
 
     const mailOptions = {
-      from: `"Akions Platform" <${process.env.SMTP_USER}>`,
+      from: `"Ekions Platform" <${process.env.SMTP_USER}>`,
       to: process.env.ADMIN_EMAIL || process.env.SMTP_USER,
       subject: `New Internship Application: ${internshipTitle} - ${fullName}`,
       html: `
@@ -124,7 +124,7 @@ const sendApplicationEmail = async (applicationData) => {
               </div>
             </div>
             <div class="footer">
-              <p>This email was sent from the Akions Platform</p>
+              <p>This email was sent from the Ekions Platform</p>
             </div>
           </div>
         </body>
@@ -171,7 +171,7 @@ const sendProductContactEmail = async ({ to, productName, customerName, customer
     }
 
     const mailOptions = {
-      from: `"Akions" <${process.env.SMTP_USER}>`,
+      from: `"Ekions" <${process.env.SMTP_USER}>`,
       to: to,
       subject: `New Product Contact Request: ${productName}`,
       html: `
@@ -265,7 +265,7 @@ const sendCustomProductRequestEmail = async ({ to, customerName, customerEmail, 
     }
 
     const mailOptions = {
-      from: `"Akions" <${process.env.SMTP_USER}>`,
+      from: `"Ekions" <${process.env.SMTP_USER}>`,
       to: to,
       subject: `New Custom Product Request from ${customerName}`,
       html: `

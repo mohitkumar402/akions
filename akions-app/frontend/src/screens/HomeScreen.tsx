@@ -500,10 +500,10 @@ export const HomeScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
         <View style={[styles.verticalsSection, { backgroundColor: '#000000' }]}>
           <View style={styles.verticalsContent}>
             <Text style={styles.sectionTitle}>
-              Akions: Three Core Verticals
+              Ekions: Three Core Verticals
             </Text>
             <Text style={styles.sectionSubtitle}>
-              Akions offers a comprehensive platform with three key areas to meet your business needs.
+              Ekions offers a comprehensive platform with three key areas to meet your business needs.
             </Text>
 
             <View style={[styles.verticalsGrid, isMobile && styles.verticalsGridMobile]}>
@@ -639,7 +639,7 @@ export const HomeScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
         <View style={styles.previewSection}>
           <View style={styles.previewContent}>
             <View style={styles.previewHeader}>
-              <Text style={styles.previewTitle}>About Akions</Text>
+              <Text style={styles.previewTitle}>About Ekions</Text>
               <TouchableOpacity
                 style={styles.viewAllButton}
                 onPress={() => navigation.navigate('About')}
@@ -649,7 +649,7 @@ export const HomeScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
             </View>
             <View style={styles.aboutPreview}>
               <Text style={styles.aboutPreviewText}>
-                Akions was founded in 2020 with a vision to connect talented individuals with exciting opportunities in the tech industry. We've grown into a leading platform for internships, product development, and custom projects.
+                Ekions was founded in 2020 with a vision to connect talented individuals with exciting opportunities in the tech industry. We've grown into a leading platform for internships, product development, and custom projects.
               </Text>
               <Text style={styles.aboutPreviewText}>
                 Our mission is to empower individuals and businesses by providing a seamless platform for collaboration and growth, fostering innovation in the tech landscape.

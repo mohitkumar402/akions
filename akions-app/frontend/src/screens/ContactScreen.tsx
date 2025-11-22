@@ -29,7 +29,7 @@ Message:
 ${formData.message}
     `.trim();
 
-    const email = 'contact@akions.com';
+    const email = 'contact@ekions.com';
     const subject = encodeURIComponent(formData.subject || 'Contact Form Submission');
     const body = encodeURIComponent(emailBody);
 
@@ -38,7 +38,7 @@ ${formData.message}
     } else {
       Linking.openURL(`mailto:${email}?subject=${subject}&body=${body}`).catch(err => {
         console.error('Error opening email:', err);
-        Alert.alert('Error', 'Could not open email client. Please send an email to contact@akions.com');
+        Alert.alert('Error', 'Could not open email client. Please send an email to contact@ekions.com');
       });
     }
 
@@ -62,7 +62,7 @@ ${formData.message}
               <Text style={styles.contactTitle}>Email Us</Text>
               <TouchableOpacity
                 onPress={() => {
-                  const email = 'contact@akions.com';
+                  const email = 'contact@ekions.com';
                   if (Platform.OS === 'web') {
                     window.location.href = `mailto:${email}`;
                   } else {
@@ -70,7 +70,7 @@ ${formData.message}
                   }
                 }}
               >
-                <Text style={styles.contactLink}>contact@akions.com</Text>
+                <Text style={styles.contactLink}>contact@ekions.com</Text>
               </TouchableOpacity>
             </View>
 

@@ -57,11 +57,11 @@ New-Item -ItemType Directory -Path "C:\data\db" -Force
    - Choose "Connect your application"
    - Copy the connection string
    - Replace `<password>` with your database password
-   - Replace `<dbname>` with `akions`
+   - Replace `<dbname>` with `ekions`
 
 4. **Update .env file:**
    ```env
-   MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/akions?retryWrites=true&w=majority
+   MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/ekions?retryWrites=true&w=majority
    ```
 
 5. **Whitelist IP Address:**
@@ -115,12 +115,12 @@ mongo
 
 Make sure your `.env` file has:
 ```env
-MONGODB_URI=mongodb://localhost:27017/akions
+MONGODB_URI=mongodb://localhost:27017/ekions
 ```
 
 For MongoDB Atlas:
 ```env
-MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/akions
+MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/ekions
 ```
 
 ## Restart Backend

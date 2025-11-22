@@ -36,9 +36,9 @@ const FooterBottomLink: React.FC<{ label: string; onPress: () => void }> = ({ la
 export const Footer: React.FC<FooterProps> = ({ navigation }) => {
   const handleGetToUs = () => {
     // Open email client or navigate to contact
-    const email = 'contact@akions.com';
-    const subject = 'Contact from Akions Website';
-    const body = 'Hello, I would like to get in touch with Akions.';
+    const email = 'contact@ekions.com';
+    const subject = 'Contact from Ekions Website';
+    const body = 'Hello, I would like to get in touch with Ekions.';
     
     if (Platform.OS === 'web') {
       window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
@@ -67,7 +67,7 @@ export const Footer: React.FC<FooterProps> = ({ navigation }) => {
       <View style={styles.footerContent}>
         <View style={styles.footerTop}>
           <View style={styles.footerSection}>
-            <Text style={styles.footerTitle}>Akions</Text>
+            <Text style={styles.footerTitle}>Ekions</Text>
             <Text style={styles.footerDescription}>
               Empowering businesses and individuals through innovative technology solutions, internships, and custom projects.
             </Text>
@@ -103,7 +103,7 @@ export const Footer: React.FC<FooterProps> = ({ navigation }) => {
             <FooterLink
               label="Email Us"
               onPress={() => {
-                const email = 'contact@akions.com';
+                const email = 'contact@ekions.com';
                 if (Platform.OS === 'web') {
                   window.location.href = `mailto:${email}`;
                 } else {
@@ -123,7 +123,7 @@ export const Footer: React.FC<FooterProps> = ({ navigation }) => {
             <FooterBottomLink label="Contact Us" onPress={handleGetToUs} />
           </View>
           <Text style={styles.copyright}>
-            © 2024 Akions. All rights reserved.
+            © 2024 Ekions. All rights reserved.
           </Text>
         </View>
       </View>

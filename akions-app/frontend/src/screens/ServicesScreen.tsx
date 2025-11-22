@@ -298,7 +298,7 @@ export const ServicesScreen: React.FC<{ navigation: any }> = ({ navigation }) =>
 
           {/* Additional Info Section */}
           <View style={styles.infoSection}>
-            <Text style={styles.infoTitle}>Why Choose Akions?</Text>
+            <Text style={styles.infoTitle}>Why Choose Ekions?</Text>
             <View style={styles.infoGrid}>
               <View style={styles.infoCard}>
                 <Text style={styles.infoIcon}>🚀</Text>

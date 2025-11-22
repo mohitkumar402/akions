@@ -300,9 +300,9 @@ export const AboutScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
         <View style={styles.hero}>
           <View style={styles.heroInner}>
             <Text style={styles.heroEmoji}>🚀</Text>
-            <Text style={styles.heroTitle}>About Akions</Text>
+            <Text style={styles.heroTitle}>About Ekions</Text>
             <Text style={styles.heroSubtitle}>
-              Learn more about our mission, vision, values, and the team behind Akions.
+              Learn more about our mission, vision, values, and the team behind Ekions.
             </Text>
           </View>
         </View>
@@ -314,7 +314,7 @@ export const AboutScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
             <View style={styles.block}>
               <Text style={styles.blockTitle}>About Us</Text>
               <Text style={styles.paragraph}>
-                Akions started as a startup with a clear vision: to revolutionize the way businesses and individuals connect through technology. We began with a simple yet powerful idea - to bridge the gap between innovative solutions and those who need them.
+                Ekions started as a startup with a clear vision: to revolutionize the way businesses and individuals connect through technology. We began with a simple yet powerful idea - to bridge the gap between innovative solutions and those who need them.
               </Text>
               <Text style={styles.paragraph}>
                 Today, we are a dynamic team of passionate professionals dedicated to delivering excellence in every project. We provide comprehensive services including design, mobile app development, web applications, and much more. Our commitment to quality and innovation has made us a trusted partner for businesses of all sizes.
@@ -495,7 +495,7 @@ export const AboutScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
                 <View style={styles.contactCard}>
                   <Text style={styles.contactIcon}>📧</Text>
                   <Text style={styles.contactTitle}>Email Us</Text>
-                  <Text style={styles.contactText}>contact@akions.com</Text>
+                  <Text style={styles.contactText}>contact@ekions.com</Text>
                 </View>
                 <View style={styles.contactCard}>
                   <Text style={styles.contactIcon}>📞</Text>

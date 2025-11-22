@@ -7,7 +7,7 @@ const knowledgeBase = {
   ],
   services: {
     keywords: ['service', 'services', 'development', 'develop', 'build', 'create', 'app', 'website', 'software'],
-    response: `Akions offers comprehensive services including:
+    response: `Ekions offers comprehensive services including:
 
 📱 **Mobile App Development**
 - Flutter apps (iOS & Android)
@@ -148,7 +148,7 @@ Visit our Blog page to read the latest articles and stay updated!`
     keywords: ['contact', 'email', 'phone', 'reach', 'support', 'help', 'assistance', 'get in touch'],
     response: `You can reach us through:
 
-📧 **Email**: contact@akions.com
+📧 **Email**: contact@ekions.com
 📞 **Phone**: +1 (234) 567-890
 📍 **Address**: 123 Tech Street, San Francisco, CA 94105
 
@@ -166,9 +166,9 @@ We're here to help!`
   },
   about: {
     keywords: ['about', 'company', 'team', 'who', 'what', 'mission', 'vision', 'story'],
-    response: `**About Akions:**
+    response: `**About Ekions:**
 
-Founded in 2020, Akions is a leading platform connecting talented individuals with opportunities in the tech industry.
+Founded in 2020, Ekions is a leading platform connecting talented individuals with opportunities in the tech industry.
 
 **Our Mission:**
 To empower individuals and businesses by providing a seamless platform for collaboration and growth.
@@ -213,7 +213,7 @@ Visit our About page to learn more about our team and values!`
 - Group training: Custom pricing
 - Corporate training: Volume discounts
 
-📧 **Contact us** at contact@akions.com for detailed pricing tailored to your needs!
+📧 **Contact us** at contact@ekions.com for detailed pricing tailored to your needs!
 
 We offer flexible payment options and can work within your budget.`
   },
@@ -246,7 +246,7 @@ We offer flexible payment options and can work within your budget.`
 4. Receive a custom quote
 5. Start your project!
 
-Need help? Contact us at contact@akions.com`
+Need help? Contact us at contact@ekions.com`
   },
   technical: {
     keywords: ['technical', 'tech', 'technology', 'stack', 'framework', 'language', 'programming'],
@@ -300,7 +300,7 @@ const generateResponse = async (message, conversationHistory = [], sessionId) =>
   
   // Check for greetings
   if (knowledgeBase.greetings.some(g => lowerMessage.includes(g))) {
-    return `Hello! 👋 Welcome to Akions. I'm your AI assistant here to help you with:
+    return `Hello! 👋 Welcome to Ekions. I'm your AI assistant here to help you with:
     
 • Our services and products
 • Internship opportunities
@@ -365,7 +365,7 @@ What would you like to know?`;
       return `Based on our previous conversation about services, you can:
       
 1. **View all services** on our Services page
-2. **Contact us** for a custom quote at contact@akions.com
+2. **Contact us** for a custom quote at contact@ekions.com
 3. **Browse products** in our Marketplace for ready-made solutions
 4. **Schedule a consultation** through our contact form
 
@@ -407,7 +407,7 @@ Or you can browse our website sections for detailed information!`;
     
 1. **Browse our website** - Navigate through Services, Marketplace, Internships, or Blog sections
 2. **Use the search bar** - Find specific content quickly
-3. **Contact us directly** - Email contact@akions.com or use the contact form
+3. **Contact us directly** - Email contact@ekions.com or use the contact form
 4. **Apply for opportunities** - Visit the Internships page to apply
 
 What specific action would you like help with?`;
@@ -418,11 +418,11 @@ What specific action would you like help with?`;
 📍 123 Tech Street, San Francisco, CA 94105
 
 **Contact:**
-📧 Email: contact@akions.com
+📧 Email: contact@ekions.com
 📞 Phone: +1 (234) 567-890
 
 **Online Presence:**
-🌐 Website: www.akions.com
+🌐 Website: www.ekions.com
 💬 Chat: Available 24/7 (you're using it now!)
 
 Most of our services are available remotely, so location isn't a barrier!`;
@@ -450,7 +450,7 @@ We're here to help whenever you need us!`;
   // Default intelligent response
   return `I understand you're asking about "${message}". 
 
-At Akions, we specialize in:
+At Ekions, we specialize in:
 • Software development services
 • Product marketplace
 • Internship opportunities

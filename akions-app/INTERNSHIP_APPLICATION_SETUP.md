@@ -52,7 +52,7 @@ SMTP_USER=your-email@gmail.com
 SMTP_PASS=your-app-password
 
 # Admin Email (where applications will be sent)
-ADMIN_EMAIL=admin@akions.com
+ADMIN_EMAIL=admin@ekions.com
 ```
 
 ### Setting Up Gmail SMTP:
@@ -61,7 +61,7 @@ ADMIN_EMAIL=admin@akions.com
 2. Enable **2-Step Verification**
 3. Generate an **App Password**: https://myaccount.google.com/apppasswords
    - Select "Mail" and "Other (Custom name)"
-   - Enter "Akions Backend" as the name
+   - Enter "Ekions Backend" as the name
    - Copy the generated 16-character password
 4. Use this password as `SMTP_PASS` in your `.env` file
 

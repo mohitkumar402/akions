@@ -17,7 +17,7 @@ interface ChatbotProps {
   onClose: () => void;
 }
 
-const SESSION_STORAGE_KEY = '@akions_chat_session_id';
+const SESSION_STORAGE_KEY = '@ekions_chat_session_id';
 
 export const Chatbot: React.FC<ChatbotProps> = ({ isOpen, onClose }) => {
   const { user, accessToken } = useAuth();
@@ -173,7 +173,7 @@ export const Chatbot: React.FC<ChatbotProps> = ({ isOpen, onClose }) => {
           // No history, show welcome message
           const welcomeMessage: Message = {
             id: 'welcome',
-            text: 'Hello! I\'m the Akions AI assistant. How can I help you today? You can ask me about our services, products, internships, or anything else!',
+            text: 'Hello! I\'m the Ekions AI assistant. How can I help you today? You can ask me about our services, products, internships, or anything else!',
             sender: 'bot',
             timestamp: new Date(),
           };
@@ -263,7 +263,7 @@ export const Chatbot: React.FC<ChatbotProps> = ({ isOpen, onClose }) => {
       setMessages((prev) => prev.filter(m => !m.id.startsWith('temp-')));
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
-        text: 'I\'m having trouble connecting right now. Please try again in a moment or contact us directly at contact@akions.com',
+        text: 'I\'m having trouble connecting right now. Please try again in a moment or contact us directly at contact@ekions.com',
         sender: 'bot',
         timestamp: new Date(),
       };
@@ -303,7 +303,7 @@ export const Chatbot: React.FC<ChatbotProps> = ({ isOpen, onClose }) => {
                 <Text style={styles.botAvatarText}>🤖</Text>
               </View>
               <View>
-                <Text style={styles.botName}>Akions AI Assistant</Text>
+                <Text style={styles.botName}>Ekions AI Assistant</Text>
                 <Text style={styles.botStatus}>Online</Text>
               </View>
             </View>
@@ -323,7 +323,7 @@ export const Chatbot: React.FC<ChatbotProps> = ({ isOpen, onClose }) => {
               <View style={[styles.messageWrapper, styles.botMessageWrapper]}>
                 <View style={[styles.messageBubble, styles.botMessage]}>
                   <Text style={styles.botMessageText}>
-                    Hello! I'm the Akions AI assistant. How can I help you today? You can ask me about our services, products, internships, or anything else!
+                    Hello! I'm the Ekions AI assistant. How can I help you today? You can ask me about our services, products, internships, or anything else!
                   </Text>
                 </View>
               </View>

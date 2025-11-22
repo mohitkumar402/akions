@@ -1,7 +1,7 @@
 # Implementation Summary
 
 ## Overview
-This document summarizes the implementation of MongoDB-based authentication, admin dashboard, Razorpay payment integration, and dynamic content management for the Akions application.
+This document summarizes the implementation of MongoDB-based authentication, admin dashboard, Razorpay payment integration, and dynamic content management for the Ekions application.
 
 ## Backend Implementation
 
@@ -14,7 +14,7 @@ This document summarizes the implementation of MongoDB-based authentication, adm
 
 ### 2. Authentication & Authorization
 - **Middleware**: `middleware/auth.js` - JWT token verification and admin role checking
-- **User Roles**: `user` (default) and `admin` (users with @akions.com email or manually assigned)
+- **User Roles**: `user` (default) and `admin` (users with @ekions.com email or manually assigned)
 - **Protected Routes**: All admin routes require authentication and admin role
 
 ### 3. API Routes
@@ -86,7 +86,7 @@ All admin routes require:
 
 ### Backend (.env)
 ```
-MONGODB_URI=mongodb://localhost:27017/akions
+MONGODB_URI=mongodb://localhost:27017/ekions
 JWT_SECRET=your-secret-key-here
 RAZORPAY_KEY_ID=your-razorpay-key-id
 RAZORPAY_KEY_SECRET=your-razorpay-key-secret
@@ -112,7 +112,7 @@ REACT_APP_RAZORPAY_KEY_ID=your-razorpay-key-id (for web)
 3. Start app: `npm start`
 
 ## Admin Access
-- Users with email ending in `@akions.com` are automatically assigned admin role
+- Users with email ending in `@ekions.com` are automatically assigned admin role
 - Admin role can be manually updated via `/api/auth/role` endpoint (admin only)
 
 ## Features Implemented

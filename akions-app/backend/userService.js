@@ -5,7 +5,7 @@ const RefreshToken = require('./models/RefreshToken');
 const InternshipApplication = require('./models/InternshipApplication');
 
 // Derive role from email domain (simple heuristic)
-const deriveRole = (email) => (email && email.endsWith('@akions.com') ? 'admin' : 'user');
+const deriveRole = (email) => (email && email.endsWith('@ekions.com') ? 'admin' : 'user');
 
 const toPlain = (doc) => (doc && doc.toObject ? doc.toObject() : doc);
 
@@ -39,7 +39,21 @@ const findByEmail = async (email) => {
 const verifyPassword = async (plain, hashed) => bcrypt.compare(plain, hashed);
 
 const addRefreshToken = async (userId, token) => {
-  await RefreshToken.create({ userId: new mongoose.Types.ObjectId(userId), token });
+  try {
+    // Use findOneAndUpdate with upsert to avoid duplicate key errors
+    await RefreshToken.findOneAndUpdate(
+      { token },
+      { userId: new mongoose.Types.ObjectId(userId), token },
+      { upsert: true, new: true }
+    );
+  } catch (error) {
+    // If it's a duplicate key error, that's okay - token already exists
+    if (error.code === 11000) {
+      console.warn('Refresh token already exists, skipping insert');
+    } else {
+      throw error;
+    }
+  }
 };
 
 const hasRefreshToken = async (token) => {

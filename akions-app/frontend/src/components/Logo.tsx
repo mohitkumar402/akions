@@ -24,7 +24,7 @@ export const Logo: React.FC<LogoProps> = ({ size = 'medium', showGlow = true }) 
           showGlow && Platform.OS === 'web' && styles.glowEffect,
         ]}
       >
-        Akions
+        Ekions
       </Text>
     </View>
   );

@@ -5,7 +5,7 @@ const Internship = require('../models/Internship');
 const sampleInternships = [
   {
     title: "Full Stack Developer Intern",
-    company: "Akions",
+    company: "Ekions",
     location: "Remote",
     type: "Remote",
     duration: "6 months",
@@ -18,7 +18,7 @@ const sampleInternships = [
   },
   {
     title: "AI/ML Research Intern",
-    company: "Akions",
+    company: "Ekions",
     location: "Hybrid",
     type: "Hybrid",
     duration: "3 months",
@@ -31,7 +31,7 @@ const sampleInternships = [
   },
   {
     title: "UI/UX Design Intern",
-    company: "Akions",
+    company: "Ekions",
     location: "Remote",
     type: "Remote",
     duration: "4 months",
@@ -44,7 +44,7 @@ const sampleInternships = [
   },
   {
     title: "DevOps Engineering Intern",
-    company: "Akions",
+    company: "Ekions",
     location: "Remote",
     type: "Remote",
     duration: "6 months",
@@ -57,7 +57,7 @@ const sampleInternships = [
   },
   {
     title: "Mobile App Development Intern",
-    company: "Akions",
+    company: "Ekions",
     location: "Remote",
     type: "Remote",
     duration: "5 months",

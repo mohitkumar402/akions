@@ -74,8 +74,8 @@ export const BlogScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
         {/* Header Section */}
         <View style={styles.headerContainer}>
           <View style={styles.headerContent}>
-            <Text style={styles.title}>Akions Blog</Text>
-            <Text style={styles.subtitle}>Insights, updates, and stories from the Akions community.</Text>
+            <Text style={styles.title}>Ekions Blog</Text>
+            <Text style={styles.subtitle}>Insights, updates, and stories from the Ekions community.</Text>
           </View>
         </View>
 

@@ -150,7 +150,7 @@ All admin screens connect to backend API:
 ## How to Use
 
 1. **Access Admin Panel**:
-   - Login as admin user (email ending with @akions.com or manually assigned admin role)
+   - Login as admin user (email ending with @ekions.com or manually assigned admin role)
    - Click "Admin" button in main navbar
 
 2. **Manage Content**:

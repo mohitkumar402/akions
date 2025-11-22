@@ -44,7 +44,7 @@ By 2025, it's estimated that 95% of customer interactions will be powered by AI 
 The future of AI is bright, and we're just scratching the surface of what's possible!
     `,
     category: "Technology",
-    author: "Akions Team",
+    author: "Ekions Team",
     publishedDate: new Date().toISOString().split('T')[0],
     image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800",
     tags: ["AI", "Technology", "Future", "Innovation"],
@@ -82,7 +82,7 @@ From drug discovery to climate modeling, quantum computing could revolutionize c
 The quantum revolution is just beginning!
     `,
     category: "Science",
-    author: "Akions Team",
+    author: "Ekions Team",
     publishedDate: new Date().toISOString().split('T')[0],
     image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800",
     tags: ["Quantum Computing", "Science", "Technology", "Physics"],
@@ -114,7 +114,7 @@ Every atom in your body (except hydrogen) was forged in the heart of a dying sta
 The universe is more incredible than we can imagine!
     `,
     category: "Science",
-    author: "Akions Team",
+    author: "Ekions Team",
     publishedDate: new Date().toISOString().split('T')[0],
     image: "https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?w=800",
     tags: ["Space", "Astronomy", "Science", "Universe"],
@@ -152,7 +152,7 @@ Black is often associated with elegance, power, and sophistication in Western cu
 Understanding color psychology can help you make better design and marketing decisions!
     `,
     category: "Psychology",
-    author: "Akions Team",
+    author: "Ekions Team",
     publishedDate: new Date().toISOString().split('T')[0],
     image: "https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=800",
     tags: ["Psychology", "Design", "Marketing", "Colors"],
@@ -190,7 +190,7 @@ Your brain can process information at speeds that exceed the fastest supercomput
 Your brain is truly a marvel of nature!
     `,
     category: "Science",
-    author: "Akions Team",
+    author: "Ekions Team",
     publishedDate: new Date().toISOString().split('T')[0],
     image: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=800",
     tags: ["Brain", "Science", "Health", "Neuroscience"],
@@ -225,7 +225,7 @@ Choosing the right JavaScript framework can make or break your project. Here's a
 Choose based on your team's expertise and project requirements!
     `,
     category: "Technology",
-    author: "Akions Team",
+    author: "Ekions Team",
     publishedDate: new Date().toISOString().split('T')[0],
     image: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800",
     tags: ["React", "Vue", "Angular", "JavaScript", "Web Development"],
@@ -257,7 +257,7 @@ Node.js is a JavaScript runtime built on Chrome's V8 engine that enables server-
 Start building amazing applications today!
     `,
     category: "Technology",
-    author: "Akions Team",
+    author: "Ekions Team",
     publishedDate: new Date().toISOString().split('T')[0],
     image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800",
     tags: ["Node.js", "JavaScript", "Backend", "Programming"],
@@ -289,7 +289,7 @@ Containers package your application with all its dependencies, ensuring it runs 
 Start containerizing your applications today!
     `,
     category: "Technology",
-    author: "Akions Team",
+    author: "Ekions Team",
     publishedDate: new Date().toISOString().split('T')[0],
     image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800",
     tags: ["Docker", "DevOps", "Containers", "Deployment"],
@@ -325,7 +325,7 @@ Designing great APIs is crucial for building successful applications. Here are t
 Build APIs that developers love to use!
     `,
     category: "Technology",
-    author: "Akions Team",
+    author: "Ekions Team",
     publishedDate: new Date().toISOString().split('T')[0],
     image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800",
     tags: ["API", "REST", "Backend", "Development"],
@@ -358,7 +358,7 @@ Selecting the right database is critical for your application's success. Here's 
 Both are excellent choices - pick based on your requirements!
     `,
     category: "Technology",
-    author: "Akions Team",
+    author: "Ekions Team",
     publishedDate: new Date().toISOString().split('T')[0],
     image: "https://images.unsplash.com/photo-1544383835-bda2bc66a55d?w=800",
     tags: ["MongoDB", "PostgreSQL", "Database", "Backend"],

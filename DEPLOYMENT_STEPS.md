@@ -210,6 +210,43 @@ Update upload route to use cloud storage.
 ## 🐛 Troubleshooting
 
 ### Backend Issues
+
+#### Railway Deployment Failures
+
+**Most Common Issues:**
+
+1. **❌ "secret ID missing for "" environment variable" Error**
+   - **Cause:** Empty or invalid environment variable name
+   - **Fix:** 
+     - Go to Railway → Settings → Variables
+     - Delete any variables with empty names or spaces in names
+     - Use underscores, not spaces: `MY_VAR` not `MY VAR`
+     - Ensure all variables have both name AND value
+   - **See:** `RAILWAY_ENV_FIX.md` for detailed fix
+
+2. **Root Directory Not Set**
+   - Go to Railway → Settings → Service
+   - Set **Root Directory** to: `akions-app/backend`
+
+3. **Wrong Database Name in MONGODB_URI**
+   - ⚠️ Must use `/ekions` (not `/akions`)
+   - Format: `mongodb+srv://user:pass@cluster.net/ekions?retryWrites=true&w=majority`
+
+4. **Missing Environment Variables**
+   - Add all required variables in Railway → Settings → Variables
+   - Don't set `PORT` - Railway sets it automatically
+
+5. **MongoDB Atlas IP Whitelist**
+   - Add `0.0.0.0/0` to allow Railway IPs
+   - Go to Atlas → Network Access → Add IP Address
+
+6. **Build/Start Commands**
+   - **Start Command:** `node server.js`
+   - **Root Directory:** `akions-app/backend`
+
+**For detailed troubleshooting, see `RAILWAY_TROUBLESHOOTING.md`**
+
+#### General Issues
 - **Port error**: Railway/Render sets PORT automatically, use `process.env.PORT || 3000`
 - **MongoDB connection**: Check connection string and IP whitelist
 - **CORS errors**: Update CORS with frontend URL

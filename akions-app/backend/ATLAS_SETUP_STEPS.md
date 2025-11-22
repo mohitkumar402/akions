@@ -18,7 +18,7 @@
 
 ### Step 3: Create Database User
 1. In the setup wizard, you'll be asked to create a user
-2. **Username**: `akions_user` (or any name you like)
+2. **Username**: `ekions_user` (or any name you like)
 3. **Password**: Create a strong password (SAVE THIS!)
 4. Click **"Create Database User"**
 5. **IMPORTANT**: Save your username and password!
@@ -38,16 +38,16 @@
 
 ### Step 6: Update .env File
 1. Open `akions-app/backend/.env`
-2. Find the line: `MONGODB_URI=mongodb://localhost:27017/akions`
+2. Find the line: `MONGODB_URI=mongodb://localhost:27017/ekions`
 3. Replace it with your Atlas connection string
 4. **IMPORTANT**: 
    - Replace `<password>` with your actual password
-   - Add `/akions` before the `?` to specify database name
-   - Final format: `mongodb+srv://username:password@cluster0.xxxxx.mongodb.net/akions?retryWrites=true&w=majority`
+   - Add `/ekions` before the `?` to specify database name
+   - Final format: `mongodb+srv://username:password@cluster0.xxxxx.mongodb.net/ekions?retryWrites=true&w=majority`
 
 **Example:**
 ```env
-MONGODB_URI=mongodb+srv://akions_user:MyPassword123@cluster0.abc123.mongodb.net/akions?retryWrites=true&w=majority
+MONGODB_URI=mongodb+srv://ekions_user:MyPassword123@cluster0.abc123.mongodb.net/ekions?retryWrites=true&w=majority
 ```
 
 ### Step 7: Restart Backend
@@ -86,7 +86,7 @@ After setup, test your connection:
 - Check for special characters in password (may need URL encoding)
 
 ### Database Not Found
-- Make sure you added `/akions` in the connection string
+- Make sure you added `/ekions` in the connection string
 - Database will be created automatically on first use
 
 ---

@@ -160,7 +160,7 @@ router.post('/chat', async (req, res) => {
     console.error('Chat error:', error);
     res.status(500).json({ 
       error: 'Sorry, I encountered an error. Please try again.',
-      response: 'I apologize, but I\'m having trouble processing your request right now. Please try rephrasing your question or contact us directly at contact@akions.com for immediate assistance.'
+      response: 'I apologize, but I\'m having trouble processing your request right now. Please try rephrasing your question or contact us directly at contact@ekions.com for immediate assistance.'
     });
   }
 });

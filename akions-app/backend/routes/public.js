@@ -93,7 +93,7 @@ router.post('/products/contact', async (req, res) => {
 
     // Send email to admin
     try {
-      const adminEmail = process.env.ADMIN_EMAIL || 'admin@akions.com';
+      const adminEmail = process.env.ADMIN_EMAIL || 'admin@ekions.com';
       await emailService.sendProductContactEmail({
         to: adminEmail,
         productName: productName || 'Unknown Product',

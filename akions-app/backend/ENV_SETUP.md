@@ -10,7 +10,7 @@ PORT=3000
 NODE_ENV=development
 
 # Database
-MONGODB_URI=mongodb+srv://akionsdevteam:Mohit%40%24123@ekions.edczomg.mongodb.net/akions?retryWrites=true&w=majority
+MONGODB_URI=mongodb+srv://akionsdevteam:Mohit%40%24123@ekions.edczomg.mongodb.net/ekions?retryWrites=true&w=majority
 
 # JWT Authentication
 JWT_SECRET=17ad3bd882f17e506be2e7c39c2aeeba2e6c6f8c3cadabfa1869c660074a4e7b292df0157bc28eb06617451065c2a65ce97c1781a3ebaf8f5fdbdfda8b2387d7
@@ -28,7 +28,7 @@ SMTP_USER=your-email@gmail.com
 SMTP_PASS=your-app-password
 
 # Admin Email (where internship applications will be sent)
-ADMIN_EMAIL=admin@akions.com
+ADMIN_EMAIL=admin@ekions.com
 ```
 
 ## Setting Up Gmail SMTP

@@ -17,7 +17,7 @@ const { authenticateToken, requireAdmin } = require('./middleware/auth');
 const app = express();
 const PORT = process.env.PORT || 3000;
 const JWT_SECRET = process.env.JWT_SECRET || 'change-me-dev-secret';
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/akions';
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/ekions';
 
 // Middleware
 app.use(cors());
@@ -27,7 +27,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Root route
 app.get('/', (req, res) => {
   res.json({
-    message: 'Akions Backend API',
+    message: 'Ekions Backend API',
     version: '1.0.0',
     endpoints: {
       health: '/api/health',

@@ -14,8 +14,8 @@ npm start
 ### Environment Variables
 Create a `.env` file in `akions-app/backend/` with:
 ```
-MONGODB_URI=mongodb://localhost:27017/akions
-JWT_SECRET=akions-secret-key-change-in-production
+MONGODB_URI=mongodb://localhost:27017/ekions
+JWT_SECRET=ekions-secret-key-change-in-production
 PORT=3000
 RAZORPAY_KEY_ID=your-razorpay-key-id
 RAZORPAY_KEY_SECRET=your-razorpay-secret
@@ -85,7 +85,7 @@ cd akions-app/frontend && npm start
 - Verify all dependencies are installed
 
 ### MongoDB Connection:
-- Default: `mongodb://localhost:27017/akions`
+- Default: `mongodb://localhost:27017/ekions`
 - If using MongoDB Atlas, update `MONGODB_URI` in `.env`
 
 ## Current Status
