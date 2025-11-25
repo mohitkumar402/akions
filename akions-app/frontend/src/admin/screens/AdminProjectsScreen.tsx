@@ -3,8 +3,9 @@ import { View, Text, ScrollView, TouchableOpacity, TextInput, StyleSheet, Alert,
 import { AdminHeader } from '../components/AdminHeader';
 import { FileUpload } from '../../components/FileUpload';
 import { useAuth } from '../../context/AuthContext';
+import { API_URL } from '../../config/api';
 
-const API_BASE = 'http://localhost:3000/api';
+const API_BASE = API_URL;
 
 interface Project {
   id: string;

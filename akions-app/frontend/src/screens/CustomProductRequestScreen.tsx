@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { View, Text, ScrollView, TextInput, TouchableOpacity, StyleSheet, Alert, Platform } from 'react-native';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
+import { API_URL } from '../config/api';
 
-const API_BASE = 'http://localhost:3000/api';
+const API_BASE = API_URL;
 
 export const CustomProductRequestScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
   const [formData, setFormData] = useState({

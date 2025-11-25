@@ -2,8 +2,9 @@ import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, TouchableOpacity, TextInput, StyleSheet, Platform, KeyboardAvoidingView, ScrollView, Animated } from 'react-native';
 import { useAuth } from '../context/AuthContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { API_URL } from '../config/api';
 
-const API_BASE = 'http://localhost:3000/api';
+const API_BASE = API_URL;
 
 interface Message {
   id: string;
@@ -137,7 +138,7 @@ export const Chatbot: React.FC<ChatbotProps> = ({ isOpen, onClose }) => {
         } else {
           const errorMessage: Message = {
             id: Date.now().toString(),
-            text: `Unable to connect to chat service. Error: ${error.message || 'Network error'}. Please check if the backend server is running on http://localhost:3000`,
+            text: `Unable to connect to chat service. Error: ${error.message || 'Network error'}. Please try again later.`,
             sender: 'bot',
             timestamp: new Date(),
           };

@@ -4,8 +4,9 @@ import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import { BlogPost } from '../types';
 import { useHover } from '../hooks/useHover';
+import { API_URL } from '../config/api';
 
-const API_BASE = 'http://localhost:3000/api';
+const API_BASE = API_URL;
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
 export const BlogScreen: React.FC<{ navigation: any }> = ({ navigation }) => {

@@ -3,8 +3,9 @@ import { View, Text, ScrollView, TextInput, TouchableOpacity, StyleSheet, Modal,
 import { Navbar } from '../components/Navbar';
 import { useAuth } from '../context/AuthContext';
 import { Internship } from '../types';
+import { API_URL } from '../config/api';
 
-const API_BASE = 'http://localhost:3000/api';
+const API_BASE = API_URL;
 
 interface InternshipApplicationScreenProps {
   route: {

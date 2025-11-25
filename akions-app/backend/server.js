@@ -20,7 +20,37 @@ const JWT_SECRET = process.env.JWT_SECRET || 'change-me-dev-secret';
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/ekions';
 
 // Middleware
-app.use(cors());
+// CORS Configuration - Allow requests from localhost (dev), Vercel (production), and Render
+const corsOptions = {
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    // List of allowed origins
+    const allowedOrigins = [
+      'http://localhost:8082',
+      'http://localhost:19006',
+      'http://localhost:3000',
+      'https://akions.onrender.com', // Backend URL
+    ];
+    
+    // Allow any Vercel deployment (pattern: *.vercel.app)
+    const vercelPattern = /^https:\/\/.*\.vercel\.app$/;
+    
+    if (allowedOrigins.includes(origin) || vercelPattern.test(origin)) {
+      callback(null, true);
+    } else {
+      // In production, log but allow for now (you can restrict this later)
+      console.log(`CORS: Allowing origin ${origin}`);
+      callback(null, true);
+    }
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+};
+
+app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 

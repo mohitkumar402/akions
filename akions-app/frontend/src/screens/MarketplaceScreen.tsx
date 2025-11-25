@@ -4,8 +4,9 @@ import { Navbar } from '../components/Navbar';
 import { Card } from '../components/Card';
 import { useAuth } from '../context/AuthContext';
 import { Product } from '../types';
+import { API_URL } from '../config/api';
 
-const API_BASE = 'http://localhost:3000/api';
+const API_BASE = API_URL;
 
 declare global {
   interface Window {

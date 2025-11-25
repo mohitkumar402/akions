@@ -4,8 +4,9 @@ import { AdminHeader } from '../components/AdminHeader';
 import { FileUpload } from '../../components/FileUpload';
 import { useAuth } from '../../context/AuthContext';
 import { Internship } from '../../types';
+import { API_URL } from '../../config/api';
 
-const API_BASE = 'http://localhost:3000/api';
+const API_BASE = API_URL;
 
 export const AdminInternshipsScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
   const { user, accessToken } = useAuth();

@@ -4,8 +4,9 @@ import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import { Card } from '../components/Card';
 import { Product, BlogPost, Internship } from '../types';
+import { API_URL } from '../config/api';
 
-const API_BASE = 'http://localhost:3000/api';
+const API_BASE = API_URL;
 
 // Create styles function that uses SCREEN_WIDTH and SCREEN_HEIGHT
 const createStyles = (screenWidth: number, screenHeight: number) => StyleSheet.create({

@@ -4,8 +4,9 @@ import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import { useAuth } from '../context/AuthContext';
 import { Internship } from '../types';
+import { API_URL } from '../config/api';
 
-const API_BASE = 'http://localhost:3000/api';
+const API_BASE = API_URL;
 
 export const InternshipsScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
   const { user, accessToken, applyForInternship, myApplications } = useAuth();

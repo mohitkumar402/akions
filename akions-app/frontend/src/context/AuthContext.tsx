@@ -1,8 +1,7 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { User } from '../types';
-
-const API_BASE = 'http://localhost:3000/api/auth';
+import { API_AUTH_URL, API_BASE } from '../config/api';
 
 interface AuthContextType {
   user: User | null;
@@ -56,7 +55,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const fetchMe = async (token: string) => {
     try {
-      const res = await fetch(`${API_BASE}/me`, {
+      const res = await fetch(`${API_AUTH_URL}/me`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (res.ok) {
@@ -75,7 +74,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const attemptRefresh = async () => {
     if (!refreshToken) return;
     try {
-      const res = await fetch(`${API_BASE}/refresh`, {
+      const res = await fetch(`${API_AUTH_URL}/refresh`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ refreshToken }),
@@ -97,7 +96,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const reloadApplications = async () => {
     if (!accessToken) return;
     try {
-      const res = await fetch(`http://localhost:3000/api/internships/applications/mine`, {
+      const res = await fetch(`${API_BASE}/internships/applications/mine`, {
         headers: { Authorization: `Bearer ${accessToken}` }
       });
       if (res.ok) {
@@ -111,7 +110,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const login = async (email: string, password: string) => {
     try {
-      const res = await fetch(`${API_BASE}/login`, {
+      const res = await fetch(`${API_AUTH_URL}/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })
@@ -139,7 +138,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const adminLogin = async (email: string, password: string) => {
     try {
-      const res = await fetch(`${API_BASE}/admin/login`, {
+      const res = await fetch(`${API_AUTH_URL}/admin/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })
@@ -171,7 +170,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const signup = async (name: string, email: string, password: string) => {
     try {
-      const res = await fetch(`${API_BASE}/register`, {
+      const res = await fetch(`${API_AUTH_URL}/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, email, password })
@@ -200,7 +199,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const logout = async () => {
     try {
       if (refreshToken) {
-        await fetch(`${API_BASE}/logout`, {
+        await fetch(`${API_AUTH_URL}/logout`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ refreshToken })
@@ -220,7 +219,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const applyForInternship = async (internshipId: string) => {
     if (!accessToken) throw new Error('Not authenticated');
     try {
-      const res = await fetch('http://localhost:3000/api/internships/apply', {
+      const res = await fetch(`${API_BASE}/internships/apply`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${accessToken}` },
         body: JSON.stringify({ internshipId })

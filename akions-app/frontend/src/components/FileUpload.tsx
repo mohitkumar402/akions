@@ -1,8 +1,9 @@
 import React, { useState, useRef } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Platform, Image, Alert, ActivityIndicator } from 'react-native';
 import { useAuth } from '../context/AuthContext';
+import { API_URL } from '../config/api';
 
-const API_BASE = 'http://localhost:3000/api';
+const API_BASE = API_URL;
 
 interface FileUploadProps {
   onUploadComplete: (url: string, type: 'image' | 'video') => void;
