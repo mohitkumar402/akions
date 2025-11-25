@@ -4,22 +4,33 @@
 // For Expo, use EXPO_PUBLIC_API_URL if available
 // For web, use window.location to detect environment
 const getApiBaseUrl = () => {
-  // Check for Expo environment variable (works in web and native)
-  // Expo exposes env vars via process.env.EXPO_PUBLIC_*
-  const envApiUrl = typeof process !== 'undefined' && (process as any).env?.EXPO_PUBLIC_API_URL;
-  if (envApiUrl) {
-    return envApiUrl;
-  }
-  
-  // Check for window.location (web environment)
-  if (typeof window !== 'undefined' && window.location) {
-    // If running on localhost, use local backend
-    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-      return 'http://localhost:3000';
+  // Priority 1: Check for Expo environment variable (works in web and native)
+  // This is set at build time and works in production deployments
+  if (typeof process !== 'undefined') {
+    const envApiUrl = (process as any).env?.EXPO_PUBLIC_API_URL;
+    if (envApiUrl) {
+      console.log('[API Config] Using EXPO_PUBLIC_API_URL:', envApiUrl);
+      return envApiUrl;
     }
   }
   
-  // Production backend URL (Render deployment)
+  // Priority 2: Check for window.location (web environment)
+  if (typeof window !== 'undefined' && window.location) {
+    const hostname = window.location.hostname;
+    
+    // If running on localhost, use local backend (development mode)
+    if (hostname === 'localhost' || hostname === '127.0.0.1') {
+      console.log('[API Config] Detected localhost, using local backend');
+      return 'http://localhost:3000';
+    }
+    
+    // If running on a production domain (not localhost), use production backend
+    console.log('[API Config] Detected production domain, using Render backend');
+    return 'https://akions.onrender.com';
+  }
+  
+  // Priority 3: Fallback to production backend URL (Render deployment)
+  console.log('[API Config] Using fallback production backend');
   return 'https://akions.onrender.com';
 };
 
