@@ -100,7 +100,7 @@ export const BlogPostScreen: React.FC<{ navigation: any; route: any }> = ({ navi
             ...p,
             id: p._id || p.id,
           }))
-          .filter((p: BlogPost) => p.id !== postId && p.id !== post?._id)
+          .filter((p: BlogPost) => p.id !== postId && p.id !== (post?._id || post?.id))
           .slice(0, 3);
         setRelatedPosts(related);
       }

@@ -4,8 +4,6 @@ import { useAuth } from '../context/AuthContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { API_URL } from '../config/api';
 
-const API_BASE = API_URL;
-
 interface Message {
   id: string;
   text: string;
@@ -86,7 +84,7 @@ export const Chatbot: React.FC<ChatbotProps> = ({ isOpen, onClose }) => {
       let storedSessionId = await AsyncStorage.getItem(SESSION_STORAGE_KEY);
       
       // Create or get session
-      const response = await fetch(`${API_BASE}/chat/session`, {
+      const response = await fetch(`${API_URL}/chat/session`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -160,7 +158,7 @@ export const Chatbot: React.FC<ChatbotProps> = ({ isOpen, onClose }) => {
     if (!sessionIdToLoad) return;
     
     try {
-      const response = await fetch(`${API_BASE}/chat/history/${sessionIdToLoad}`);
+      const response = await fetch(`${API_URL}/chat/history/${sessionIdToLoad}`);
       if (response.ok) {
         const history = await response.json();
         if (history && history.length > 0) {
@@ -230,7 +228,7 @@ export const Chatbot: React.FC<ChatbotProps> = ({ isOpen, onClose }) => {
     setMessages((prev) => [...prev, tempUserMessage]);
 
     try {
-      const response = await fetch(`${API_BASE}/chat`, {
+      const response = await fetch(`${API_URL}/chat`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -528,10 +526,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#9ca3af',
   },
   typingDotDelay1: {
-    animationDelay: '0.2s',
+    opacity: 0.5,
   },
   typingDotDelay2: {
-    animationDelay: '0.4s',
+    opacity: 0.3,
   },
   inputContainer: {
     flexDirection: 'row',

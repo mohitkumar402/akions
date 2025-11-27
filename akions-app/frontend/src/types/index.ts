@@ -42,6 +42,7 @@ export interface InternshipApplication {
 
 export interface BlogPost {
   id: string;
+  _id?: string; // MongoDB _id from backend
   title: string;
   excerpt: string;
   content: string;
@@ -52,6 +53,7 @@ export interface BlogPost {
   likes: number;
   shares: number;
   comments: Comment[];
+  tags?: string[]; // Optional tags for blog posts
 }
 
 export interface Comment {

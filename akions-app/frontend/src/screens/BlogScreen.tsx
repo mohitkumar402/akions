@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, ScrollView, TextInput, TouchableOpacity, StyleSheet, Platform, Dimensions, Image, Animated } from 'react-native';
+import { View, Text, ScrollView, TextInput, TouchableOpacity, StyleSheet, Platform, Dimensions, Image, Animated, ImageStyle } from 'react-native';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import { BlogPost } from '../types';
@@ -137,7 +137,7 @@ export const BlogScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
                     key={post.id}
                     post={post}
                     index={index}
-                    onPress={() => navigation.navigate('BlogPost', { postId: post.id || post._id })}
+                    onPress={() => navigation.navigate('BlogPost', { postId: post.id || post._id || '' })}
                   />
                 ))}
               </Animated.View>
@@ -412,7 +412,7 @@ const BlogCard: React.FC<{ post: BlogPost; index: number; onPress: () => void }>
           <View style={styles.imageContainer}>
             <Image
               source={{ uri: post.image }}
-              style={styles.blogImage}
+              style={styles.blogImage as ImageStyle}
               resizeMode="cover"
             />
             <View style={styles.imageOverlay} />

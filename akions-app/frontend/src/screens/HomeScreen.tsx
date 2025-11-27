@@ -45,7 +45,7 @@ const createStyles = (screenWidth: number, screenHeight: number) => StyleSheet.c
   carouselImage: {
     width: screenWidth,
     height: '100%',
-  },
+  } as const,
   carouselIndicators: {
     position: 'absolute',
     bottom: 20,
@@ -255,7 +255,10 @@ const createStyles = (screenWidth: number, screenHeight: number) => StyleSheet.c
     backgroundColor: '#1f2937',
     borderRadius: 12,
     padding: 16,
-    flex: Platform.OS === 'web' ? (screenWidth > 1024 ? '23%' : screenWidth > 768 ? '31%' : '48%') : 1,
+    ...(Platform.OS === 'web' 
+      ? { width: screenWidth > 1024 ? '23%' : screenWidth > 768 ? '31%' : '48%' }
+      : { flex: 1 }
+    ),
     borderWidth: 1,
     borderColor: '#374151',
   },
@@ -473,7 +476,7 @@ export const HomeScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
             snapToInterval={SCREEN_WIDTH}
             snapToAlignment="center"
             scrollEventThrottle={16}
-            nestedScrollEnabled={true}
+            {...(Platform.OS !== 'web' && { nestedScrollEnabled: true })}
             style={styles.carouselFlatList}
           />
           {/* Carousel Indicators */}
