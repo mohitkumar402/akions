@@ -65,7 +65,7 @@ export const AdminLoginScreen: React.FC<{ navigation: any }> = ({ navigation }) 
       try {
         await adminLogin(email, password);
         // If admin login succeeds, navigate to admin dashboard
-        navigation.replace('AdminDashboard');
+                  navigation.replace('AdminDashboard');
       } catch (error: any) {
         const errorMessage = error.message || 'Invalid credentials or access denied';
         setErrors({ email: errorMessage });

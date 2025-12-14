@@ -18,11 +18,34 @@ const createStyles = (screenWidth: number) => StyleSheet.create({
     paddingHorizontal: 24,
     justifyContent: 'center',
     alignItems: 'center',
+    position: 'relative',
+    overflow: 'hidden',
+  },
+  heroBackgroundImage: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover',
+    opacity: 0.3,
+  },
+  heroOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(15, 118, 110, 0.7)',
   },
   heroInner: {
     maxWidth: 1200,
     width: '100%',
     alignItems: 'center',
+    position: 'relative',
+    zIndex: 1,
   },
   heroEmoji: {
     fontSize: Platform.OS === 'web' ? 64 : 56,
@@ -298,6 +321,12 @@ export const AboutScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* Hero Section */}
         <View style={styles.hero}>
+          <Image
+            source={require('../../assets/about us.png')}
+            style={styles.heroBackgroundImage}
+            resizeMode="cover"
+          />
+          <View style={styles.heroOverlay} />
           <View style={styles.heroInner}>
             <Text style={styles.heroEmoji}>🚀</Text>
             <Text style={styles.heroTitle}>About Ekions</Text>

@@ -113,3 +113,6 @@ The app will automatically use `localhost:3000` for the API when running locally
 - All API URLs are centralized in `src/config/api.ts`
 - CORS is configured in the backend to allow Vercel deployments
 
+
+
+

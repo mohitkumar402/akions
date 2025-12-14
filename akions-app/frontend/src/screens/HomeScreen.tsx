@@ -277,6 +277,54 @@ const createStyles = (screenWidth: number, screenHeight: number) => StyleSheet.c
     color: '#9ca3af',
     lineHeight: 20,
   },
+  imageSection: {
+    width: '100%',
+    position: 'relative',
+    overflow: 'hidden',
+  },
+  imageSectionImage: {
+    width: '100%',
+    height: Platform.OS === 'web' ? 600 : 400,
+    resizeMode: 'cover',
+  },
+  imageSectionOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 24,
+  },
+  imageSectionContent: {
+    maxWidth: 1200,
+    width: '100%',
+    alignItems: 'center',
+  },
+  imageSectionTitle: {
+    fontSize: Platform.OS === 'web' ? 48 : 36,
+    fontWeight: '700',
+    color: '#ffffff',
+    textAlign: 'center',
+    marginBottom: 16,
+    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowOffset: { width: 0, height: 2 },
+    textShadowRadius: 4,
+  },
+  imageSectionButton: {
+    backgroundColor: '#2563eb',
+    paddingHorizontal: 32,
+    paddingVertical: 14,
+    borderRadius: 8,
+    marginTop: 8,
+  },
+  imageSectionButtonText: {
+    color: '#ffffff',
+    fontSize: 16,
+    fontWeight: '600',
+  },
 });
 
 export const HomeScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
@@ -639,25 +687,44 @@ export const HomeScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
           </View>
         </View>
 
-        {/* About Preview Section */}
-        <View style={styles.previewSection}>
-          <View style={styles.previewContent}>
-            <View style={styles.previewHeader}>
-              <Text style={styles.previewTitle}>About Ekions</Text>
+        {/* About Us Section */}
+        <View style={styles.imageSection}>
+          <Image
+            source={require('../../assets/about us.png')}
+            style={styles.imageSectionImage}
+            resizeMode="cover"
+          />
+          <View style={styles.imageSectionOverlay}>
+            <View style={styles.imageSectionContent}>
+              <Text style={styles.imageSectionTitle}>About Us</Text>
               <TouchableOpacity
-                style={styles.viewAllButton}
+                style={styles.imageSectionButton}
                 onPress={() => navigation.navigate('About')}
+                activeOpacity={0.8}
               >
-                <Text style={styles.viewAllText}>Learn More</Text>
+                <Text style={styles.imageSectionButtonText}>Learn More</Text>
               </TouchableOpacity>
             </View>
-            <View style={styles.aboutPreview}>
-              <Text style={styles.aboutPreviewText}>
-                Ekions was founded in 2020 with a vision to connect talented individuals with exciting opportunities in the tech industry. We've grown into a leading platform for internships, product development, and custom projects.
-              </Text>
-              <Text style={styles.aboutPreviewText}>
-                Our mission is to empower individuals and businesses by providing a seamless platform for collaboration and growth, fostering innovation in the tech landscape.
-              </Text>
+          </View>
+        </View>
+
+        {/* Work With Us Section */}
+        <View style={styles.imageSection}>
+          <Image
+            source={require('../../assets/work with us.png')}
+            style={styles.imageSectionImage}
+            resizeMode="cover"
+          />
+          <View style={styles.imageSectionOverlay}>
+            <View style={styles.imageSectionContent}>
+              <Text style={styles.imageSectionTitle}>Work With Us</Text>
+              <TouchableOpacity
+                style={styles.imageSectionButton}
+                onPress={() => navigation.navigate('Contact')}
+                activeOpacity={0.8}
+              >
+                <Text style={styles.imageSectionButtonText}>Get Started</Text>
+              </TouchableOpacity>
             </View>
           </View>
         </View>

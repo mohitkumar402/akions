@@ -67,3 +67,6 @@ MONGODB_URI=mongodb+srv://akionsdevteam:Abc123@ekions.edczomg.mongodb.net/ekions
 
 **No local MongoDB installation needed!** Just start the backend server.
 
+
+
+

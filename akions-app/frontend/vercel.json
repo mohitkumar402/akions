@@ -3,7 +3,7 @@
   "name": "ekions-frontend",
   "buildCommand": "npm install && npx expo export:web",
   "outputDirectory": "web-build",
-  "devCommand": "npx expo start --web",
+  "devCommand": "npx expo platform --web",
   "installCommand": "npm install",
   "framework": null,
   "rewrites": [

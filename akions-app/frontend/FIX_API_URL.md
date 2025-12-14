@@ -87,3 +87,6 @@ The API config now logs which URL it's using. Check the browser console for:
 1. Check that your Vercel domain is allowed in `backend/server.js`
 2. Verify the backend is running on Render
 
+
+
+
