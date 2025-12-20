@@ -15,105 +15,162 @@ declare global {
 }
 
 // Create styles function that uses SCREEN_WIDTH
-const createStyles = (screenWidth: number) => StyleSheet.create({
+const createStyles = (screenWidth: number) => {
+  const isMobile = screenWidth < 768;
+  const isTablet = screenWidth >= 768 && screenWidth < 1024;
+  
+  return StyleSheet.create({
   container: { flex: 1, backgroundColor: '#000000' },
   scrollContent: { paddingBottom: 32 },
-  inner: { paddingVertical: 32, paddingHorizontal: 24, maxWidth: 1200, alignSelf: 'center', width: '100%' },
-  title: { fontSize: 32, fontWeight: '700', color: '#ffffff', marginBottom: 24, textAlign: 'center' },
+  inner: { 
+    paddingVertical: isMobile ? 16 : 32, 
+    paddingHorizontal: isMobile ? 12 : isTablet ? 20 : 24, 
+    maxWidth: 1200, 
+    alignSelf: 'center', 
+    width: '100%' 
+  },
+  title: { 
+    fontSize: isMobile ? 24 : isTablet ? 28 : 32, 
+    fontWeight: '700', 
+    color: '#ffffff', 
+    marginBottom: isMobile ? 16 : 24, 
+    textAlign: 'center',
+    paddingHorizontal: isMobile ? 8 : 0,
+  },
   searchFiltersRow: {
-    flexDirection: Platform.OS === 'web' ? 'row' : 'column',
-    alignItems: 'center',
-    marginBottom: 32,
-    gap: 16,
+    flexDirection: isMobile ? 'column' : 'row',
+    alignItems: isMobile ? 'stretch' : 'center',
+    marginBottom: isMobile ? 20 : 32,
+    gap: isMobile ? 12 : 16,
   },
   searchBar: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#1f2937',
     borderRadius: 12,
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    flex: Platform.OS === 'web' ? 1 : undefined,
-    width: Platform.OS === 'web' ? 'auto' : '100%',
-    gap: 12,
+    paddingHorizontal: isMobile ? 12 : 16,
+    paddingVertical: isMobile ? 10 : 12,
+    flex: isMobile ? 0 : (Platform.OS === 'web' ? 1 : 0),
+    width: isMobile ? '100%' : (Platform.OS === 'web' ? 'auto' : '100%'),
+    gap: isMobile ? 8 : 12,
   },
-  searchIcon: { color: '#9ca3af', fontSize: 18 },
-  searchInput: { flex: 1, fontSize: 16, color: '#ffffff' },
+  searchIcon: { color: '#9ca3af', fontSize: isMobile ? 16 : 18 },
+  searchInput: { flex: 1, fontSize: isMobile ? 14 : 16, color: '#ffffff' },
   filtersWrapper: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    marginBottom: 32,
-    gap: 12,
-    justifyContent: 'flex-end',
+    marginBottom: isMobile ? 12 : 0,
+    gap: isMobile ? 8 : 12,
+    justifyContent: isMobile ? 'flex-start' : 'flex-start',
+    width: isMobile ? '100%' : 'auto',
   },
   filterItem: { flexDirection: 'row', alignItems: 'center', gap: 8 },
   filterLabel: { color: '#9ca3af', fontWeight: '500', fontSize: 14 },
   filterBox: {
     backgroundColor: '#1f2937',
     borderRadius: 8,
-    paddingHorizontal: 16,
-    paddingVertical: 10,
+    paddingHorizontal: isMobile ? 12 : 16,
+    paddingVertical: isMobile ? 8 : 10,
     borderWidth: 1,
     borderColor: '#374151',
-    minWidth: 120,
+    minWidth: isMobile ? 100 : 120,
+    flex: isMobile ? 1 : 0,
+    maxWidth: isMobile ? '32%' : undefined,
   },
   filterBoxText: {
     color: '#ffffff',
-    fontSize: 14,
+    fontSize: isMobile ? 12 : 14,
     fontWeight: '500',
   },
   productsGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: Platform.OS === 'web' ? 'flex-start' : 'center',
-    gap: 20,
-    marginBottom: 32,
+    justifyContent: isMobile ? 'center' : (Platform.OS === 'web' ? 'flex-start' : 'center'),
+    gap: isMobile ? 12 : 20,
+    marginBottom: isMobile ? 24 : 32,
   },
   productColumn: {
-    width: Platform.OS === 'web' ? (screenWidth > 1024 ? '18%' : screenWidth > 768 ? '30%' : '48%') : '100%',
-    marginBottom: 24,
-    minHeight: 450,
+    width: isMobile ? '100%' : (screenWidth > 1024 ? '31%' : screenWidth > 768 ? '48%' : '100%'),
+    marginBottom: isMobile ? 16 : 24,
+    minHeight: isMobile ? 400 : 450,
+    maxWidth: isMobile ? '100%' : (screenWidth > 1024 ? 380 : screenWidth > 768 ? 350 : '100%'),
   },
   cardFooterRow: { marginTop: 12, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
   categoryBadge: { backgroundColor: '#1f2937', paddingHorizontal: 12, paddingVertical: 4, borderRadius: 8 },
   categoryBadgeText: { fontSize: 11, color: '#9ca3af', fontWeight: '500' },
   ratingText: { fontSize: 14, color: '#fbbf24', fontWeight: '600' },
-  pagination: { flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 32, gap: 8 },
-  pageButton: { paddingHorizontal: 12, paddingVertical: 8, borderRadius: 8, backgroundColor: '#1f2937' },
-  pageText: { color: '#9ca3af', fontSize: 14 },
+  pagination: { 
+    flexDirection: 'row', 
+    justifyContent: 'center', 
+    alignItems: 'center', 
+    marginTop: isMobile ? 24 : 32, 
+    gap: isMobile ? 4 : 8,
+    flexWrap: 'wrap',
+    paddingHorizontal: isMobile ? 8 : 0,
+  },
+  pageButton: { 
+    paddingHorizontal: isMobile ? 8 : 12, 
+    paddingVertical: isMobile ? 6 : 8, 
+    borderRadius: 8, 
+    backgroundColor: '#1f2937',
+    minWidth: isMobile ? 36 : 44,
+    alignItems: 'center',
+  },
+  pageText: { color: '#9ca3af', fontSize: isMobile ? 12 : 14 },
   pageActive: { backgroundColor: '#2563eb' },
-  pageActiveText: { color: '#ffffff', fontWeight: '600', fontSize: 14 },
-  buyButton: { backgroundColor: '#2563eb', paddingHorizontal: 20, paddingVertical: 10, borderRadius: 8 },
-  buyButtonText: { color: '#ffffff', fontWeight: '600', fontSize: 14 },
-  loading: { textAlign: 'center', color: '#9ca3af', marginTop: 24, fontSize: 16 },
-  priceRow: { marginTop: 12, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
-  priceText: { fontSize: 18, fontWeight: '700', color: '#ffffff' },
+  pageActiveText: { color: '#ffffff', fontWeight: '600', fontSize: isMobile ? 12 : 14 },
+  buyButton: { 
+    backgroundColor: '#2563eb', 
+    paddingHorizontal: isMobile ? 16 : 20, 
+    paddingVertical: isMobile ? 8 : 10, 
+    borderRadius: 8 
+  },
+  buyButtonText: { color: '#ffffff', fontWeight: '600', fontSize: isMobile ? 13 : 14 },
+  loading: { 
+    textAlign: 'center', 
+    color: '#9ca3af', 
+    marginTop: isMobile ? 20 : 24, 
+    fontSize: isMobile ? 14 : 16 
+  },
+  priceRow: { 
+    marginTop: 12, 
+    flexDirection: 'row', 
+    alignItems: 'center', 
+    justifyContent: 'space-between',
+    paddingHorizontal: isMobile ? 4 : 0,
+  },
+  priceText: { fontSize: isMobile ? 16 : 18, fontWeight: '700', color: '#ffffff' },
   filterBoxActive: {
     backgroundColor: '#2563eb',
     borderColor: '#3b82f6',
   },
   clearFiltersButton: {
     backgroundColor: '#ef4444',
-    paddingHorizontal: 16,
-    paddingVertical: 10,
+    paddingHorizontal: isMobile ? 12 : 16,
+    paddingVertical: isMobile ? 10 : 12,
     borderRadius: 8,
-    marginLeft: 8,
-  },
-  clearFiltersText: {
-    color: '#ffffff',
-    fontSize: 14,
-    fontWeight: '600',
-  },
-  emptyContainer: {
-    paddingVertical: 64,
+    marginTop: isMobile ? 12 : 12,
+    width: isMobile ? '100%' : 'auto',
     alignItems: 'center',
     justifyContent: 'center',
   },
+  clearFiltersText: {
+    color: '#ffffff',
+    fontSize: isMobile ? 13 : 14,
+    fontWeight: '600',
+  },
+  emptyContainer: {
+    paddingVertical: isMobile ? 40 : 64,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: isMobile ? 16 : 0,
+  },
   emptyText: {
     color: '#9ca3af',
-    fontSize: 18,
-    marginBottom: 24,
+    fontSize: isMobile ? 16 : 18,
+    marginBottom: isMobile ? 20 : 24,
     textAlign: 'center',
+    paddingHorizontal: isMobile ? 16 : 0,
   },
   modalOverlay: {
     flex: 1,
@@ -124,23 +181,23 @@ const createStyles = (screenWidth: number) => StyleSheet.create({
   modalContent: {
     backgroundColor: '#1f2937',
     borderRadius: 16,
-    padding: 24,
-    width: Platform.OS === 'web' ? 400 : '80%',
+    padding: isMobile ? 20 : 24,
+    width: Platform.OS === 'web' ? 400 : (isMobile ? '90%' : '80%'),
     maxHeight: '70%',
     borderWidth: 1,
     borderColor: '#374151',
   },
   modalTitle: {
-    fontSize: 20,
+    fontSize: isMobile ? 18 : 20,
     fontWeight: '700',
     color: '#ffffff',
-    marginBottom: 16,
+    marginBottom: isMobile ? 12 : 16,
   },
   modalOption: {
-    paddingVertical: 12,
-    paddingHorizontal: 16,
+    paddingVertical: isMobile ? 10 : 12,
+    paddingHorizontal: isMobile ? 14 : 16,
     borderRadius: 8,
-    marginBottom: 8,
+    marginBottom: isMobile ? 6 : 8,
     backgroundColor: '#111827',
     borderWidth: 1,
     borderColor: '#374151',
@@ -151,13 +208,39 @@ const createStyles = (screenWidth: number) => StyleSheet.create({
   },
   modalOptionText: {
     color: '#d1d5db',
-    fontSize: 16,
+    fontSize: isMobile ? 14 : 16,
   },
   modalOptionTextSelected: {
     color: '#ffffff',
     fontWeight: '600',
   },
-});
+  // Container boxes for better UI
+  sectionContainer: {
+    backgroundColor: '#111827',
+    borderRadius: 12,
+    padding: isMobile ? 16 : 24,
+    marginBottom: isMobile ? 16 : 24,
+    borderWidth: 1,
+    borderColor: '#1f2937',
+  },
+  searchContainer: {
+    backgroundColor: '#111827',
+    borderRadius: 12,
+    padding: isMobile ? 12 : 16,
+    marginBottom: isMobile ? 16 : 24,
+    borderWidth: 1,
+    borderColor: '#1f2937',
+  },
+  filtersContainer: {
+    backgroundColor: '#111827',
+    borderRadius: 12,
+    padding: isMobile ? 12 : 16,
+    marginBottom: isMobile ? 16 : 24,
+    borderWidth: 1,
+    borderColor: '#1f2937',
+  },
+  });
+};
 
 export const MarketplaceScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
   const { width: SCREEN_WIDTH } = Dimensions.get('window');
@@ -167,16 +250,14 @@ export const MarketplaceScreen: React.FC<{ navigation: any }> = ({ navigation })
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
-  const [selectedPrice, setSelectedPrice] = useState('All');
   const [selectedRating, setSelectedRating] = useState('All');
   const [showCategoryModal, setShowCategoryModal] = useState(false);
-  const [showPriceModal, setShowPriceModal] = useState(false);
   const [showRatingModal, setShowRatingModal] = useState(false);
 
   useEffect(() => {
     loadProducts();
     // Check for search query from navigation
-    const searchParam = navigation.getState()?.routes?.find(r => r.name === 'Marketplace')?.params?.searchQuery;
+    const searchParam = navigation.getState()?.routes?.find((r: { name?: string }) => r.name === 'Marketplace')?.params?.searchQuery;
     if (searchParam) {
       setSearchQuery(searchParam);
     }
@@ -189,22 +270,58 @@ export const MarketplaceScreen: React.FC<{ navigation: any }> = ({ navigation })
     }
   }, [navigation]);
 
+  // All products from seedProducts.js
+  const manualProducts: Product[] = [
+    // Software Products
+    { id: '1', title: 'Project Management Tool', description: 'Streamline your projects with this intuitive tool.', image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=800', category: 'Productivity', price: 2999, rating: 4.8 },
+    { id: '2', title: 'E-commerce Platform', description: 'Launch your online store with this powerful platform.', image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800', category: 'E-commerce', price: 4999, rating: 4.6 },
+    { id: '3', title: 'Customer Relationship Manager', description: 'Manage customer interactions effectively.', image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800', category: 'Business', price: 3999, rating: 4.7 },
+    { id: '4', title: 'Data Analytics Dashboard', description: 'Visualize and analyze your data with ease.', image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800', category: 'Analytics', price: 4499, rating: 4.9 },
+    { id: '5', title: 'Social Media Scheduler', description: 'Schedule and manage your social media posts.', image: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=800', category: 'Marketing', price: 1999, rating: 4.5 },
+    // Teaching & Training Products
+    { id: '6', title: 'Flutter App Development Course', description: 'Complete Flutter development course with hands-on projects and real-world examples.', image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800', category: 'Teaching', price: 4999, rating: 4.9 },
+    { id: '7', title: 'Android Development Masterclass', description: 'Learn Android app development from basics to advanced topics with Kotlin and Java.', image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800', category: 'Teaching', price: 5999, rating: 4.8 },
+    { id: '8', title: 'Web Application Development Bootcamp', description: 'Full-stack web development course covering React, Node.js, and modern frameworks.', image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800', category: 'Teaching', price: 6999, rating: 4.9 },
+    { id: '9', title: 'Backend Development with Node.js', description: 'Master backend development, APIs, databases, and server architecture.', image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800', category: 'Teaching', price: 5499, rating: 4.7 },
+    // Software Development Services
+    { id: '10', title: 'Flutter Mobile App Development', description: 'Professional Flutter app development for iOS and Android. Cross-platform solutions.', image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800', category: 'Software Development', price: 50000, rating: 4.9 },
+    { id: '11', title: 'Android Native App Development', description: 'Custom Android applications built with Kotlin/Java. Enterprise-grade solutions.', image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800', category: 'Software Development', price: 60000, rating: 4.8 },
+    { id: '12', title: 'Web Application Development', description: 'Modern web applications with React, Vue, or Angular. Responsive and scalable.', image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800', category: 'Software Development', price: 45000, rating: 4.9 },
+    { id: '13', title: 'Enterprise Backend Development', description: 'Scalable backend systems with microservices architecture. Cloud-ready solutions.', image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800', category: 'Software Development', price: 100000, rating: 5.0 },
+    // Hosting & Infrastructure
+    { id: '14', title: 'Cloud Hosting & Deployment', description: 'Professional hosting setup on AWS, Azure, or GCP. CI/CD pipeline included.', image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800', category: 'Hosting', price: 15000, rating: 4.8 },
+    { id: '15', title: 'Enterprise Server Management', description: 'Dedicated server management, monitoring, and maintenance. 24/7 support.', image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800', category: 'Hosting', price: 25000, rating: 4.9 },
+    { id: '16', title: 'DevOps & Infrastructure Setup', description: 'Complete DevOps pipeline with Docker, Kubernetes, and automated deployments.', image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800', category: 'Hosting', price: 35000, rating: 4.9 },
+    // Enterprise Solutions
+    { id: '17', title: 'Enterprise Software Solutions', description: 'Custom enterprise software tailored to your business needs. Scalable and secure.', image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800', category: 'Enterprise', price: 200000, rating: 5.0 },
+    { id: '18', title: 'Enterprise Backend Architecture', description: 'Design and implement enterprise-grade backend systems with best practices.', image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800', category: 'Enterprise', price: 150000, rating: 5.0 },
+    { id: '19', title: 'Enterprise Mobile Solutions', description: 'Enterprise mobile applications with security, scalability, and compliance.', image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800', category: 'Enterprise', price: 120000, rating: 4.9 },
+  ];
+
   const loadProducts = async () => {
     try {
+      // Try to fetch from backend first
       const res = await fetch(`${API_BASE}/products`);
       if (res.ok) {
         const data = await res.json();
-        setProducts(data);
+        if (data && data.length > 0) {
+          setProducts(data);
+          setLoading(false);
+          return;
+        }
       }
+      // Fallback to manual data
+      setProducts(manualProducts);
     } catch (error) {
       console.error('Load products error:', error);
+      // Fallback to manual data on error
+      setProducts(manualProducts);
     } finally {
       setLoading(false);
     }
   };
 
   const categories = useMemo(() => ['All', ...Array.from(new Set(products.map(p => p.category)))], [products]);
-  const priceRanges = ['All', 'Free', '₹0-₹5,000', '₹5,000-₹10,000', '₹10,000-₹25,000', '₹25,000+'];
   const ratings = ['All', '4.5+ Stars', '4+ Stars', '3.5+ Stars', '3+ Stars'];
 
   const filteredProducts = useMemo(() => {
@@ -216,29 +333,6 @@ export const MarketplaceScreen: React.FC<{ navigation: any }> = ({ navigation })
       
       // Category filter
       const matchesCategory = selectedCategory === 'All' || product.category === selectedCategory;
-      
-      // Price filter
-      let matchesPrice = true;
-      if (selectedPrice !== 'All') {
-        const price = product.price || 0;
-        switch (selectedPrice) {
-          case 'Free':
-            matchesPrice = price === 0;
-            break;
-          case '₹0-₹5,000':
-            matchesPrice = price > 0 && price <= 5000;
-            break;
-          case '₹5,000-₹10,000':
-            matchesPrice = price > 5000 && price <= 10000;
-            break;
-          case '₹10,000-₹25,000':
-            matchesPrice = price > 10000 && price <= 25000;
-            break;
-          case '₹25,000+':
-            matchesPrice = price > 25000;
-            break;
-        }
-      }
       
       // Rating filter
       let matchesRating = true;
@@ -260,9 +354,9 @@ export const MarketplaceScreen: React.FC<{ navigation: any }> = ({ navigation })
         }
       }
       
-      return matchesSearch && matchesCategory && matchesPrice && matchesRating;
+      return matchesSearch && matchesCategory && matchesRating;
     });
-  }, [products, searchQuery, selectedCategory, selectedPrice, selectedRating]);
+  }, [products, searchQuery, selectedCategory, selectedRating]);
 
   const handlePayment = async (product: Product) => {
     if (!user || !accessToken) {
@@ -351,9 +445,13 @@ export const MarketplaceScreen: React.FC<{ navigation: any }> = ({ navigation })
       <Navbar />
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <View style={styles.inner}>
-          <Text style={styles.title}>Ready-Made Software Products</Text>
+          {/* Title Section */}
+          <View style={styles.sectionContainer}>
+            <Text style={styles.title}>Ready-Made Software Products</Text>
+          </View>
 
-          <View style={styles.searchFiltersRow}>
+          {/* Search Section */}
+          <View style={styles.searchContainer}>
             <View style={styles.searchBar}>
               <Text style={styles.searchIcon}>🔍</Text>
               <TextInput
@@ -364,7 +462,10 @@ export const MarketplaceScreen: React.FC<{ navigation: any }> = ({ navigation })
                 placeholderTextColor="#9ca3af"
               />
             </View>
+          </View>
 
+          {/* Filters Section */}
+          <View style={styles.filtersContainer}>
             <View style={styles.filtersWrapper}>
               <TouchableOpacity 
                 style={[styles.filterBox, selectedCategory !== 'All' && styles.filterBoxActive]}
@@ -375,14 +476,6 @@ export const MarketplaceScreen: React.FC<{ navigation: any }> = ({ navigation })
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity 
-                style={[styles.filterBox, selectedPrice !== 'All' && styles.filterBoxActive]}
-                onPress={() => setShowPriceModal(true)}
-              >
-                <Text style={styles.filterBoxText}>
-                  {selectedPrice === 'All' ? 'Price' : selectedPrice} ▼
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity 
                 style={[styles.filterBox, selectedRating !== 'All' && styles.filterBoxActive]}
                 onPress={() => setShowRatingModal(true)}
               >
@@ -390,47 +483,47 @@ export const MarketplaceScreen: React.FC<{ navigation: any }> = ({ navigation })
                   {selectedRating === 'All' ? 'Rating' : selectedRating} ▼
                 </Text>
               </TouchableOpacity>
-              {(selectedCategory !== 'All' || selectedPrice !== 'All' || selectedRating !== 'All') && (
-                <TouchableOpacity
-                  style={styles.clearFiltersButton}
-                  onPress={() => {
-                    setSelectedCategory('All');
-                    setSelectedPrice('All');
-                    setSelectedRating('All');
-                  }}
-                >
-                  <Text style={styles.clearFiltersText}>Clear All</Text>
-                </TouchableOpacity>
-              )}
             </View>
-          </View>
-
-          {loading ? (
-            <Text style={styles.loading}>Loading products...</Text>
-          ) : filteredProducts.length === 0 ? (
-            <View style={styles.emptyContainer}>
-              <Text style={styles.emptyText}>No products found matching your filters</Text>
+            {(selectedCategory !== 'All' || selectedRating !== 'All') && (
               <TouchableOpacity
                 style={styles.clearFiltersButton}
                 onPress={() => {
                   setSelectedCategory('All');
-                  setSelectedPrice('All');
                   setSelectedRating('All');
-                  setSearchQuery('');
                 }}
               >
                 <Text style={styles.clearFiltersText}>Clear All Filters</Text>
               </TouchableOpacity>
-            </View>
-          ) : (
-            <View style={styles.productsGrid}>
-              {filteredProducts.map((product) => (
+            )}
+          </View>
+
+          {/* Products Section */}
+          <View style={styles.sectionContainer}>
+            {loading ? (
+              <Text style={styles.loading}>Loading products...</Text>
+            ) : filteredProducts.slice(0, 5).length === 0 ? (
+              <View style={styles.emptyContainer}>
+                <Text style={styles.emptyText}>No products found matching your filters</Text>
+                <TouchableOpacity
+                  style={styles.clearFiltersButton}
+                  onPress={() => {
+                    setSelectedCategory('All');
+                    setSelectedRating('All');
+                    setSearchQuery('');
+                  }}
+                >
+                  <Text style={styles.clearFiltersText}>Clear All Filters</Text>
+                </TouchableOpacity>
+              </View>
+            ) : (
+              <View style={styles.productsGrid}>
+              {filteredProducts.slice(0, 5).map((product) => (
                 <View key={product.id} style={styles.productColumn}>
                   <Card
                     title={product.title}
                     description={product.description}
                     image={product.image}
-                    onPress={() => navigation.navigate('ProductDetails', { productId: product.id || product._id })}
+                    onPress={() => navigation.navigate('ProductDetails', { productId: product.id })}
                   >
                     <View style={styles.cardFooterRow}>
                       <View style={styles.categoryBadge}>
@@ -441,19 +534,19 @@ export const MarketplaceScreen: React.FC<{ navigation: any }> = ({ navigation })
                       )}
                     </View>
                     <View style={styles.priceRow}>
-                      <Text style={styles.priceText}>₹{product.price?.toLocaleString() || 0}</Text>
                       <TouchableOpacity
                         style={styles.buyButton}
-                        onPress={() => navigation.navigate('ProductDetails', { productId: product.id || product._id })}
+                        onPress={() => navigation.navigate('ProductDetails', { productId: product.id })}
                       >
-                        <Text style={styles.buyButtonText}>Buy Now</Text>
+                        <Text style={styles.buyButtonText}>View Details</Text>
                       </TouchableOpacity>
                     </View>
                   </Card>
                 </View>
               ))}
-            </View>
-          )}
+              </View>
+            )}
+          </View>
 
           {/* Category Filter Modal */}
           <Modal
@@ -488,46 +581,6 @@ export const MarketplaceScreen: React.FC<{ navigation: any }> = ({ navigation })
                       ]}
                     >
                       {category}
-                    </Text>
-                  </TouchableOpacity>
-                ))}
-              </View>
-            </TouchableOpacity>
-          </Modal>
-
-          {/* Price Filter Modal */}
-          <Modal
-            visible={showPriceModal}
-            transparent={true}
-            animationType="fade"
-            onRequestClose={() => setShowPriceModal(false)}
-          >
-            <TouchableOpacity
-              style={styles.modalOverlay}
-              activeOpacity={1}
-              onPress={() => setShowPriceModal(false)}
-            >
-              <View style={styles.modalContent}>
-                <Text style={styles.modalTitle}>Select Price Range</Text>
-                {priceRanges.map((range) => (
-                  <TouchableOpacity
-                    key={range}
-                    style={[
-                      styles.modalOption,
-                      selectedPrice === range && styles.modalOptionSelected,
-                    ]}
-                    onPress={() => {
-                      setSelectedPrice(range);
-                      setShowPriceModal(false);
-                    }}
-                  >
-                    <Text
-                      style={[
-                        styles.modalOptionText,
-                        selectedPrice === range && styles.modalOptionTextSelected,
-                      ]}
-                    >
-                      {range}
                     </Text>
                   </TouchableOpacity>
                 ))}
@@ -575,14 +628,17 @@ export const MarketplaceScreen: React.FC<{ navigation: any }> = ({ navigation })
             </TouchableOpacity>
           </Modal>
 
-          <View style={styles.pagination}>
-            <TouchableOpacity style={styles.pageButton}><Text style={styles.pageText}>←</Text></TouchableOpacity>
-            <TouchableOpacity style={[styles.pageButton, styles.pageActive]}><Text style={styles.pageActiveText}>1</Text></TouchableOpacity>
-            <TouchableOpacity style={styles.pageButton}><Text style={styles.pageText}>2</Text></TouchableOpacity>
-            <TouchableOpacity style={styles.pageButton}><Text style={styles.pageText}>3</Text></TouchableOpacity>
-            <Text style={styles.pageText}>...</Text>
-            <TouchableOpacity style={styles.pageButton}><Text style={styles.pageText}>10</Text></TouchableOpacity>
-            <TouchableOpacity style={styles.pageButton}><Text style={styles.pageText}>→</Text></TouchableOpacity>
+          {/* Pagination Section */}
+          <View style={styles.sectionContainer}>
+            <View style={styles.pagination}>
+              <TouchableOpacity style={styles.pageButton}><Text style={styles.pageText}>←</Text></TouchableOpacity>
+              <TouchableOpacity style={[styles.pageButton, styles.pageActive]}><Text style={styles.pageActiveText}>1</Text></TouchableOpacity>
+              <TouchableOpacity style={styles.pageButton}><Text style={styles.pageText}>2</Text></TouchableOpacity>
+              <TouchableOpacity style={styles.pageButton}><Text style={styles.pageText}>3</Text></TouchableOpacity>
+              <Text style={styles.pageText}>...</Text>
+              <TouchableOpacity style={styles.pageButton}><Text style={styles.pageText}>10</Text></TouchableOpacity>
+              <TouchableOpacity style={styles.pageButton}><Text style={styles.pageText}>→</Text></TouchableOpacity>
+            </View>
           </View>
         </View>
       </ScrollView>

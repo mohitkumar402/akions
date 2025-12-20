@@ -5,6 +5,7 @@ import { Footer } from '../components/Footer';
 import { BlogPost } from '../types';
 import { useHover } from '../hooks/useHover';
 import { API_URL } from '../config/api';
+import { manualBlogs } from '../data/blogData';
 
 const API_BASE = API_URL;
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
@@ -71,6 +72,7 @@ export const BlogPostScreen: React.FC<{ navigation: any; route: any }> = ({ navi
 
   const loadBlogPost = async () => {
     try {
+      // Try to fetch from backend first
       const res = await fetch(`${API_BASE}/blogs/${postId}`);
       if (res.ok) {
         const data = await res.json();
@@ -79,18 +81,24 @@ export const BlogPostScreen: React.FC<{ navigation: any; route: any }> = ({ navi
           data.id = data._id;
         }
         setPost(data);
-      } else {
-        console.error('Failed to load blog post:', res.status);
         setLoading(false);
+        return;
       }
     } catch (error) {
-      console.error('Load blog post error:', error);
-      setLoading(false);
+      // Fallback to manual data
     }
+    
+    // Fallback to manual blog data
+    const foundPost = manualBlogs.find((blog: BlogPost) => blog.id === postId || blog.id === String(postId));
+    if (foundPost) {
+      setPost(foundPost);
+    }
+    setLoading(false);
   };
 
   const loadRelatedPosts = async () => {
     try {
+      // Try to fetch from backend first
       const res = await fetch(`${API_BASE}/blogs`);
       if (res.ok) {
         const data = await res.json();
@@ -103,10 +111,17 @@ export const BlogPostScreen: React.FC<{ navigation: any; route: any }> = ({ navi
           .filter((p: BlogPost) => p.id !== postId && p.id !== (post?._id || post?.id))
           .slice(0, 3);
         setRelatedPosts(related);
+        return;
       }
     } catch (error) {
-      console.error('Load related posts error:', error);
+      // Fallback to manual data
     }
+    
+    // Fallback to manual blog data
+    const related = manualBlogs
+      .filter((p: BlogPost) => p.id !== postId && p.id !== String(postId))
+      .slice(0, 3) as BlogPost[];
+    setRelatedPosts(related);
   };
 
   const handleLike = () => {

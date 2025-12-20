@@ -7,16 +7,7 @@ import { API_URL } from '../config/api';
 
 const API_BASE = API_URL;
 
-interface InternshipApplicationScreenProps {
-  route: {
-    params: {
-      internship: Internship;
-    };
-  };
-  navigation: any;
-}
-
-export const InternshipApplicationScreen: React.FC<InternshipApplicationScreenProps> = ({ route, navigation }) => {
+export const InternshipApplicationScreen: React.FC<{ navigation: any; route: any }> = ({ route, navigation }) => {
   const { internship } = route.params;
   const { user, accessToken } = useAuth();
   const [formData, setFormData] = useState({

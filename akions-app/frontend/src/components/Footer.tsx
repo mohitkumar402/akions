@@ -1,6 +1,10 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Platform, Linking } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Platform, Linking, Dimensions } from 'react-native';
 import { useHover } from '../hooks/useHover';
+
+const { width: SCREEN_WIDTH } = Dimensions.get('window');
+const isMobile = SCREEN_WIDTH < 768;
+const isAndroid = Platform.OS === 'android';
 
 interface FooterProps {
   navigation: any;
@@ -115,13 +119,21 @@ export const Footer: React.FC<FooterProps> = ({ navigation }) => {
         </View>
 
         <View style={styles.footerBottom}>
-          <View style={styles.footerLinksRow}>
-            <FooterBottomLink label="Privacy Policy" onPress={() => {}} />
-            <Text style={styles.separator}>|</Text>
-            <FooterBottomLink label="Terms of Service" onPress={() => {}} />
-            <Text style={styles.separator}>|</Text>
-            <FooterBottomLink label="Contact Us" onPress={handleGetToUs} />
-          </View>
+          {isMobile || isAndroid ? (
+            <View style={styles.footerLinksColumn}>
+              <FooterBottomLink label="Privacy Policy" onPress={() => {}} />
+              <FooterBottomLink label="Terms of Service" onPress={() => {}} />
+              <FooterBottomLink label="Contact Us" onPress={handleGetToUs} />
+            </View>
+          ) : (
+            <View style={styles.footerLinksRow}>
+              <FooterBottomLink label="Privacy Policy" onPress={() => {}} />
+              {!isMobile && !isAndroid && <Text style={styles.separator}>|</Text>}
+              <FooterBottomLink label="Terms of Service" onPress={() => {}} />
+              {!isMobile && !isAndroid && <Text style={styles.separator}>|</Text>}
+              <FooterBottomLink label="Contact Us" onPress={handleGetToUs} />
+            </View>
+          )}
           <Text style={styles.copyright}>
             © 2024 Ekions. All rights reserved.
           </Text>
@@ -136,8 +148,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#000000',
     borderTopWidth: 1,
     borderTopColor: '#1f2937',
-    paddingVertical: Platform.OS === 'web' ? 48 : 40,
-    paddingHorizontal: 24,
+    paddingVertical: isMobile || isAndroid ? 32 : (Platform.OS === 'web' ? 48 : 40),
+    paddingHorizontal: isMobile || isAndroid ? 16 : 24,
   },
   footerContent: {
     maxWidth: 1200,
@@ -145,44 +157,44 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   footerTop: {
-    flexDirection: Platform.OS === 'web' ? 'row' : 'column',
+    flexDirection: isMobile || isAndroid ? 'column' : (Platform.OS === 'web' ? 'row' : 'column'),
     justifyContent: 'space-between',
-    marginBottom: 32,
-    gap: Platform.OS === 'web' ? 48 : 32,
+    marginBottom: isMobile || isAndroid ? 24 : 32,
+    gap: isMobile || isAndroid ? 24 : (Platform.OS === 'web' ? 48 : 32),
   },
   footerSection: {
-    flex: Platform.OS === 'web' ? 1 : undefined,
-    marginBottom: Platform.OS === 'web' ? 0 : 24,
+    flex: (isMobile || isAndroid) ? undefined : (Platform.OS === 'web' ? 1 : undefined),
+    marginBottom: (isMobile || isAndroid) ? 20 : (Platform.OS === 'web' ? 0 : 24),
+    width: (isMobile || isAndroid) ? '100%' : undefined,
   },
   footerTitle: {
-    fontSize: 24,
+    fontSize: isMobile || isAndroid ? 20 : 24,
     fontWeight: '700',
     color: '#ffffff',
-    marginBottom: 12,
+    marginBottom: isMobile || isAndroid ? 10 : 12,
   },
   footerDescription: {
-    fontSize: 14,
+    fontSize: isMobile || isAndroid ? 13 : 14,
     color: '#9ca3af',
-    lineHeight: 22,
-    maxWidth: 300,
+    lineHeight: isMobile || isAndroid ? 20 : 22,
+    maxWidth: (isMobile || isAndroid) ? '100%' : 300,
   },
   sectionTitle: {
-    fontSize: 16,
+    fontSize: isMobile || isAndroid ? 15 : 16,
     fontWeight: '600',
     color: '#ffffff',
-    marginBottom: 16,
+    marginBottom: isMobile || isAndroid ? 12 : 16,
   },
   linksColumn: {
-    gap: 12,
+    gap: isMobile || isAndroid ? 10 : 12,
   },
   linkItem: {
-    marginBottom: 8,
+    marginBottom: isMobile || isAndroid ? 6 : 8,
   },
   linkText: {
-    fontSize: 14,
+    fontSize: isMobile || isAndroid ? 13 : 14,
     color: '#9ca3af',
-    lineHeight: 20,
-    transition: Platform.OS === 'web' ? 'color 0.2s ease' : undefined,
+    lineHeight: isMobile || isAndroid ? 18 : 20,
   },
   linkTextHovered: {
     ...(Platform.OS === 'web' && {
@@ -192,7 +204,7 @@ const styles = StyleSheet.create({
   footerBottom: {
     borderTopWidth: 1,
     borderTopColor: '#1f2937',
-    paddingTop: 24,
+    paddingTop: isMobile || isAndroid ? 20 : 24,
     alignItems: 'center',
   },
   footerLinksRow: {
@@ -203,11 +215,20 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     gap: 12,
   },
+  footerLinksColumn: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 16,
+    gap: 12,
+    width: '100%',
+  },
   footerLink: {
-    fontSize: 14,
+    fontSize: isMobile || isAndroid ? 13 : 14,
     color: '#9ca3af',
-    paddingHorizontal: 8,
-    transition: Platform.OS === 'web' ? 'color 0.2s ease' : undefined,
+    paddingHorizontal: isMobile || isAndroid ? 0 : 8,
+    paddingVertical: isMobile || isAndroid ? 6 : 0,
+    textAlign: 'center',
   },
   footerLinkHovered: {
     ...(Platform.OS === 'web' && {
@@ -219,9 +240,11 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   copyright: {
-    fontSize: 12,
+    fontSize: isMobile || isAndroid ? 11 : 12,
     color: '#6b7280',
     textAlign: 'center',
+    paddingHorizontal: isMobile || isAndroid ? 16 : 0,
+    lineHeight: isMobile || isAndroid ? 16 : 18,
   },
 });
 

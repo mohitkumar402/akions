@@ -28,15 +28,93 @@ export const InternshipsScreen: React.FC<{ navigation: any }> = ({ navigation })
     }
   }, [navigation]);
 
+  // Manual internships data from seedInternships.js
+  const manualInternships: Internship[] = [
+    {
+      id: '1',
+      title: 'Full Stack Developer Intern',
+      company: 'Ekions',
+      location: 'Remote',
+      type: 'Remote',
+      duration: '6 months',
+      stipend: '₹25,000/month',
+      description: 'Join our dynamic team and work on cutting-edge web applications. You\'ll gain hands-on experience with React, Node.js, and modern development practices.',
+      image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800',
+      skills: ['React', 'Node.js', 'MongoDB', 'JavaScript', 'Express'],
+      requirements: ['React', 'Node.js', 'MongoDB', 'JavaScript'],
+    },
+    {
+      id: '2',
+      title: 'AI/ML Research Intern',
+      company: 'Ekions',
+      location: 'Hybrid',
+      type: 'Hybrid',
+      duration: '3 months',
+      stipend: '₹30,000/month',
+      description: 'Work on exciting AI projects including natural language processing, computer vision, and machine learning model development.',
+      image: 'https://images.unsplash.com/photo-1555255707-c07966088b7b?w=800',
+      skills: ['Python', 'TensorFlow', 'PyTorch', 'Machine Learning', 'Deep Learning'],
+      requirements: ['Python', 'TensorFlow', 'PyTorch', 'Data Science'],
+    },
+    {
+      id: '3',
+      title: 'UI/UX Design Intern',
+      company: 'Ekions',
+      location: 'Remote',
+      type: 'Remote',
+      duration: '4 months',
+      stipend: '₹20,000/month',
+      description: 'Create beautiful and intuitive user interfaces. Work with our design team to bring ideas to life using Figma, Adobe XD, and modern design principles.',
+      image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800',
+      skills: ['Figma', 'Adobe XD', 'UI/UX Design', 'Prototyping', 'User Research'],
+      requirements: ['Figma', 'Adobe XD', 'Design Thinking', 'Prototyping'],
+    },
+    {
+      id: '4',
+      title: 'DevOps Engineering Intern',
+      company: 'Ekions',
+      location: 'Remote',
+      type: 'Remote',
+      duration: '6 months',
+      stipend: '₹28,000/month',
+      description: 'Learn cloud infrastructure, CI/CD pipelines, containerization, and automation. Work with AWS, Docker, Kubernetes, and modern DevOps tools.',
+      image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800',
+      skills: ['AWS', 'Docker', 'Kubernetes', 'CI/CD', 'Terraform', 'Jenkins'],
+      requirements: ['AWS', 'Docker', 'Kubernetes', 'CI/CD'],
+    },
+    {
+      id: '5',
+      title: 'Mobile App Development Intern',
+      company: 'Ekions',
+      location: 'Remote',
+      type: 'Remote',
+      duration: '5 months',
+      stipend: '₹26,000/month',
+      description: 'Build mobile applications for iOS and Android using React Native. Work on real projects that reach thousands of users.',
+      image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800',
+      skills: ['React Native', 'JavaScript', 'iOS', 'Android', 'Mobile UI/UX'],
+      requirements: ['React Native', 'JavaScript', 'Mobile Development'],
+    },
+  ];
+
   const loadInternships = async () => {
     try {
+      // Try to fetch from backend first
       const res = await fetch(`${API_BASE}/internships`);
       if (res.ok) {
         const data = await res.json();
-        setInternships(data);
+        if (data && data.length > 0) {
+          setInternships(data);
+          setLoading(false);
+          return;
+        }
       }
+      // Fallback to manual data
+      setInternships(manualInternships);
     } catch (error) {
       console.error('Load internships error:', error);
+      // Fallback to manual data on error
+      setInternships(manualInternships);
     } finally {
       setLoading(false);
     }
@@ -249,7 +327,7 @@ export const InternshipsScreen: React.FC<{ navigation: any }> = ({ navigation })
           {loading ? (
             <Text style={styles.loading}>Loading internships...</Text>
           ) : (
-            filteredInternships.map((internship) => {
+            filteredInternships.slice(0, 5).map((internship) => {
               const hasApplied = myApplications.includes(internship.id);
               return (
                 <View key={internship.id} style={styles.internshipCard}>

@@ -325,6 +325,13 @@ export const AboutScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
             source={require('../../assets/about us.png')}
             style={styles.heroBackgroundImage}
             resizeMode="cover"
+            fadeDuration={200}
+            onError={(error) => {
+              console.error('About Us hero image error:', error);
+            }}
+            onLoad={() => {
+              console.log('✅ About Us hero image loaded');
+            }}
           />
           <View style={styles.heroOverlay} />
           <View style={styles.heroInner}>

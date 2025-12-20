@@ -14,6 +14,7 @@ import { MarketplaceScreen } from '../screens/MarketplaceScreen';
 import { InternshipsScreen } from '../screens/InternshipsScreen';
 import { AboutScreen } from '../screens/AboutScreen';
 import { BlogScreen } from '../screens/BlogScreen';
+import { ExploreBlogScreen } from '../screens/ExploreBlogScreen';
 import { BlogPostScreen } from '../screens/BlogPostScreen';
 import { CustomProjectsScreen } from '../screens/CustomProjectsScreen';
 import CompleteScreen from '../screens/CompleteScreen';
@@ -29,8 +30,88 @@ const Stack = createNativeStackNavigator();
 export const AppNavigator: React.FC = () => {
   const { user } = useAuth();
 
+  // Configure linking for web URL routing
+  const linking = {
+    prefixes: ['http://localhost:8081', 'http://localhost:19006', 'akions://'],
+    config: {
+      screens: {
+        Home: {
+          path: 'home',
+        },
+        Services: {
+          path: 'services',
+          exact: true,
+        },
+        Marketplace: {
+          path: 'marketplace',
+          exact: true,
+        },
+        Internships: {
+          path: 'internships',
+          exact: true,
+        },
+        About: {
+          path: 'about',
+          exact: true,
+        },
+        Blog: {
+          path: 'blog',
+          exact: true,
+        },
+        ExploreBlog: {
+          path: 'explore-blog',
+          exact: true,
+        },
+        Contact: {
+          path: 'contact',
+          exact: true,
+        },
+        Login: {
+          path: 'login',
+          exact: true,
+        },
+        Signup: {
+          path: 'signup',
+          exact: true,
+        },
+        AdminLogin: {
+          path: 'admin/login',
+          exact: true,
+        },
+        CustomProjects: {
+          path: 'custom-projects',
+          exact: true,
+        },
+        CustomProductRequest: {
+          path: 'custom-product-request',
+          exact: true,
+        },
+        ProductDetails: {
+          path: 'product/:id',
+          exact: true,
+        },
+        InternshipApplication: {
+          path: 'internship/apply',
+          exact: true,
+        },
+        Complete: {
+          path: 'complete',
+          exact: true,
+        },
+        AdminDashboard: {
+          path: 'admin/dashboard',
+          exact: true,
+        },
+        BlogPost: {
+          path: 'blog/:id',
+          exact: true,
+        },
+      },
+    },
+  };
+
   return (
-    <NavigationContainer>
+    <NavigationContainer linking={linking}>
       <Stack.Navigator
         screenOptions={{
           headerShown: false,
@@ -43,6 +124,7 @@ export const AppNavigator: React.FC = () => {
         <Stack.Screen name="Internships" component={InternshipsScreen} />
         <Stack.Screen name="About" component={AboutScreen} />
         <Stack.Screen name="Blog" component={BlogScreen} />
+        <Stack.Screen name="ExploreBlog" component={ExploreBlogScreen} />
         <Stack.Screen name="BlogPost" component={BlogPostScreen} />
         <Stack.Screen name="CustomProjects" component={CustomProjectsScreen} />
         <Stack.Screen name="Services" component={ServicesScreen} />

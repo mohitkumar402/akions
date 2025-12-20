@@ -40,8 +40,11 @@ const corsOptions = {
     if (allowedOrigins.includes(origin) || vercelPattern.test(origin)) {
       callback(null, true);
     } else {
-      // In production, log but allow for now (you can restrict this later)
-      console.log(`CORS: Allowing origin ${origin}`);
+      // In production, allow but don't log every request (too verbose)
+      // Only log in development if needed
+      if (process.env.NODE_ENV === 'development' && process.env.LOG_CORS === 'true') {
+        console.log(`CORS: Allowing origin ${origin}`);
+      }
       callback(null, true);
     }
   },
@@ -72,15 +75,60 @@ app.get('/', (req, res) => {
     note: 'This is the API server. Access the frontend through the Expo/Metro bundler URL.',
   });
 });
+// Helper function to URL encode password in connection string
+function encodeMongoPassword(uri) {
+  try {
+    // Extract password from connection string
+    const match = uri.match(/mongodb\+srv:\/\/([^:]+):([^@]+)@/);
+    if (match) {
+      const username = match[1];
+      const password = match[2];
+      // Check if password is already encoded
+      if (password === decodeURIComponent(password)) {
+        // Password needs encoding
+        const encodedPassword = encodeURIComponent(password);
+        return uri.replace(`:${password}@`, `:${encodedPassword}@`);
+      }
+    }
+    return uri;
+  } catch (err) {
+    return uri;
+  }
+}
+
 // Connect to MongoDB
+const encodedMongoURI = encodeMongoPassword(MONGODB_URI);
+
+// Log connection attempt (without showing password)
+const safeURI = MONGODB_URI.replace(/:([^:@]+)@/, ':***@');
+console.log('Attempting to connect to MongoDB...');
+console.log('Connection string (password hidden):', safeURI);
+
 mongoose
-  .connect(MONGODB_URI)
+  .connect(encodedMongoURI, {
+    serverSelectionTimeoutMS: 10000, // 10 seconds timeout
+    retryWrites: true,
+    maxPoolSize: 10,
+  })
   .then(() => {
-    console.log('Connected to MongoDB');
+    console.log('✅ Connected to MongoDB successfully!');
   })
   .catch((err) => {
-    console.error('MongoDB connection error:', err);
-    process.exit(1);
+    console.error('❌ MongoDB connection error:', err.message);
+    console.error('\n🔍 Troubleshooting steps:');
+    console.error('1. Verify username and password in MongoDB Atlas');
+    console.error('2. Check if password contains special characters - they must be URL-encoded');
+    console.error('   Example: @ becomes %40, # becomes %23, % becomes %25');
+    console.error('3. Whitelist your IP address in MongoDB Atlas:');
+    console.error('   - Go to Network Access → Add IP Address');
+    console.error('   - Or use 0.0.0.0/0 to allow all IPs (less secure)');
+    console.error('4. Verify database user has "readWrite" permissions');
+    console.error('5. Check if connection string format is correct:');
+    console.error('   mongodb+srv://username:password@cluster.mongodb.net/database?retryWrites=true&w=majority');
+    console.error('\n💡 Tip: Try encoding your password manually if it has special characters');
+    console.error('   Use: encodeURIComponent("your-password")');
+    // Don't exit - allow server to run without DB for testing
+    console.error('\n⚠️  Server will continue running, but database features will not work.');
   });
 
 // User storage & refresh token management handled by userService (in-memory).
@@ -276,7 +324,15 @@ app.post('/api/internships/apply', authenticateToken, async (req, res) => {
 
     // Get internship details for email
     const Internship = require('./models/Internship');
-    const internship = await Internship.findById(internshipId);
+    let internship = null;
+    // Handle both MongoDB ObjectIds and simple string IDs
+    if (mongoose.Types.ObjectId.isValid(internshipId)) {
+      internship = await Internship.findById(internshipId);
+    } else {
+      // If it's not a valid ObjectId, try to find by a custom ID field or skip
+      // For now, we'll skip the lookup since frontend uses simple IDs
+      console.log(`Internship ID "${internshipId}" is not a valid MongoDB ObjectId, skipping lookup for email notification`);
+    }
 
     const application = await userService.applyForInternship({ 
       internshipId, 

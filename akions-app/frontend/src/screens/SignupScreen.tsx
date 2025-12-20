@@ -52,6 +52,8 @@ export const SignupScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
       setLoading(true);
       try {
         await signup(name, email, password);
+        // Redirect to Home page after successful signup
+        navigation.replace('Home');
       } catch (error) {
         setErrors({ email: 'Failed to create account' });
       } finally {

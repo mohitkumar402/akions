@@ -1,14 +1,37 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image, Platform } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Image, Platform, ActivityIndicator } from 'react-native';
 import { useHover } from '../hooks/useHover';
+import { API_BASE } from '../config/api';
 
 interface CardProps {
   title: string;
   description?: string;
-  image?: string;
+  image?: string | any; // Can be URI string or require() object
   onPress?: () => void;
   children?: React.ReactNode;
 }
+
+// Static image component - no blinking/flickering
+const LazyImage = React.memo(({ imageSource, style, onError, onLoad }: {
+  imageSource: any;
+  style: any;
+  onError: (error: any) => void;
+  onLoad: () => void;
+}) => {
+  return (
+    <Image
+      source={imageSource}
+      style={style}
+      resizeMode="cover"
+      onError={(error) => {
+        onError(error);
+      }}
+      onLoad={() => {
+        onLoad();
+      }}
+    />
+  );
+});
 
 export const Card: React.FC<CardProps> = ({
   title,
@@ -20,16 +43,82 @@ export const Card: React.FC<CardProps> = ({
   const [imageError, setImageError] = useState(false);
   const { isHovered, hoverProps } = useHover();
 
+  // Helper function to optimize image URLs and get image source
+  const getImageSource = () => {
+    if (!image) return null;
+    
+    // If it's a require() object (local asset)
+    if (typeof image === 'number' || (typeof image === 'object' && image.uri === undefined)) {
+      return image;
+    }
+    
+    // If it's a string (URI)
+    if (typeof image === 'string') {
+      let optimizedUrl = image;
+      
+      // Optimize Unsplash URLs - add size parameters for better performance
+      if (image.includes('unsplash.com')) {
+        // If URL already has ?w= parameter, keep it; otherwise add optimized size
+        if (!image.includes('?w=') && !image.includes('&w=')) {
+          optimizedUrl = image.includes('?') 
+            ? `${image}&w=400&q=80&auto=format&fit=crop` 
+            : `${image}?w=400&q=80&auto=format&fit=crop`;
+        } else {
+          // Replace existing w= parameter with optimized size
+          optimizedUrl = image.replace(/[?&]w=\d+/, '?w=400').replace(/[?&]q=\d+/, '&q=80');
+          if (!optimizedUrl.includes('auto=format')) {
+            optimizedUrl += (optimizedUrl.includes('?') ? '&' : '?') + 'auto=format&fit=crop';
+          }
+        }
+      }
+      
+      // If it's already a full URL, use optimized version
+      if (optimizedUrl.startsWith('http://') || optimizedUrl.startsWith('https://')) {
+        return { uri: optimizedUrl };
+      }
+      // If it's a relative path, prepend API base URL
+      if (optimizedUrl.startsWith('/')) {
+        return { uri: `${API_BASE}${optimizedUrl}` };
+      }
+      // If it's a relative path without leading slash
+      return { uri: `${API_BASE}/${optimizedUrl}` };
+    }
+    
+    // If it's already an object with uri
+    if (typeof image === 'object' && image.uri) {
+      // Optimize if it's an Unsplash URL
+      let optimizedUri = image.uri;
+      if (image.uri.includes('unsplash.com') && !image.uri.includes('?w=') && !image.uri.includes('&w=')) {
+        optimizedUri = image.uri.includes('?') 
+          ? `${image.uri}&w=400&q=80&auto=format&fit=crop` 
+          : `${image.uri}?w=400&q=80&auto=format&fit=crop`;
+      }
+      return { 
+        ...image, 
+        uri: optimizedUri,
+      };
+    }
+    
+    return null;
+  };
+
+  const imageSource = getImageSource();
+
   const CardContent = () => (
     <View style={[styles.card, isHovered && styles.cardHovered]}>
-      {image && (
+      {imageSource && (
         <View style={styles.imageContainer}>
           {!imageError ? (
             <Image
-              source={{ uri: image }}
+              source={imageSource}
               style={styles.image}
               resizeMode="cover"
-              onError={() => setImageError(true)}
+              progressiveRenderingEnabled={Platform.OS !== 'web'}
+              fadeDuration={200}
+              onError={(error) => {
+                setImageError(true);
+              }}
+              onLoad={() => setImageError(false)}
             />
           ) : (
             <View style={styles.imagePlaceholder}>
@@ -65,15 +154,16 @@ export const Card: React.FC<CardProps> = ({
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: 'white',
-    borderRadius: 8,
+    backgroundColor: '#111827',
+    borderRadius: 12,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.3,
     shadowRadius: 8,
     elevation: 3,
     overflow: 'hidden',
-    transition: Platform.OS === 'web' ? 'all 0.3s ease' : undefined,
+    borderWidth: 1,
+    borderColor: '#1f2937',
   },
   cardHovered: {
     ...(Platform.OS === 'web' && {
@@ -86,9 +176,10 @@ const styles = StyleSheet.create({
   imageContainer: {
     width: '100%',
     height: 192,
-    backgroundColor: '#e5e7eb',
+    backgroundColor: '#1f2937',
     justifyContent: 'center',
     alignItems: 'center',
+    overflow: 'hidden',
   },
   image: {
     width: '100%',
@@ -99,23 +190,24 @@ const styles = StyleSheet.create({
     height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#e5e7eb',
+    backgroundColor: '#1f2937',
   },
   imagePlaceholderText: {
     fontSize: 48,
-    color: '#9ca3af',
+    color: '#6b7280',
   },
   content: {
     padding: 16,
+    backgroundColor: '#111827',
   },
   title: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#111827',
+    color: '#ffffff',
     marginBottom: 8,
   },
   description: {
-    color: '#4b5563',
+    color: '#9ca3af',
     fontSize: 14,
     lineHeight: 20,
   },

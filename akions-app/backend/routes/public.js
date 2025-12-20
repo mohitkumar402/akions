@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const mongoose = require('mongoose');
 const Product = require('../models/Product');
 const Blog = require('../models/Blog');
 const Project = require('../models/Project');
@@ -16,11 +17,17 @@ const sanitize = (doc) => {
 // Get all active products
 router.get('/products', async (req, res) => {
   try {
+    // Check if MongoDB is connected
+    if (mongoose.connection.readyState !== 1) {
+      console.warn('[Products API] MongoDB not connected, returning empty array');
+      return res.json([]);
+    }
     const products = await Product.find({ isActive: true }).sort({ createdAt: -1 });
     res.json(products.map(sanitize));
   } catch (error) {
     console.error('Get products error:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    // Return empty array instead of error to allow frontend to work
+    res.json([]);
   }
 });
 
@@ -39,11 +46,17 @@ router.get('/products/:id', async (req, res) => {
 // Get all published blogs
 router.get('/blogs', async (req, res) => {
   try {
+    // Check if MongoDB is connected
+    if (mongoose.connection.readyState !== 1) {
+      console.warn('[Blogs API] MongoDB not connected, returning empty array');
+      return res.json([]);
+    }
     const blogs = await Blog.find({ isPublished: true }).sort({ createdAt: -1 });
     res.json(blogs.map(sanitize));
   } catch (error) {
     console.error('Get blogs error:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    // Return empty array instead of error to allow frontend to work
+    res.json([]);
   }
 });
 
@@ -62,11 +75,17 @@ router.get('/blogs/:id', async (req, res) => {
 // Get all active projects
 router.get('/projects', async (req, res) => {
   try {
+    // Check if MongoDB is connected
+    if (mongoose.connection.readyState !== 1) {
+      console.warn('[Projects API] MongoDB not connected, returning empty array');
+      return res.json([]);
+    }
     const projects = await Project.find({ isActive: true }).sort({ createdAt: -1 });
     res.json(projects.map(sanitize));
   } catch (error) {
     console.error('Get projects error:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    // Return empty array instead of error to allow frontend to work
+    res.json([]);
   }
 });
 
@@ -174,6 +193,51 @@ router.post('/products/custom-request', async (req, res) => {
   }
 });
 
+// Contact form submission
+router.post('/contact', async (req, res) => {
+  try {
+    const { name, email, subject, message } = req.body;
+
+    // Validation
+    if (!name || !email || !message) {
+      return res.status(400).json({ error: 'Name, email, and message are required' });
+    }
+
+    if (!/\S+@\S+\.\S+/.test(email)) {
+      return res.status(400).json({ error: 'Invalid email address' });
+    }
+
+    // Log the request
+    console.log('Contact Form Submission:', {
+      name,
+      email,
+      subject: subject || 'General Inquiry',
+      timestamp: new Date().toISOString(),
+    });
+
+    // Send email to akions@hotmail.com
+    try {
+      await emailService.sendContactFormEmail({
+        name: name.trim(),
+        email: email.trim(),
+        subject: subject ? subject.trim() : 'Contact Form Submission from Akions Website',
+        message: message.trim(),
+      });
+    } catch (emailError) {
+      console.error('Failed to send contact form email:', emailError);
+      // Don't fail the request if email fails, but log it
+    }
+
+    res.json({ 
+      message: 'Thank you for contacting us! We have received your message and will get back to you soon.',
+      success: true 
+    });
+  } catch (error) {
+    console.error('Contact form error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 // Get single project
 router.get('/projects/:id', async (req, res) => {
   try {
@@ -189,11 +253,17 @@ router.get('/projects/:id', async (req, res) => {
 // Get all active internships
 router.get('/internships', async (req, res) => {
   try {
+    // Check if MongoDB is connected
+    if (mongoose.connection.readyState !== 1) {
+      console.warn('[Internships API] MongoDB not connected, returning empty array');
+      return res.json([]);
+    }
     const internships = await Internship.find({ isActive: true }).sort({ createdAt: -1 });
     res.json(internships.map(sanitize));
   } catch (error) {
     console.error('Get internships error:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    // Return empty array instead of error to allow frontend to work
+    res.json([]);
   }
 });
 

@@ -10,6 +10,7 @@ export interface User {
 
 export interface Product {
   id: string;
+  _id?: string; // MongoDB _id from backend
   title: string;
   description: string;
   image: string;

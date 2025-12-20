@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const mongoose = require('mongoose');
 const Product = require('../models/Product');
 const Blog = require('../models/Blog');
 const Project = require('../models/Project');
@@ -74,26 +75,48 @@ router.delete('/products/:id', authenticateToken, requireAdmin, async (req, res)
 // Create blog
 router.post('/blogs', authenticateToken, requireAdmin, async (req, res) => {
   try {
-    const { title, excerpt, content, author, publishedDate, image, category, likes, shares, comments } = req.body;
-    if (!title || !excerpt || !content || !author || !publishedDate || !category) {
-      return res.status(400).json({ error: 'Missing required fields (title, excerpt, content, author, publishedDate, category)' });
+    // Check if MongoDB is connected
+    if (mongoose.connection.readyState !== 1) {
+      return res.status(503).json({ error: 'Database not connected. Please check MongoDB connection.' });
     }
-    const blog = await Blog.create({ title, excerpt, content, author, publishedDate, image: image || '', category, likes: likes || 0, shares: shares || 0, comments: comments || [] });
+    
+    const { title, excerpt, content, author, publishedDate, image, category, likes, shares, comments, isPublished } = req.body;
+    if (!title || !excerpt || !content || !author || !category) {
+      return res.status(400).json({ error: 'Missing required fields (title, excerpt, content, author, category)' });
+    }
+    
+    const blog = await Blog.create({ 
+      title, 
+      excerpt, 
+      content, 
+      author, 
+      publishedDate: publishedDate || new Date(), 
+      image: image || '', 
+      category, 
+      likes: likes || 0, 
+      shares: shares || 0, 
+      comments: comments || [],
+      isPublished: isPublished !== undefined ? isPublished : true
+    });
     res.status(201).json(sanitize(blog));
   } catch (error) {
     console.error('Create blog error:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ error: 'Internal server error', details: error.message });
   }
 });
 
 // Get all blogs (admin)
 router.get('/blogs', authenticateToken, requireAdmin, async (req, res) => {
   try {
+    // Check if MongoDB is connected
+    if (mongoose.connection.readyState !== 1) {
+      return res.json([]);
+    }
     const blogs = await Blog.find({}).sort({ createdAt: -1 });
     res.json(blogs.map(sanitize));
   } catch (error) {
     console.error('Get blogs error:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.json([]);
   }
 });
 
@@ -128,10 +151,16 @@ router.delete('/blogs/:id', authenticateToken, requireAdmin, async (req, res) =>
 // Create project
 router.post('/projects', authenticateToken, requireAdmin, async (req, res) => {
   try {
-    const { title, description, image, category, price, features, technologies } = req.body;
+    // Check if MongoDB is connected
+    if (mongoose.connection.readyState !== 1) {
+      return res.status(503).json({ error: 'Database not connected. Please check MongoDB connection.' });
+    }
+    
+    const { title, description, image, category, price, features, technologies, isActive } = req.body;
     if (!title || !description || !category || price === undefined) {
       return res.status(400).json({ error: 'Missing required fields (title, description, category, price)' });
     }
+    
     const project = await Project.create({ 
       title, 
       description, 
@@ -139,12 +168,13 @@ router.post('/projects', authenticateToken, requireAdmin, async (req, res) => {
       category, 
       price, 
       features: features || [], 
-      technologies: technologies || [] 
+      technologies: technologies || [],
+      isActive: isActive !== undefined ? isActive : true
     });
     res.status(201).json(sanitize(project));
   } catch (error) {
     console.error('Create project error:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ error: 'Internal server error', details: error.message });
   }
 });
 
@@ -205,11 +235,15 @@ router.post('/internships', authenticateToken, requireAdmin, async (req, res) =>
 // Get all internships (admin)
 router.get('/internships', authenticateToken, requireAdmin, async (req, res) => {
   try {
+    // Check if MongoDB is connected
+    if (mongoose.connection.readyState !== 1) {
+      return res.json([]);
+    }
     const internships = await Internship.find({}).sort({ createdAt: -1 });
     res.json(internships.map(sanitize));
   } catch (error) {
     console.error('Get internships error:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.json([]);
   }
 });
 

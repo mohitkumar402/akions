@@ -149,7 +149,6 @@ export const ProductDetailsScreen: React.FC<{ navigation: any; route: any }> = (
             </View>
 
             <Text style={styles.productTitle}>{product.title}</Text>
-            <Text style={styles.productPrice}>₹{product.price?.toLocaleString() || 0}</Text>
 
             {/* Description */}
             <View style={styles.descriptionSection}>
@@ -365,12 +364,6 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: '#ffffff',
     marginBottom: 12,
-  },
-  productPrice: {
-    fontSize: Platform.OS === 'web' ? 32 : 24,
-    fontWeight: '700',
-    color: '#10b981',
-    marginBottom: 32,
   },
   descriptionSection: {
     marginBottom: 32,

@@ -357,9 +357,105 @@ const sendCustomProductRequestEmail = async ({ to, customerName, customerEmail, 
   }
 };
 
+// Send contact form email
+const sendContactFormEmail = async ({ name, email, subject, message }) => {
+  try {
+    const transporter = createTransporter();
+    
+    if (!process.env.SMTP_USER || !process.env.SMTP_PASS) {
+      console.warn('Email not configured. SMTP credentials missing.');
+      return { success: false, message: 'Email not configured' };
+    }
+
+    const mailOptions = {
+      from: `"Akions Website" <${process.env.SMTP_USER}>`,
+      to: 'akions@hotmail.com',
+      replyTo: email,
+      subject: subject || 'Contact Form Submission from Akions Website',
+      html: `
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <style>
+            body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+            .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+            .header { background: #000000; color: white; padding: 20px; text-align: center; border-radius: 8px 8px 0 0; }
+            .content { background: #f9fafb; padding: 30px; border-radius: 0 0 8px 8px; }
+            .info-row { margin: 15px 0; padding: 12px; background: white; border-radius: 6px; border-left: 4px solid #2563eb; }
+            .label { font-weight: bold; color: #374151; }
+            .value { color: #1f2937; margin-top: 4px; }
+            .message-box { background: white; padding: 16px; border-radius: 6px; border-left: 4px solid #10b981; margin-top: 8px; white-space: pre-wrap; }
+            .footer { text-align: center; padding: 20px; color: #666; font-size: 12px; margin-top: 20px; }
+          </style>
+        </head>
+        <body>
+          <div class="container">
+            <div class="header">
+              <h2>New Contact Form Submission</h2>
+            </div>
+            <div class="content">
+              <p>You have received a new message from the Akions website contact form:</p>
+              
+              <div class="info-row">
+                <div class="label">Name:</div>
+                <div class="value">${name}</div>
+              </div>
+              
+              <div class="info-row">
+                <div class="label">Email:</div>
+                <div class="value"><a href="mailto:${email}">${email}</a></div>
+              </div>
+              
+              ${subject ? `
+              <div class="info-row">
+                <div class="label">Subject:</div>
+                <div class="value">${subject}</div>
+              </div>
+              ` : ''}
+              
+              <div class="info-row">
+                <div class="label">Message:</div>
+                <div class="message-box">${message.replace(/\n/g, '<br>')}</div>
+              </div>
+              
+              <div class="footer">
+                <p>Please reply directly to: <a href="mailto:${email}">${email}</a></p>
+                <p>This message was sent from the Akions website contact form.</p>
+              </div>
+            </div>
+          </div>
+        </body>
+        </html>
+      `,
+      text: `
+New Contact Form Submission
+
+Name: ${name}
+Email: ${email}
+${subject ? `Subject: ${subject}\n` : ''}
+
+Message:
+${message}
+
+---
+Please reply directly to: ${email}
+This message was sent from the Akions website contact form.
+      `.trim(),
+    };
+
+    await transporter.sendMail(mailOptions);
+    console.log('Contact form email sent successfully to akions@hotmail.com');
+    return { success: true, message: 'Email sent successfully' };
+  } catch (error) {
+    console.error('Error sending contact form email:', error);
+    throw error;
+  }
+};
+
 module.exports = {
   sendApplicationEmail,
   sendProductContactEmail,
   sendCustomProductRequestEmail,
+  sendContactFormEmail,
 };
 
