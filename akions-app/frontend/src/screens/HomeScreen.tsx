@@ -1524,17 +1524,14 @@ Understanding color psychology can help you make better design and marketing dec
           resizeMode="cover"
           progressiveRenderingEnabled={Platform.OS !== 'web'}
           fadeDuration={200}
-          onError={(error) => {
-            console.error(`Carousel image error for ${item.id} (${item.title}):`, error);
+          onError={() => {
+            if (typeof __DEV__ !== 'undefined' && __DEV__) {
+              console.warn('Carousel image failed:', item.id, item.title);
+            }
             setCarouselImageErrors(prev => ({ ...prev, [item.id]: true }));
           }}
-          onLoad={() => {
-            console.log(`✅ Carousel image loaded successfully: ${item.id} - ${item.title}`);
-            setCarouselImageErrors(prev => ({ ...prev, [item.id]: false }));
-          }}
-          onLoadStart={() => {
-            console.log(`🔄 Carousel image loading started: ${item.id} - ${item.title}`);
-          }}
+          onLoad={() => setCarouselImageErrors(prev => ({ ...prev, [item.id]: false }))}
+          onLoadStart={() => {}}
         />
     );
   });
@@ -1555,10 +1552,6 @@ Understanding color psychology can help you make better design and marketing dec
     );
   };
 
-  // Debug: Log carousel slides
-  useEffect(() => {
-    console.log('📸 Carousel slides:', carouselSlides.map(s => ({ id: s.id, title: s.title, hasImage: !!s.image })));
-  }, []);
 
   useEffect(() => {
     // Staggered card animations
@@ -1776,9 +1769,7 @@ Understanding color psychology can help you make better design and marketing dec
                 source={require('../../assets/ekions internships.png')}
                 style={styles.aboutUsImage}
                 resizeMode="cover"
-                onError={(error) => {
-                  console.error('Internships image failed to load:', error);
-                }}
+                onError={() => {}}
               />
             </View>
           </View>
@@ -1810,12 +1801,8 @@ Understanding color psychology can help you make better design and marketing dec
                 style={styles.aboutUsImage}
                 resizeMode="cover"
                 fadeDuration={200}
-                onError={(error) => {
-                  console.error('Products image failed to load:', error);
-                }}
-                onLoad={() => {
-                  console.log('✅ Products image loaded');
-                }}
+                onError={() => {}}
+                onLoad={() => {}}
               />
             </View>
           </View>
@@ -1847,12 +1834,8 @@ Understanding color psychology can help you make better design and marketing dec
                 style={styles.aboutUsImage}
                 resizeMode="cover"
                 fadeDuration={200}
-                onError={(error) => {
-                  console.error('Blog image failed to load:', error);
-                }}
-                onLoad={() => {
-                  console.log('✅ Blog image loaded');
-                }}
+                onError={() => {}}
+                onLoad={() => {}}
               />
             </View>
           </View>
@@ -1886,12 +1869,8 @@ Understanding color psychology can help you make better design and marketing dec
                 style={styles.aboutUsImage}
                 resizeMode="cover"
                 fadeDuration={200}
-                onError={(error) => {
-                  console.error('About Us image failed to load:', error);
-                }}
-                onLoad={() => {
-                  console.log('✅ About Us image loaded');
-                }}
+                onError={() => {}}
+                onLoad={() => {}}
               />
             </View>
           </View>
@@ -1907,12 +1886,8 @@ Understanding color psychology can help you make better design and marketing dec
                 style={styles.workWithUsImage}
                 resizeMode="cover"
                 fadeDuration={200}
-                onError={(error) => {
-                  console.error('Work With Us image failed to load:', error);
-                }}
-                onLoad={() => {
-                  console.log('✅ Work With Us image loaded');
-                }}
+                onError={() => {}}
+                onLoad={() => {}}
               />
             </View>
             

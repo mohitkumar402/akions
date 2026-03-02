@@ -137,16 +137,10 @@ export const AppNavigator: React.FC = () => {
         <Stack.Screen name="Signup" component={SignupScreen} />
         <Stack.Screen name="AdminLogin" component={AdminLoginScreen} />
 
-        {/* Protected Routes - Require authentication */}
-        {user && (
-          <>
-            <Stack.Screen name="Complete" component={CompleteScreen} />
-            <Stack.Screen name="InternshipApplication" component={InternshipApplicationScreen} />
-            {user.role === 'admin' && (
-              <Stack.Screen name="AdminDashboard" component={AdminDashboard} />
-            )}
-          </>
-        )}
+        {/* Protected Routes - Always registered; auth guards inside components */}
+        <Stack.Screen name="Complete" component={CompleteScreen} />
+        <Stack.Screen name="InternshipApplication" component={InternshipApplicationScreen} />
+        <Stack.Screen name="AdminDashboard" component={AdminDashboard} />
       </Stack.Navigator>
     </NavigationContainer>
   );

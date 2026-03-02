@@ -5,10 +5,26 @@ const crypto = require('crypto');
 const Payment = require('../models/Payment');
 const { authenticateToken } = require('../middleware/auth');
 
+const isProduction = process.env.NODE_ENV === 'production';
+const keyId = process.env.RAZORPAY_KEY_ID;
+const keySecret = process.env.RAZORPAY_KEY_SECRET;
+
+if (isProduction && (!keyId || !keySecret)) {
+  console.warn('Payment routes: RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET should be set in production.');
+}
+
 const razorpay = new Razorpay({
-  key_id: process.env.RAZORPAY_KEY_ID || 'rzp_test_1234567890',
-  key_secret: process.env.RAZORPAY_KEY_SECRET || 'test_secret_1234567890',
+  key_id: keyId || 'rzp_test_1234567890',
+  key_secret: keySecret || 'test_secret_1234567890',
 });
+
+function getRazorpaySecret() {
+  const secret = process.env.RAZORPAY_KEY_SECRET;
+  if (isProduction && !secret) {
+    throw new Error('RAZORPAY_KEY_SECRET is required in production');
+  }
+  return secret || 'test_secret_1234567890';
+}
 
 // Create Razorpay order
 router.post('/create-order', authenticateToken, async (req, res) => {
@@ -66,7 +82,7 @@ router.post('/verify-payment', authenticateToken, async (req, res) => {
     // Verify signature
     const text = `${razorpayOrderId}|${razorpayPaymentId}`;
     const generatedSignature = crypto
-      .createHmac('sha256', process.env.RAZORPAY_KEY_SECRET || 'test_secret_1234567890')
+      .createHmac('sha256', getRazorpaySecret())
       .update(text)
       .digest('hex');
 

@@ -16,37 +16,41 @@ const { authenticateToken, requireAdmin } = require('./middleware/auth');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const isProduction = process.env.NODE_ENV === 'production';
+
+// JWT: in production, secret is required (no default)
+if (isProduction && !process.env.JWT_SECRET) {
+  console.error('FATAL: JWT_SECRET is required in production. Set it in .env');
+  process.exit(1);
+}
 const JWT_SECRET = process.env.JWT_SECRET || 'change-me-dev-secret';
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/ekions';
 
-// Middleware
-// CORS Configuration - Allow requests from localhost (dev), Vercel (production), and Render
+// Allowed origins: add CORS_ALLOWED_ORIGINS (comma-separated) in .env for extra origins
+const allowedOrigins = [
+  'http://localhost:8082',
+  'http://localhost:19006',
+  'http://localhost:3000',
+  'https://akions.onrender.com',
+  ...(process.env.CORS_ALLOWED_ORIGINS ? process.env.CORS_ALLOWED_ORIGINS.split(',').map((o) => o.trim()) : []),
+];
+const vercelPattern = /^https:\/\/.*\.vercel\.app$/;
+
+// CORS: in production only allow known origins; in dev allow all for flexibility
 const corsOptions = {
   origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps or curl requests)
     if (!origin) return callback(null, true);
-    
-    // List of allowed origins
-    const allowedOrigins = [
-      'http://localhost:8082',
-      'http://localhost:19006',
-      'http://localhost:3000',
-      'https://akions.onrender.com', // Backend URL
-    ];
-    
-    // Allow any Vercel deployment (pattern: *.vercel.app)
-    const vercelPattern = /^https:\/\/.*\.vercel\.app$/;
-    
-    if (allowedOrigins.includes(origin) || vercelPattern.test(origin)) {
-      callback(null, true);
-    } else {
-      // In production, allow but don't log every request (too verbose)
-      // Only log in development if needed
-      if (process.env.NODE_ENV === 'development' && process.env.LOG_CORS === 'true') {
-        console.log(`CORS: Allowing origin ${origin}`);
-      }
-      callback(null, true);
+    const allowed = allowedOrigins.includes(origin) || vercelPattern.test(origin);
+    if (allowed) {
+      return callback(null, true);
     }
+    if (isProduction) {
+      return callback(new Error('CORS not allowed'), false);
+    }
+    if (process.env.LOG_CORS === 'true') {
+      console.log(`CORS: Allowing origin (dev) ${origin}`);
+    }
+    callback(null, true);
   },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],

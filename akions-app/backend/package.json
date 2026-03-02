@@ -10,7 +10,8 @@
     "seed:blogs": "node scripts/seedBlogs.js",
     "seed:internships": "node scripts/seedInternships.js",
     "seed:products": "node scripts/seedProducts.js",
-    "create:admin": "node scripts/createAdmin.js"
+    "create:admin": "node scripts/createAdmin.js",
+    "setup:env": "node scripts/copy-env-if-missing.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

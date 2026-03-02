@@ -1,0 +1,13 @@
+node_modules
+npm-debug.log
+.git
+.gitignore
+README.md
+*.md
+.env.example
+.vscode
+.DS_Store
+.next
+.expo
+uploads
+test-*.js

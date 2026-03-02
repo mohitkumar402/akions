@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const userService = require('../userService');
 
+// In production, server.js exits if JWT_SECRET is missing; dev fallback only
 const JWT_SECRET = process.env.JWT_SECRET || 'change-me-dev-secret';
 
 // Middleware to verify JWT token
