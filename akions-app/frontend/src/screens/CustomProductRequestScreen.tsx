@@ -208,7 +208,7 @@ export const CustomProductRequestScreen: React.FC<{ navigation: any }> = ({ navi
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000000',
+    backgroundColor: '#ffffff',
   },
   scrollContent: {
     paddingBottom: 32,
@@ -229,17 +229,21 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontSize: Platform.OS === 'web' ? 18 : 16,
-    color: '#9ca3af',
+    color: '#6b7280',
     marginBottom: 48,
     textAlign: 'center',
     lineHeight: 24,
   },
   form: {
-    backgroundColor: '#111827',
+    backgroundColor: '#ffffff',
     borderRadius: 16,
     padding: 32,
     borderWidth: 1,
-    borderColor: '#1f2937',
+    borderColor: '#e5e7eb',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 8,
   },
   formRow: {
     flexDirection: Platform.OS === 'web' ? 'row' : 'column',
@@ -253,17 +257,17 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#ffffff',
+    color: '#111827',
     marginBottom: 8,
   },
   input: {
-    backgroundColor: '#1f2937',
+    backgroundColor: '#f3f4f6',
     borderWidth: 1,
-    borderColor: '#374151',
+    borderColor: '#e5e7eb',
     borderRadius: 8,
     padding: 12,
     fontSize: 16,
-    color: '#ffffff',
+    color: '#111827',
     minHeight: 44,
   },
   textArea: {

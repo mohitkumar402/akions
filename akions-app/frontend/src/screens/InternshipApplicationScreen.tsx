@@ -265,15 +265,15 @@ export const InternshipApplicationScreen: React.FC<{ navigation: any; route: any
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#000000' },
+  container: { flex: 1, backgroundColor: '#ffffff' },
   scrollContent: { paddingBottom: 32 },
   content: { paddingVertical: 32, paddingHorizontal: 24, maxWidth: 800, alignSelf: 'center', width: '100%' },
-  title: { fontSize: 32, fontWeight: '700', color: '#ffffff', marginBottom: 8 },
-  subtitle: { fontSize: 18, color: '#d1d5db', marginBottom: 32 },
+  title: { fontSize: 32, fontWeight: '700', color: '#111827', marginBottom: 8 },
+  subtitle: { fontSize: 18, color: '#4b5563', marginBottom: 32 },
   form: { gap: 20 },
   formGroup: { marginBottom: 20 },
-  label: { fontSize: 14, fontWeight: '600', color: '#ffffff', marginBottom: 8 },
-  input: { backgroundColor: '#1a1a1a', borderWidth: 1, borderColor: '#333333', borderRadius: 8, padding: 16, fontSize: 16, color: '#ffffff', minHeight: 48 },
+  label: { fontSize: 14, fontWeight: '600', color: '#111827', marginBottom: 8 },
+  input: { backgroundColor: '#f9fafb', borderWidth: 1, borderColor: '#e5e7eb', borderRadius: 8, padding: 16, fontSize: 16, color: '#111827', minHeight: 48 },
   textArea: { minHeight: 120, textAlignVertical: 'top', paddingTop: 16 },
   submitButton: { 
     backgroundColor: '#2563eb', 

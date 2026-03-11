@@ -5,6 +5,7 @@ const Product = require('../models/Product');
 const Blog = require('../models/Blog');
 const Project = require('../models/Project');
 const Internship = require('../models/Internship');
+const SiteSettings = require('../models/SiteSettings');
 const emailService = require('../services/emailService');
 
 // Helper to sanitize mongoose documents
@@ -276,6 +277,36 @@ router.get('/internships/:id', async (req, res) => {
   } catch (error) {
     console.error('Get internship error:', error);
     res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Get site settings (public)
+router.get('/settings', async (req, res) => {
+  try {
+    // Check if MongoDB is connected
+    if (mongoose.connection.readyState !== 1) {
+      console.warn('[Settings API] MongoDB not connected, returning defaults');
+      return res.json({
+        theme: { mode: 'light', primaryColor: '#2563eb', backgroundColor: '#ffffff' },
+        banners: [],
+        services: [],
+        testimonials: [],
+        sections: {},
+        footer: { companyName: 'Ekions', isCompact: true },
+      });
+    }
+    const settings = await SiteSettings.getSettings();
+    res.json(settings);
+  } catch (error) {
+    console.error('Get settings error:', error);
+    res.json({
+      theme: { mode: 'light', primaryColor: '#2563eb', backgroundColor: '#ffffff' },
+      banners: [],
+      services: [],
+      testimonials: [],
+      sections: {},
+      footer: { companyName: 'Ekions', isCompact: true },
+    });
   }
 });
 

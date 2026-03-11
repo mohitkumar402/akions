@@ -21,6 +21,7 @@ export interface Product {
 
 export interface Internship {
   id: string;
+  _id?: string; // MongoDB _id from backend
   title: string;
   company: string;
   location: string;

@@ -15,6 +15,7 @@ interface AuthContextType {
   applyForInternship: (internshipId: string) => Promise<void>;
   myApplications: string[];
   reloadApplications: () => Promise<void>;
+  refreshAccessToken: () => Promise<string | null>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -71,8 +72,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  const attemptRefresh = async () => {
-    if (!refreshToken) return;
+  const attemptRefresh = async (): Promise<string | null> => {
+    if (!refreshToken) return null;
     try {
       const res = await fetch(`${API_AUTH_URL}/refresh`, {
         method: 'POST',
@@ -84,13 +85,21 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setAccessToken(data.accessToken);
         await AsyncStorage.setItem('accessToken', data.accessToken);
         if (data.accessToken) await fetchMe(data.accessToken);
+        return data.accessToken;
       } else {
         await logout();
+        return null;
       }
     } catch (e) {
       console.error('Token refresh failed:', e);
       await logout();
+      return null;
     }
+  };
+
+  // Public method for components to refresh token
+  const refreshAccessToken = async (): Promise<string | null> => {
+    return attemptRefresh();
   };
 
   const reloadApplications = async () => {
@@ -236,7 +245,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   return (
-    <AuthContext.Provider value={{ user, isLoading, login, adminLogin, signup, logout, accessToken, refreshToken, applyForInternship, myApplications, reloadApplications }}>
+    <AuthContext.Provider value={{ user, isLoading, login, adminLogin, signup, logout, accessToken, refreshToken, applyForInternship, myApplications, reloadApplications, refreshAccessToken }}>
       {children}
     </AuthContext.Provider>
   );

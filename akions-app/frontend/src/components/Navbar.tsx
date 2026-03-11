@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, TouchableOpacity, Platform, StyleSheet, TextInput, Alert, Dimensions, Modal, ScrollView } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useAuth } from '../context/AuthContext';
+import { useTheme } from '../context/ThemeContext';
 import { useHover } from '../hooks/useHover';
 import { Logo } from './Logo';
+import { API_URL } from '../config/api';
+
+const API_BASE = API_URL;
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const isMobile = SCREEN_WIDTH < 768;
@@ -104,11 +108,13 @@ const LogoutButton: React.FC<{ onPress: () => void; fontSize?: number; paddingHo
 // GetStartedButton Component
 const GetStartedButton: React.FC<{ onPress: () => void; fontSize?: number; paddingHorizontal?: number; paddingVertical?: number }> = ({ onPress, fontSize, paddingHorizontal, paddingVertical }) => {
   const { isHovered, hoverProps } = useHover();
+  const { theme } = useTheme();
   return (
     <TouchableOpacity
       onPress={onPress}
       style={[
-        styles.getStartedButton, 
+        styles.getStartedButton,
+        { backgroundColor: theme.primary },
         isHovered && styles.getStartedButtonHovered,
         paddingHorizontal !== undefined && { paddingHorizontal },
         paddingVertical !== undefined && { paddingVertical },
@@ -153,9 +159,42 @@ export const Navbar: React.FC = () => {
   const navigation = useNavigation<any>();
   const route = useRoute();
   const { user, logout } = useAuth();
+  const { theme } = useTheme();
   const [searchQuery, setSearchQuery] = useState('');
   const [dimensions, setDimensions] = useState(Dimensions.get('window'));
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [categories, setCategories] = useState<any[]>([]);
+  const [showCategoryDropdown, setShowCategoryDropdown] = useState(false);
+  const dropdownRef = useRef<any>(null);
+
+  // Fetch categories for dropdown
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const res = await fetch(`${API_BASE}/categories/menu`);
+        if (res.ok) {
+          const data = await res.json();
+          setCategories(data);
+        }
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+      }
+    };
+    fetchCategories();
+  }, []);
+
+  // Close dropdown when clicking outside (web only)
+  useEffect(() => {
+    if (Platform.OS === 'web') {
+      const handleClickOutside = (event: any) => {
+        if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+          setShowCategoryDropdown(false);
+        }
+      };
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => document.removeEventListener('mousedown', handleClickOutside);
+    }
+  }, []);
 
   React.useEffect(() => {
     const subscription = Dimensions.addEventListener('change', ({ window }) => {
@@ -171,17 +210,99 @@ export const Navbar: React.FC = () => {
   // Responsive nav items - shorter labels on smaller screens
   const navItems = currentIsMobile 
     ? [
-        { name: 'About', route: 'About' },
+        { name: 'About Us', route: 'About' },
         { name: 'Services', route: 'Services' },
         { name: 'Marketplace', route: 'Marketplace' },
         { name: 'Internships', route: 'Internships' },
       ]
     : [
-        { name: 'About & Contact', route: 'About' },
+        { name: 'About Us', route: 'About' },
         { name: 'Services', route: 'Services' },
         { name: 'Marketplace', route: 'Marketplace' },
         { name: 'Internships', route: 'Internships' },
       ];
+
+  // Render category dropdown item
+  const renderCategoryDropdown = () => {
+    if (categories.length === 0) return null;
+    
+    return (
+      <View 
+        ref={dropdownRef}
+        style={styles.dropdownContainer}
+      >
+        <TouchableOpacity
+          style={[styles.navItem, showCategoryDropdown && styles.navItemActive]}
+          onPress={() => setShowCategoryDropdown(!showCategoryDropdown)}
+          onMouseEnter={() => Platform.OS === 'web' && setShowCategoryDropdown(true)}
+        >
+          <Text style={[styles.navText, showCategoryDropdown && styles.navTextActive]}>
+            Products ▼
+          </Text>
+        </TouchableOpacity>
+        
+        {showCategoryDropdown && (
+          <View 
+            style={styles.dropdownMenu}
+            onMouseLeave={() => Platform.OS === 'web' && setShowCategoryDropdown(false)}
+          >
+            {/* View All Products */}
+            <TouchableOpacity
+              style={styles.dropdownItem}
+              onPress={() => {
+                navigation.navigate('Marketplace');
+                setShowCategoryDropdown(false);
+              }}
+            >
+              <Text style={styles.dropdownItemText}>All Products</Text>
+            </TouchableOpacity>
+            
+            <View style={styles.dropdownDivider} />
+            
+            {/* Parent categories with children */}
+            {categories.map((parentCat) => (
+              <View key={parentCat._id}>
+                <TouchableOpacity
+                  style={styles.dropdownItem}
+                  onPress={() => {
+                    navigation.navigate('CategoryProducts', { categoryId: parentCat._id, categoryName: parentCat.name });
+                    setShowCategoryDropdown(false);
+                  }}
+                >
+                  <Text style={styles.dropdownItemText}>
+                    {parentCat.icon ? `${parentCat.icon} ` : ''}{parentCat.name}
+                  </Text>
+                  {parentCat.children && parentCat.children.length > 0 && (
+                    <Text style={styles.dropdownArrow}>›</Text>
+                  )}
+                </TouchableOpacity>
+                
+                {/* Child categories */}
+                {parentCat.children && parentCat.children.length > 0 && (
+                  <View style={styles.childCategoriesContainer}>
+                    {parentCat.children.map((childCat: any) => (
+                      <TouchableOpacity
+                        key={childCat._id}
+                        style={styles.childCategoryItem}
+                        onPress={() => {
+                          navigation.navigate('CategoryProducts', { categoryId: childCat._id, categoryName: childCat.name });
+                          setShowCategoryDropdown(false);
+                        }}
+                      >
+                        <Text style={styles.childCategoryText}>
+                          {childCat.name}
+                        </Text>
+                      </TouchableOpacity>
+                    ))}
+                  </View>
+                )}
+              </View>
+            ))}
+          </View>
+        )}
+      </View>
+    );
+  };
 
   const dynamicStyles = createDynamicStyles(currentIsMobile, currentIsTablet, currentIsDesktop);
 
@@ -242,6 +363,9 @@ export const Navbar: React.FC = () => {
           {/* Center: Navigation Links - Desktop/Tablet */}
           {!currentIsMobile && (
             <View style={[styles.navItems, dynamicStyles.navItems]}>
+              {/* Products Dropdown (Categories) */}
+              {renderCategoryDropdown()}
+              
               {navItems.map((item) => (
                 <NavItem
                   key={item.route}
@@ -531,6 +655,68 @@ const styles = StyleSheet.create({
     color: '#2563eb',
     fontWeight: '600',
   },
+  
+  // Category Dropdown Styles
+  dropdownContainer: {
+    position: 'relative',
+    zIndex: 1001,
+  },
+  dropdownMenu: {
+    position: 'absolute',
+    top: '100%',
+    left: 0,
+    backgroundColor: '#ffffff',
+    borderRadius: 8,
+    minWidth: 250,
+    maxHeight: 400,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.15,
+    shadowRadius: 12,
+    ...(Platform.OS === 'web' && {
+      boxShadow: '0 10px 40px rgba(0,0,0,0.2)',
+    }),
+    overflow: 'hidden',
+    marginTop: 8,
+  },
+  dropdownItem: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#f3f4f6',
+  },
+  dropdownItemText: {
+    fontSize: 14,
+    color: '#1f2937',
+    fontWeight: '500',
+  },
+  dropdownArrow: {
+    fontSize: 16,
+    color: '#9ca3af',
+    fontWeight: '600',
+  },
+  dropdownDivider: {
+    height: 1,
+    backgroundColor: '#e5e7eb',
+  },
+  childCategoriesContainer: {
+    backgroundColor: '#f9fafb',
+    paddingLeft: 16,
+  },
+  childCategoryItem: {
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#f3f4f6',
+  },
+  childCategoryText: {
+    fontSize: 13,
+    color: '#4b5563',
+  },
+  
   rightSection: {
     flexDirection: 'row',
     alignItems: 'center',

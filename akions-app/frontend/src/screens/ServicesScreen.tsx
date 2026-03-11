@@ -1,13 +1,14 @@
 import React from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Dimensions, Platform } from 'react-native';
 import { Navbar } from '../components/Navbar';
+import { SEO } from '../components/SEO';
 import { useHover } from '../hooks/useHover';
 
 // Create styles function that uses SCREEN_WIDTH
 const createStyles = (screenWidth: number) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000000',
+    backgroundColor: '#ffffff',
   },
   scrollContent: {
     paddingBottom: 32,
@@ -22,13 +23,13 @@ const createStyles = (screenWidth: number) => StyleSheet.create({
   title: {
     fontSize: screenWidth < 768 ? 28 : screenWidth < 1024 ? 40 : 48,
     fontWeight: '700',
-    color: '#ffffff',
+    color: '#111827',
     marginBottom: screenWidth < 768 ? 12 : 16,
     textAlign: 'center',
   },
   subtitle: {
     fontSize: screenWidth < 768 ? 14 : screenWidth < 1024 ? 16 : 18,
-    color: '#9ca3af',
+    color: '#6b7280',
     marginBottom: screenWidth < 768 ? 32 : 48,
     textAlign: 'center',
     lineHeight: screenWidth < 768 ? 20 : 24,
@@ -42,13 +43,13 @@ const createStyles = (screenWidth: number) => StyleSheet.create({
     marginBottom: 48,
   },
   serviceCard: {
-    backgroundColor: '#111827',
+    backgroundColor: '#ffffff',
     borderRadius: 16,
     padding: screenWidth < 768 ? 16 : 20,
     width: screenWidth < 768 ? '100%' : screenWidth < 1024 ? '48%' : '48%',
     maxWidth: screenWidth < 768 ? '100%' : 480,
     borderWidth: 1,
-    borderColor: '#1f2937',
+    borderColor: '#e5e7eb',
     minHeight: screenWidth < 768 ? 180 : 220,
     position: 'relative',
     overflow: 'hidden',
@@ -59,13 +60,13 @@ const createStyles = (screenWidth: number) => StyleSheet.create({
   },
   serviceCardHovered: {
     ...(Platform.OS === 'web' && {
-      backgroundColor: '#1a2332',
+      backgroundColor: '#f8fafc',
       borderColor: '#2563eb',
       borderWidth: 2,
       transform: [{ translateY: -8 }, { scale: 1.03 }],
       shadowColor: '#2563eb',
       shadowOffset: { width: 0, height: 12 },
-      shadowOpacity: 0.4,
+      shadowOpacity: 0.15,
       shadowRadius: 20,
       elevation: 12,
     }),
@@ -73,7 +74,7 @@ const createStyles = (screenWidth: number) => StyleSheet.create({
   iconContainer: {
     width: screenWidth < 768 ? 52 : 64,
     height: screenWidth < 768 ? 52 : 64,
-    backgroundColor: '#1f2937',
+    backgroundColor: '#eff6ff',
     borderRadius: 16,
     justifyContent: 'center',
     alignItems: 'center',
@@ -102,7 +103,7 @@ const createStyles = (screenWidth: number) => StyleSheet.create({
   serviceTitle: {
     fontSize: screenWidth < 768 ? 18 : 20,
     fontWeight: '700',
-    color: '#ffffff',
+    color: '#111827',
     marginBottom: screenWidth < 768 ? 8 : 10,
     lineHeight: screenWidth < 768 ? 24 : 28,
     ...(Platform.OS === 'web' && {
@@ -111,12 +112,12 @@ const createStyles = (screenWidth: number) => StyleSheet.create({
   },
   serviceTitleHovered: {
     ...(Platform.OS === 'web' && {
-      color: '#60a5fa',
+      color: '#2563eb',
     }),
   },
   serviceDescription: {
     fontSize: screenWidth < 768 ? 13 : 14,
-    color: '#9ca3af',
+    color: '#6b7280',
     marginBottom: screenWidth < 768 ? 12 : 14,
     lineHeight: screenWidth < 768 ? 18 : 20,
   },
@@ -188,12 +189,12 @@ const createStyles = (screenWidth: number) => StyleSheet.create({
     marginTop: 32,
     paddingTop: 48,
     borderTopWidth: 1,
-    borderTopColor: '#1f2937',
+    borderTopColor: '#e5e7eb',
   },
   infoTitle: {
     fontSize: 32,
     fontWeight: '700',
-    color: '#ffffff',
+    color: '#111827',
     marginBottom: 32,
     textAlign: 'center',
   },
@@ -204,14 +205,14 @@ const createStyles = (screenWidth: number) => StyleSheet.create({
     gap: screenWidth < 768 ? 12 : 16,
   },
   infoCard: {
-    backgroundColor: '#111827',
+    backgroundColor: '#f8fafc',
     borderRadius: 16,
     padding: screenWidth < 768 ? 16 : 20,
     width: screenWidth < 768 ? '100%' : screenWidth < 1024 ? '48%' : '48%',
     maxWidth: screenWidth < 768 ? '100%' : 480,
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#1f2937',
+    borderColor: '#e5e7eb',
     minHeight: screenWidth < 768 ? 160 : 180,
     position: 'relative',
     overflow: 'hidden',
@@ -222,13 +223,13 @@ const createStyles = (screenWidth: number) => StyleSheet.create({
   },
   infoCardHovered: {
     ...(Platform.OS === 'web' && {
-      backgroundColor: '#1a2332',
+      backgroundColor: '#ffffff',
       borderColor: '#2563eb',
       borderWidth: 2,
       transform: [{ translateY: -6 }, { scale: 1.03 }],
       shadowColor: '#2563eb',
       shadowOffset: { width: 0, height: 12 },
-      shadowOpacity: 0.4,
+      shadowOpacity: 0.15,
       shadowRadius: 20,
       elevation: 12,
     }),
@@ -248,13 +249,13 @@ const createStyles = (screenWidth: number) => StyleSheet.create({
   infoCardTitle: {
     fontSize: screenWidth < 768 ? 16 : 18,
     fontWeight: '700',
-    color: '#ffffff',
+    color: '#111827',
     marginBottom: screenWidth < 768 ? 6 : 8,
     textAlign: 'center',
   },
   infoCardText: {
     fontSize: screenWidth < 768 ? 12 : 14,
-    color: '#9ca3af',
+    color: '#6b7280',
     textAlign: 'center',
     lineHeight: screenWidth < 768 ? 18 : 20,
     paddingHorizontal: screenWidth < 768 ? 8 : 0,
@@ -468,6 +469,11 @@ export const ServicesScreen: React.FC<{ navigation: any }> = ({ navigation }) =>
 
   return (
     <View style={styles.container}>
+      <SEO
+        title="Services - Software Development, Hosting & Training"
+        description="Comprehensive software development, hosting, and training solutions. Custom web apps, mobile development, cloud hosting, and professional IT training."
+        keywords="software development, web development, mobile app development, cloud hosting, IT training, custom software, tech services"
+      />
       <Navbar />
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <View style={styles.inner}>

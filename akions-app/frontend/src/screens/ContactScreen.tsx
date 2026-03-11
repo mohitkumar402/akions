@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, ScrollView, TextInput, TouchableOpacity, StyleSheet, Alert, Platform, Linking } from 'react-native';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
+import { SEO } from '../components/SEO';
 
 export const ContactScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
   const [formData, setFormData] = useState({
@@ -48,6 +49,11 @@ ${formData.message}
 
   return (
     <View style={styles.container}>
+      <SEO
+        title="Contact Us - Get in Touch"
+        description="Have a question or want to work with us? Get in touch with Ekions. We'd love to hear from you."
+        keywords="contact Ekions, get in touch, support, customer service, business inquiry"
+      />
       <Navbar navigation={navigation} />
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <View style={styles.inner}>
@@ -154,7 +160,7 @@ ${formData.message}
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000000',
+    backgroundColor: '#ffffff',
   },
   scrollContent: {
     paddingBottom: 32,
@@ -169,13 +175,13 @@ const styles = StyleSheet.create({
   title: {
     fontSize: Platform.OS === 'web' ? 48 : 36,
     fontWeight: '700',
-    color: '#ffffff',
+    color: '#111827',
     marginBottom: 16,
     textAlign: 'center',
   },
   subtitle: {
     fontSize: Platform.OS === 'web' ? 18 : 16,
-    color: '#9ca3af',
+    color: '#6b7280',
     marginBottom: 48,
     textAlign: 'center',
     lineHeight: 24,
@@ -187,13 +193,17 @@ const styles = StyleSheet.create({
     gap: 24,
   },
   contactCard: {
-    backgroundColor: '#111827',
+    backgroundColor: '#ffffff',
     borderRadius: 16,
     padding: 24,
     alignItems: 'center',
     flex: Platform.OS === 'web' ? 1 : undefined,
     borderWidth: 1,
-    borderColor: '#1f2937',
+    borderColor: '#e5e7eb',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 8,
   },
   contactIcon: {
     fontSize: 48,
@@ -202,7 +212,7 @@ const styles = StyleSheet.create({
   contactTitle: {
     fontSize: 20,
     fontWeight: '700',
-    color: '#ffffff',
+    color: '#111827',
     marginBottom: 12,
   },
   contactLink: {
@@ -212,34 +222,38 @@ const styles = StyleSheet.create({
   },
   contactText: {
     fontSize: 14,
-    color: '#9ca3af',
+    color: '#6b7280',
     textAlign: 'center',
     marginBottom: 4,
   },
   formSection: {
-    backgroundColor: '#111827',
+    backgroundColor: '#ffffff',
     borderRadius: 16,
     padding: 32,
     borderWidth: 1,
-    borderColor: '#1f2937',
+    borderColor: '#e5e7eb',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 8,
   },
   formTitle: {
     fontSize: 24,
     fontWeight: '700',
-    color: '#ffffff',
+    color: '#111827',
     marginBottom: 24,
     textAlign: 'center',
   },
   input: {
-    backgroundColor: '#1f2937',
+    backgroundColor: '#f3f4f6',
     borderRadius: 12,
     paddingHorizontal: 16,
     paddingVertical: 12,
     fontSize: 16,
-    color: '#ffffff',
+    color: '#111827',
     marginBottom: 16,
     borderWidth: 1,
-    borderColor: '#374151',
+    borderColor: '#e5e7eb',
   },
   textArea: {
     height: 120,

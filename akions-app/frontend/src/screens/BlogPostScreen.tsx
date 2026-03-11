@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, TextInput, StyleSheet, Image, Platform, Dimensions, Animated, ActivityIndicator } from 'react-native';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
+import { SEO } from '../components/SEO';
 import { BlogPost } from '../types';
 import { useHover } from '../hooks/useHover';
 import { API_URL } from '../config/api';
@@ -171,6 +172,15 @@ export const BlogPostScreen: React.FC<{ navigation: any; route: any }> = ({ navi
 
   return (
     <View style={styles.container}>
+      <SEO
+        title={post?.metaTitle || post?.title}
+        description={post?.metaDescription || post?.excerpt || post?.content?.substring(0, 160)}
+        keywords={post?.metaKeyword}
+        image={post?.image}
+        type="article"
+        author={post?.author}
+        publishedTime={post?.date}
+      />
       <Navbar />
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* Hero Section with Image */}
@@ -414,24 +424,24 @@ const RelatedPostCard: React.FC<{ post: BlogPost; onPress: () => void }> = ({ po
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000000',
+    backgroundColor: '#ffffff',
   },
   loadingContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#000000',
+    backgroundColor: '#f9fafb',
   },
   loadingText: {
     marginTop: 16,
-    color: '#9ca3af',
+    color: '#6b7280',
     fontSize: 16,
   },
   notFoundContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#000000',
+    backgroundColor: '#f9fafb',
     padding: 48,
   },
   notFoundEmoji: {
@@ -441,7 +451,7 @@ const styles = StyleSheet.create({
   notFoundText: {
     fontSize: 24,
     fontWeight: '700',
-    color: '#ffffff',
+    color: '#111827',
     marginBottom: 24,
   },
   backButton: {
@@ -611,17 +621,21 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   articleContent: {
-    backgroundColor: '#111827',
+    backgroundColor: '#ffffff',
     borderRadius: 24,
     padding: Platform.OS === 'web' ? 48 : 32,
     marginBottom: 32,
     borderWidth: 1,
-    borderColor: '#1f2937',
+    borderColor: '#e5e7eb',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 8,
   },
   h1: {
     fontSize: Platform.OS === 'web' ? 36 : 28,
     fontWeight: '800',
-    color: '#ffffff',
+    color: '#111827',
     marginTop: 32,
     marginBottom: 16,
     lineHeight: Platform.OS === 'web' ? 44 : 36,
@@ -630,7 +644,7 @@ const styles = StyleSheet.create({
   h2: {
     fontSize: Platform.OS === 'web' ? 28 : 24,
     fontWeight: '700',
-    color: '#ffffff',
+    color: '#111827',
     marginTop: 32,
     marginBottom: 12,
     lineHeight: Platform.OS === 'web' ? 36 : 32,
@@ -644,7 +658,7 @@ const styles = StyleSheet.create({
   },
   paragraph: {
     fontSize: Platform.OS === 'web' ? 18 : 16,
-    color: '#d1d5db',
+    color: '#4b5563',
     lineHeight: Platform.OS === 'web' ? 32 : 26,
     marginBottom: 20,
   },
@@ -662,7 +676,7 @@ const styles = StyleSheet.create({
   listText: {
     flex: 1,
     fontSize: Platform.OS === 'web' ? 18 : 16,
-    color: '#d1d5db',
+    color: '#4b5563',
     lineHeight: Platform.OS === 'web' ? 32 : 26,
   },
   spacer: {
@@ -674,7 +688,7 @@ const styles = StyleSheet.create({
   tagsTitle: {
     fontSize: 24,
     fontWeight: '700',
-    color: '#ffffff',
+    color: '#111827',
     marginBottom: 20,
   },
   tagsContainer: {
@@ -683,12 +697,12 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   tagChip: {
-    backgroundColor: '#1e293b',
+    backgroundColor: '#eff6ff',
     paddingHorizontal: 16,
     paddingVertical: 8,
     borderRadius: 20,
     borderWidth: 1,
-    borderColor: '#334155',
+    borderColor: '#bfdbfe',
   },
   tagText: {
     color: '#60a5fa',
@@ -701,16 +715,20 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 28,
     fontWeight: '700',
-    color: '#ffffff',
+    color: '#111827',
     marginBottom: 24,
   },
   commentCard: {
-    backgroundColor: '#111827',
+    backgroundColor: '#ffffff',
     borderRadius: 16,
     padding: 20,
     marginBottom: 16,
     borderWidth: 1,
-    borderColor: '#1f2937',
+    borderColor: '#e5e7eb',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.03,
+    shadowRadius: 4,
   },
   commentHeader: {
     flexDirection: 'row',
@@ -737,7 +755,7 @@ const styles = StyleSheet.create({
   commentAuthor: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#ffffff',
+    color: '#111827',
   },
   commentTimestamp: {
     fontSize: 12,
@@ -746,7 +764,7 @@ const styles = StyleSheet.create({
   },
   commentText: {
     fontSize: 15,
-    color: '#d1d5db',
+    color: '#4b5563',
     lineHeight: 24,
   },
   noComments: {
@@ -757,29 +775,29 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
   },
   addCommentCard: {
-    backgroundColor: '#111827',
+    backgroundColor: '#ffffff',
     borderRadius: 16,
     padding: 24,
     marginTop: 24,
     borderWidth: 1,
-    borderColor: '#1f2937',
+    borderColor: '#e5e7eb',
   },
   addCommentTitle: {
     fontSize: 20,
     fontWeight: '700',
-    color: '#ffffff',
+    color: '#111827',
     marginBottom: 16,
   },
   commentInput: {
-    backgroundColor: '#1e293b',
+    backgroundColor: '#f3f4f6',
     borderRadius: 12,
     padding: 16,
     minHeight: 120,
     fontSize: 16,
-    color: '#ffffff',
+    color: '#111827',
     textAlignVertical: 'top',
     borderWidth: 1,
-    borderColor: '#334155',
+    borderColor: '#e5e7eb',
     marginBottom: 16,
   },
   postCommentButton: {
@@ -802,12 +820,16 @@ const styles = StyleSheet.create({
     gap: 24,
   },
   relatedCard: {
-    backgroundColor: '#111827',
+    backgroundColor: '#ffffff',
     borderRadius: 16,
     overflow: 'hidden',
     width: Platform.OS === 'web' ? (SCREEN_WIDTH > 1024 ? '31%' : SCREEN_WIDTH > 768 ? '48%' : '100%') : '100%',
     borderWidth: 1,
-    borderColor: '#1f2937',
+    borderColor: '#e5e7eb',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 8,
     ...(Platform.OS === 'web' && {
       transition: 'all 0.3s ease',
     }),
@@ -825,13 +847,13 @@ const styles = StyleSheet.create({
   relatedImage: {
     width: '100%',
     height: 180,
-    backgroundColor: '#1f2937',
+    backgroundColor: '#f3f4f6',
   },
   relatedContent: {
     padding: 20,
   },
   relatedCategoryTag: {
-    backgroundColor: '#1e293b',
+    backgroundColor: '#eff6ff',
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 8,
@@ -847,13 +869,13 @@ const styles = StyleSheet.create({
   relatedTitle: {
     fontSize: 18,
     fontWeight: '700',
-    color: '#ffffff',
+    color: '#111827',
     marginBottom: 8,
     lineHeight: 26,
   },
   relatedExcerpt: {
     fontSize: 14,
-    color: '#9ca3af',
+    color: '#6b7280',
     lineHeight: 20,
     marginBottom: 12,
   },

@@ -160,7 +160,7 @@ export const ExploreBlogScreen: React.FC<{ navigation: any }> = ({ navigation })
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000000',
+    backgroundColor: '#ffffff',
   },
   headerContainer: {
     backgroundColor: '#0f766e',
@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
     lineHeight: 26,
   },
   mainContainer: {
-    backgroundColor: '#000000',
+    backgroundColor: '#f9fafb',
     paddingVertical: Platform.OS === 'web' ? 48 : 32,
     paddingHorizontal: 24,
   },
@@ -195,7 +195,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   searchBar: {
-    backgroundColor: '#1e293b',
+    backgroundColor: '#ffffff',
     borderRadius: 12,
     paddingHorizontal: 16,
     paddingVertical: 12,
@@ -203,7 +203,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#334155',
+    borderColor: '#e5e7eb',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.03,
+    shadowRadius: 4,
   },
   searchIcon: {
     fontSize: 18,
@@ -213,7 +217,7 @@ const styles = StyleSheet.create({
   searchInput: {
     flex: 1,
     fontSize: 16,
-    color: '#ffffff',
+    color: '#111827',
   },
   categoriesScroller: {
     marginBottom: 32,
@@ -228,9 +232,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#2563eb',
   },
   categoryChipUnselected: {
-    backgroundColor: '#1e293b',
+    backgroundColor: '#f3f4f6',
     borderWidth: 1,
-    borderColor: '#334155',
+    borderColor: '#e5e7eb',
   },
   categoryText: {
     fontSize: 14,
@@ -241,7 +245,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   categoryTextUnselected: {
-    color: '#9ca3af',
+    color: '#6b7280',
   },
   postsGrid: {
     flexDirection: Platform.OS === 'web' ? 'row' : 'column',
@@ -250,13 +254,17 @@ const styles = StyleSheet.create({
     gap: 24,
   },
   blogCard: {
-    backgroundColor: '#111827',
+    backgroundColor: '#ffffff',
     borderRadius: 16,
     overflow: 'hidden',
     width: Platform.OS === 'web' ? (SCREEN_WIDTH > 1024 ? '31%' : SCREEN_WIDTH > 768 ? '48%' : '100%') : '100%',
     borderWidth: 1,
-    borderColor: '#1f2937',
+    borderColor: '#e5e7eb',
     marginBottom: Platform.OS === 'web' ? 0 : 24,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 8,
     ...(Platform.OS === 'web' && {
       transition: 'all 0.3s ease',
     }),
@@ -290,13 +298,13 @@ const styles = StyleSheet.create({
   blogImage: {
     width: '100%',
     height: Platform.OS === 'web' ? 200 : 180,
-    backgroundColor: '#1f2937',
+    backgroundColor: '#f3f4f6',
   },
   blogCardContent: {
     padding: 20,
   },
   categoryTag: {
-    backgroundColor: '#1e293b',
+    backgroundColor: '#eff6ff',
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 8,
@@ -311,13 +319,13 @@ const styles = StyleSheet.create({
   blogTitle: {
     fontSize: Platform.OS === 'web' ? 20 : 18,
     fontWeight: '700',
-    color: '#ffffff',
+    color: '#111827',
     marginBottom: 12,
     lineHeight: 28,
   },
   blogExcerpt: {
     fontSize: Platform.OS === 'web' ? 14 : 13,
-    color: '#9ca3af',
+    color: '#6b7280',
     lineHeight: 22,
     marginBottom: 16,
   },
@@ -328,7 +336,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     paddingTop: 16,
     borderTopWidth: 1,
-    borderTopColor: '#1f2937',
+    borderTopColor: '#e5e7eb',
   },
   author: {
     fontSize: 13,
@@ -365,7 +373,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   loading: {
-    color: '#9ca3af',
+    color: '#6b7280',
     fontSize: 16,
   },
   emptyContainer: {

@@ -6,6 +6,7 @@ const Blog = require('../models/Blog');
 const Project = require('../models/Project');
 const Internship = require('../models/Internship');
 const Document = require('../models/Document');
+const SiteSettings = require('../models/SiteSettings');
 const { ChatMessage, ChatSession } = require('../models/Chat');
 const { authenticateToken, requireAdmin } = require('../middleware/auth');
 
@@ -25,10 +26,17 @@ router.post('/products', authenticateToken, requireAdmin, async (req, res) => {
     if (!title || !description || !category || price === undefined) {
       return res.status(400).json({ error: 'Missing required fields (title, description, category, price)' });
     }
-    const product = await Product.create({ title, description, image: image || '', category, price, rating: rating || 0 });
+    // Validate rating is between 0-5
+    const validRating = Math.min(5, Math.max(0, rating || 0));
+    const product = await Product.create({ title, description, image: image || '', category, price, rating: validRating });
     res.status(201).json(sanitize(product));
   } catch (error) {
     console.error('Create product error:', error);
+    // Return better error messages for validation errors
+    if (error.name === 'ValidationError') {
+      const messages = Object.values(error.errors).map((e) => e.message).join(', ');
+      return res.status(400).json({ error: messages });
+    }
     res.status(500).json({ error: 'Internal server error' });
   }
 });
@@ -515,6 +523,223 @@ router.get('/chats/stats', authenticateToken, requireAdmin, async (req, res) => 
     });
   } catch (error) {
     console.error('Get chat stats error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// ========== SITE SETTINGS ROUTES ==========
+
+// Get site settings (admin)
+router.get('/settings', authenticateToken, requireAdmin, async (req, res) => {
+  try {
+    const settings = await SiteSettings.getSettings();
+    res.json(settings);
+  } catch (error) {
+    console.error('Get settings error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Update site settings (admin)
+router.put('/settings', authenticateToken, requireAdmin, async (req, res) => {
+  try {
+    let settings = await SiteSettings.findOne();
+    if (!settings) {
+      settings = await SiteSettings.getSettings();
+    }
+    
+    // Update all provided fields
+    Object.keys(req.body).forEach(key => {
+      if (key !== '_id' && key !== '__v') {
+        settings[key] = req.body[key];
+      }
+    });
+    
+    await settings.save();
+    res.json(settings);
+  } catch (error) {
+    console.error('Update settings error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Update specific section of settings
+router.patch('/settings/:section', authenticateToken, requireAdmin, async (req, res) => {
+  try {
+    const { section } = req.params;
+    let settings = await SiteSettings.findOne();
+    if (!settings) {
+      settings = await SiteSettings.getSettings();
+    }
+    
+    // Update specific section
+    if (settings[section] !== undefined) {
+      if (typeof settings[section] === 'object' && !Array.isArray(settings[section])) {
+        settings[section] = { ...settings[section].toObject?.() || settings[section], ...req.body };
+      } else {
+        settings[section] = req.body;
+      }
+    } else if (section === 'sections' && req.body.sectionKey) {
+      // Handle nested sections update
+      const sectionKey = req.body.sectionKey;
+      delete req.body.sectionKey;
+      settings.sections[sectionKey] = { ...settings.sections[sectionKey]?.toObject?.() || settings.sections[sectionKey], ...req.body };
+    }
+    
+    await settings.save();
+    res.json(settings);
+  } catch (error) {
+    console.error('Update settings section error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Add banner
+router.post('/settings/banners', authenticateToken, requireAdmin, async (req, res) => {
+  try {
+    const settings = await SiteSettings.getSettings();
+    const newBanner = {
+      id: Date.now().toString(),
+      ...req.body,
+      order: settings.banners.length,
+    };
+    settings.banners.push(newBanner);
+    await settings.save();
+    res.status(201).json(settings);
+  } catch (error) {
+    console.error('Add banner error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Update banner
+router.put('/settings/banners/:id', authenticateToken, requireAdmin, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const settings = await SiteSettings.getSettings();
+    const bannerIndex = settings.banners.findIndex(b => b.id === id);
+    if (bannerIndex === -1) {
+      return res.status(404).json({ error: 'Banner not found' });
+    }
+    settings.banners[bannerIndex] = { ...settings.banners[bannerIndex], ...req.body, id };
+    await settings.save();
+    res.json(settings);
+  } catch (error) {
+    console.error('Update banner error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Delete banner
+router.delete('/settings/banners/:id', authenticateToken, requireAdmin, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const settings = await SiteSettings.getSettings();
+    settings.banners = settings.banners.filter(b => b.id !== id);
+    await settings.save();
+    res.json(settings);
+  } catch (error) {
+    console.error('Delete banner error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Add service
+router.post('/settings/services', authenticateToken, requireAdmin, async (req, res) => {
+  try {
+    const settings = await SiteSettings.getSettings();
+    const newService = {
+      id: Date.now().toString(),
+      ...req.body,
+      order: settings.services.length,
+    };
+    settings.services.push(newService);
+    await settings.save();
+    res.status(201).json(settings);
+  } catch (error) {
+    console.error('Add service error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Update service
+router.put('/settings/services/:id', authenticateToken, requireAdmin, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const settings = await SiteSettings.getSettings();
+    const serviceIndex = settings.services.findIndex(s => s.id === id);
+    if (serviceIndex === -1) {
+      return res.status(404).json({ error: 'Service not found' });
+    }
+    settings.services[serviceIndex] = { ...settings.services[serviceIndex], ...req.body, id };
+    await settings.save();
+    res.json(settings);
+  } catch (error) {
+    console.error('Update service error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Delete service
+router.delete('/settings/services/:id', authenticateToken, requireAdmin, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const settings = await SiteSettings.getSettings();
+    settings.services = settings.services.filter(s => s.id !== id);
+    await settings.save();
+    res.json(settings);
+  } catch (error) {
+    console.error('Delete service error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Add testimonial
+router.post('/settings/testimonials', authenticateToken, requireAdmin, async (req, res) => {
+  try {
+    const settings = await SiteSettings.getSettings();
+    const newTestimonial = {
+      id: Date.now().toString(),
+      ...req.body,
+      order: settings.testimonials.length,
+    };
+    settings.testimonials.push(newTestimonial);
+    await settings.save();
+    res.status(201).json(settings);
+  } catch (error) {
+    console.error('Add testimonial error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Update testimonial
+router.put('/settings/testimonials/:id', authenticateToken, requireAdmin, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const settings = await SiteSettings.getSettings();
+    const testimonialIndex = settings.testimonials.findIndex(t => t.id === id);
+    if (testimonialIndex === -1) {
+      return res.status(404).json({ error: 'Testimonial not found' });
+    }
+    settings.testimonials[testimonialIndex] = { ...settings.testimonials[testimonialIndex], ...req.body, id };
+    await settings.save();
+    res.json(settings);
+  } catch (error) {
+    console.error('Update testimonial error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Delete testimonial
+router.delete('/settings/testimonials/:id', authenticateToken, requireAdmin, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const settings = await SiteSettings.getSettings();
+    settings.testimonials = settings.testimonials.filter(t => t.id !== id);
+    await settings.save();
+    res.json(settings);
+  } catch (error) {
+    console.error('Delete testimonial error:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 });

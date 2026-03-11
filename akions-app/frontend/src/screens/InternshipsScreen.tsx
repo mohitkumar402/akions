@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { View, Text, ScrollView, TextInput, TouchableOpacity, StyleSheet, Image, Dimensions, Platform, Modal } from 'react-native';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
+import { SEO } from '../components/SEO';
 import { useAuth } from '../context/AuthContext';
 import { Internship } from '../types';
 import { API_URL } from '../config/api';
@@ -207,6 +208,11 @@ export const InternshipsScreen: React.FC<{ navigation: any }> = ({ navigation })
 
   return (
     <View style={styles.container}>
+      <SEO
+        title="Internships - Find Your Dream Internship"
+        description="Explore exciting internship opportunities at Ekions. Gain hands-on experience in Full Stack Development, AI/ML, UI/UX Design, DevOps, and Mobile App Development."
+        keywords="internships, tech internships, remote internships, full stack developer internship, ai internship, machine learning internship, design internship"
+      />
       <Navbar />
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <View style={styles.inner}>
@@ -393,11 +399,11 @@ export const InternshipsScreen: React.FC<{ navigation: any }> = ({ navigation })
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#000000' },
+  container: { flex: 1, backgroundColor: '#ffffff' },
   scrollContent: { paddingBottom: 32 },
   inner: { paddingVertical: 32, paddingHorizontal: 24, maxWidth: 1200, alignSelf: 'center', width: '100%' },
-  title: { fontSize: 40, fontWeight: '700', color: '#ffffff', marginBottom: 8 },
-  subtitle: { fontSize: 16, color: '#9ca3af', marginBottom: 32 },
+  title: { fontSize: 40, fontWeight: '700', color: '#111827', marginBottom: 8 },
+  subtitle: { fontSize: 16, color: '#6b7280', marginBottom: 32 },
   searchFiltersRow: {
     flexDirection: Platform.OS === 'web' ? 'row' : 'column',
     alignItems: 'center',
@@ -407,7 +413,7 @@ const styles = StyleSheet.create({
   searchBar: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#1f2937',
+    backgroundColor: '#f3f4f6',
     borderRadius: 8,
     paddingHorizontal: 16,
     paddingVertical: 12,
@@ -415,8 +421,8 @@ const styles = StyleSheet.create({
     width: Platform.OS === 'web' ? 'auto' : '100%',
     gap: 8,
   },
-  searchIcon: { fontSize: 16, color: '#9ca3af' },
-  searchInput: { flex: 1, fontSize: 16, color: '#ffffff', padding: 0 },
+  searchIcon: { fontSize: 16, color: '#6b7280' },
+  searchInput: { flex: 1, fontSize: 16, color: '#111827', padding: 0 },
   filtersWrapper: {
     flexDirection: 'row',
     gap: 12,
@@ -425,20 +431,25 @@ const styles = StyleSheet.create({
   filterButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#1f2937',
+    backgroundColor: '#ffffff',
     borderRadius: 8,
     paddingHorizontal: 16,
     paddingVertical: 10,
     gap: 8,
     borderWidth: 1,
-    borderColor: '#374151',
+    borderColor: '#e5e7eb',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 2,
+    elevation: 1,
   },
   filterButtonActive: {
     backgroundColor: '#2563eb',
     borderColor: '#3b82f6',
   },
-  filterButtonText: { color: '#ffffff', fontSize: 14, fontWeight: '500' },
-  filterArrow: { color: '#9ca3af', fontSize: 12 },
+  filterButtonText: { color: '#374151', fontSize: 14, fontWeight: '500' },
+  filterArrow: { color: '#6b7280', fontSize: 12 },
   clearFiltersButton: {
     backgroundColor: '#dc2626',
     borderRadius: 8,
@@ -454,17 +465,21 @@ const styles = StyleSheet.create({
   },
   modalOverlay: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
     justifyContent: 'center',
     alignItems: 'center',
   },
   modalContent: {
-    backgroundColor: '#111827',
-    borderRadius: 12,
+    backgroundColor: '#ffffff',
+    borderRadius: 16,
     width: Platform.OS === 'web' ? 400 : '90%',
     maxHeight: Platform.OS === 'web' ? 500 : '70%',
-    borderWidth: 1,
-    borderColor: '#1f2937',
+    borderWidth: 0,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.15,
+    shadowRadius: 20,
+    elevation: 10,
   },
   modalHeader: {
     flexDirection: 'row',
@@ -472,12 +487,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 20,
     borderBottomWidth: 1,
-    borderBottomColor: '#1f2937',
+    borderBottomColor: '#f3f4f6',
   },
   modalTitle: {
     fontSize: 18,
     fontWeight: '700',
-    color: '#ffffff',
+    color: '#111827',
   },
   modalClose: {
     fontSize: 24,
@@ -490,24 +505,31 @@ const styles = StyleSheet.create({
   modalOption: {
     padding: 16,
     borderBottomWidth: 1,
-    borderBottomColor: '#1f2937',
+    borderBottomColor: '#f3f4f6',
   },
   modalOptionSelected: {
-    backgroundColor: '#1e3a8a',
+    backgroundColor: '#eff6ff',
   },
   modalOptionText: {
     fontSize: 16,
-    color: '#d1d5db',
+    color: '#4b5563',
   },
   modalOptionTextSelected: {
-    color: '#ffffff',
+    color: '#2563eb',
     fontWeight: '600',
   },
   internshipCard: {
-    backgroundColor: '#111827',
-    borderRadius: 12,
+    backgroundColor: '#ffffff',
+    borderRadius: 16,
     marginBottom: 24,
     overflow: 'hidden',
+    borderWidth: 1,
+    borderColor: '#e5e7eb',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.08,
+    shadowRadius: 12,
+    elevation: 4,
   },
   cardContent: {
     flexDirection: Platform.OS === 'web' ? 'row' : 'column',
@@ -519,23 +541,25 @@ const styles = StyleSheet.create({
   },
   typeLabel: {
     fontSize: 12,
-    color: '#9ca3af',
+    color: '#2563eb',
     marginBottom: 8,
     textTransform: 'uppercase',
+    fontWeight: '600',
+    letterSpacing: 0.5,
   },
   cardTitle: {
     fontSize: 24,
     fontWeight: '700',
-    color: '#ffffff',
+    color: '#111827',
     marginBottom: 12,
   },
   cardMeta: {
     fontSize: 14,
-    color: '#9ca3af',
+    color: '#6b7280',
     marginBottom: 16,
   },
   viewDetailsButton: {
-    backgroundColor: '#1f2937',
+    backgroundColor: '#2563eb',
     paddingVertical: 12,
     paddingHorizontal: 24,
     borderRadius: 8,
@@ -563,13 +587,13 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     minHeight: 200,
-    backgroundColor: '#1f2937',
+    backgroundColor: '#f3f4f6',
     justifyContent: 'center',
     alignItems: 'center',
   },
   imagePlaceholderText: {
     fontSize: 48,
-    color: '#4b5563',
+    color: '#9ca3af',
   },
   pagination: {
     flexDirection: 'row',
@@ -582,10 +606,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 8,
     borderRadius: 8,
-    backgroundColor: '#1f2937',
+    backgroundColor: '#f3f4f6',
   },
   pageText: {
-    color: '#9ca3af',
+    color: '#6b7280',
     fontSize: 14,
   },
   pageActive: {

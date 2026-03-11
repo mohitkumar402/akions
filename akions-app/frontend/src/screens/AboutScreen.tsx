@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, ScrollView, StyleSheet, Platform, Dimensions, Image } from 'react-native';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
+import { SEO } from '../components/SEO';
 import { teamMembers, values } from '../data/mockData';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
@@ -10,7 +11,7 @@ const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const createStyles = (screenWidth: number) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000000',
+    backgroundColor: '#ffffff',
   },
   hero: {
     backgroundColor: '#0f766e',
@@ -67,7 +68,7 @@ const createStyles = (screenWidth: number) => StyleSheet.create({
     lineHeight: 28,
   },
   sectionWrapper: {
-    backgroundColor: '#000000',
+    backgroundColor: '#f9fafb',
     paddingVertical: Platform.OS === 'web' ? 96 : 64,
     paddingHorizontal: 24,
   },
@@ -82,7 +83,7 @@ const createStyles = (screenWidth: number) => StyleSheet.create({
   blockTitle: {
     fontSize: Platform.OS === 'web' ? 40 : 32,
     fontWeight: '700',
-    color: '#ffffff',
+    color: '#111827',
     marginBottom: 24,
     letterSpacing: -0.5,
   },
@@ -91,7 +92,7 @@ const createStyles = (screenWidth: number) => StyleSheet.create({
     marginBottom: 48,
   },
   paragraph: {
-    color: '#d1d5db',
+    color: '#4b5563',
     fontSize: Platform.OS === 'web' ? 18 : 16,
     lineHeight: Platform.OS === 'web' ? 32 : 26,
     marginBottom: 20,
@@ -108,17 +109,21 @@ const createStyles = (screenWidth: number) => StyleSheet.create({
     alignItems: 'center',
     width: Platform.OS === 'web' ? (screenWidth > 1024 ? 220 : screenWidth > 768 ? 200 : 180) : '100%',
     maxWidth: 280,
-    backgroundColor: '#111827',
+    backgroundColor: '#ffffff',
     borderRadius: 16,
     padding: 24,
     borderWidth: 1,
-    borderColor: '#1f2937',
+    borderColor: '#e5e7eb',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 8,
   },
   avatar: {
     width: 120,
     height: 120,
     borderRadius: 60,
-    backgroundColor: '#1f2937',
+    backgroundColor: '#f3f4f6',
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 20,
@@ -131,13 +136,13 @@ const createStyles = (screenWidth: number) => StyleSheet.create({
   teamName: {
     fontSize: Platform.OS === 'web' ? 20 : 18,
     fontWeight: '700',
-    color: '#ffffff',
+    color: '#111827',
     marginBottom: 6,
     textAlign: 'center',
   },
   teamRole: {
     fontSize: Platform.OS === 'web' ? 14 : 13,
-    color: '#9ca3af',
+    color: '#6b7280',
     textAlign: 'center',
     fontWeight: '500',
   },
@@ -153,13 +158,17 @@ const createStyles = (screenWidth: number) => StyleSheet.create({
     marginBottom: Platform.OS === 'web' ? 0 : 24,
   },
   valueCard: {
-    backgroundColor: '#111827',
+    backgroundColor: '#ffffff',
     borderRadius: 16,
     padding: 32,
     borderWidth: 1,
-    borderColor: '#1f2937',
+    borderColor: '#e5e7eb',
     height: '100%',
     minHeight: 240,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 8,
   },
   valueIconWrapper: {
     width: 64,
@@ -176,22 +185,22 @@ const createStyles = (screenWidth: number) => StyleSheet.create({
   valueTitle: {
     fontSize: Platform.OS === 'web' ? 24 : 20,
     fontWeight: '700',
-    color: '#ffffff',
+    color: '#111827',
     marginBottom: 12,
     letterSpacing: -0.3,
   },
   valueDescription: {
-    color: '#9ca3af',
+    color: '#6b7280',
     fontSize: Platform.OS === 'web' ? 16 : 14,
     lineHeight: Platform.OS === 'web' ? 26 : 22,
   },
   statsSection: {
-    backgroundColor: '#111827',
+    backgroundColor: '#f8fafc',
     borderRadius: 20,
     padding: Platform.OS === 'web' ? 64 : 48,
     marginTop: 48,
     borderWidth: 1,
-    borderColor: '#1f2937',
+    borderColor: '#e5e7eb',
   },
   statsGrid: {
     flexDirection: Platform.OS === 'web' ? 'row' : 'column',
@@ -209,7 +218,7 @@ const createStyles = (screenWidth: number) => StyleSheet.create({
   },
   statLabel: {
     fontSize: Platform.OS === 'web' ? 16 : 14,
-    color: '#9ca3af',
+    color: '#6b7280',
     fontWeight: '500',
   },
   contactGrid: {
@@ -219,13 +228,17 @@ const createStyles = (screenWidth: number) => StyleSheet.create({
     marginTop: 24,
   },
   contactCard: {
-    backgroundColor: '#111827',
+    backgroundColor: '#ffffff',
     borderRadius: 16,
     padding: 32,
     alignItems: 'center',
     flex: Platform.OS === 'web' ? 1 : undefined,
     borderWidth: 1,
-    borderColor: '#1f2937',
+    borderColor: '#e5e7eb',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 8,
   },
   contactIcon: {
     fontSize: 48,
@@ -234,12 +247,12 @@ const createStyles = (screenWidth: number) => StyleSheet.create({
   contactTitle: {
     fontSize: 20,
     fontWeight: '700',
-    color: '#ffffff',
+    color: '#111827',
     marginBottom: 12,
   },
   contactText: {
     fontSize: 14,
-    color: '#9ca3af',
+    color: '#6b7280',
     textAlign: 'center',
     marginBottom: 4,
   },
@@ -248,7 +261,7 @@ const createStyles = (screenWidth: number) => StyleSheet.create({
     height: Platform.OS === 'web' ? 400 : 300,
     borderRadius: 16,
     marginBottom: 32,
-    backgroundColor: '#111827',
+    backgroundColor: '#f3f4f6',
     resizeMode: 'cover',
   },
   servicesGrid: {
@@ -259,12 +272,16 @@ const createStyles = (screenWidth: number) => StyleSheet.create({
     marginTop: 24,
   },
   serviceCard: {
-    backgroundColor: '#111827',
+    backgroundColor: '#ffffff',
     borderRadius: 16,
     padding: 32,
     width: Platform.OS === 'web' ? (screenWidth > 1024 ? '31%' : screenWidth > 768 ? '48%' : '100%') : '100%',
     borderWidth: 1,
-    borderColor: '#1f2937',
+    borderColor: '#e5e7eb',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 8,
     alignItems: 'center',
   },
   serviceIcon: {
@@ -274,13 +291,13 @@ const createStyles = (screenWidth: number) => StyleSheet.create({
   serviceTitle: {
     fontSize: Platform.OS === 'web' ? 20 : 18,
     fontWeight: '700',
-    color: '#ffffff',
+    color: '#111827',
     marginBottom: 12,
     textAlign: 'center',
   },
   serviceDescription: {
     fontSize: Platform.OS === 'web' ? 14 : 13,
-    color: '#9ca3af',
+    color: '#6b7280',
     textAlign: 'center',
     lineHeight: 22,
   },
@@ -292,12 +309,16 @@ const createStyles = (screenWidth: number) => StyleSheet.create({
     marginTop: 24,
   },
   productCard: {
-    backgroundColor: '#111827',
+    backgroundColor: '#ffffff',
     borderRadius: 12,
     padding: 24,
     width: Platform.OS === 'web' ? (screenWidth > 1024 ? '23%' : screenWidth > 768 ? '48%' : '100%') : '100%',
     borderWidth: 1,
-    borderColor: '#1f2937',
+    borderColor: '#e5e7eb',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 8,
     alignItems: 'center',
   },
   productIcon: {
@@ -307,7 +328,7 @@ const createStyles = (screenWidth: number) => StyleSheet.create({
   productName: {
     fontSize: Platform.OS === 'web' ? 16 : 14,
     fontWeight: '600',
-    color: '#ffffff',
+    color: '#111827',
     textAlign: 'center',
   },
 });
@@ -317,6 +338,11 @@ export const AboutScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <SEO
+        title="About Us - Our Mission, Team & Values"
+        description="Learn about Ekions, our mission to connect businesses with top talent and innovative solutions. Meet our team and discover our core values."
+        keywords="about Ekions, our team, company values, tech company, software company, our mission"
+      />
       <Navbar />
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* Hero Section */}

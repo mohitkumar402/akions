@@ -10,6 +10,11 @@ const ProjectSchema = new mongoose.Schema(
     features: [String],
     technologies: [String],
     isActive: { type: Boolean, default: true },
+    // SEO Meta Fields
+    metaTitle: { type: String, default: '' },
+    metaKeyword: { type: String, default: '' },
+    metaDescription: { type: String, default: '' },
+    sequenceNo: { type: Number, default: 0 },
   },
   { timestamps: true }
 );

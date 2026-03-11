@@ -19,10 +19,16 @@ const BlogSchema = new mongoose.Schema(
     publishedDate: { type: String, required: true },
     image: { type: String, default: '' },
     category: { type: String, required: true },
+    tags: [{ type: String }],
     likes: { type: Number, default: 0 },
     shares: { type: Number, default: 0 },
     comments: [CommentSchema],
     isPublished: { type: Boolean, default: true },
+    // SEO Meta Fields
+    metaTitle: { type: String, default: '' },
+    metaKeyword: { type: String, default: '' },
+    metaDescription: { type: String, default: '' },
+    sequenceNo: { type: Number, default: 0 },
   },
   { timestamps: true }
 );

@@ -24,6 +24,7 @@ import { ServicesScreen } from '../screens/ServicesScreen';
 import { ContactScreen } from '../screens/ContactScreen';
 import { CustomProductRequestScreen } from '../screens/CustomProductRequestScreen';
 import { ProductDetailsScreen } from '../screens/ProductDetailsScreen';
+import { CategoryProductsScreen } from '../screens/CategoryProductsScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -90,6 +91,10 @@ export const AppNavigator: React.FC = () => {
           path: 'product/:id',
           exact: true,
         },
+        CategoryProducts: {
+          path: 'category/:slug',
+          exact: true,
+        },
         InternshipApplication: {
           path: 'internship/apply',
           exact: true,
@@ -131,6 +136,7 @@ export const AppNavigator: React.FC = () => {
         <Stack.Screen name="Contact" component={ContactScreen} />
         <Stack.Screen name="CustomProductRequest" component={CustomProductRequestScreen} />
         <Stack.Screen name="ProductDetails" component={ProductDetailsScreen} />
+        <Stack.Screen name="CategoryProducts" component={CategoryProductsScreen} />
 
         {/* Auth Routes - Always accessible */}
         <Stack.Screen name="Login" component={LoginScreen} />

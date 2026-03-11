@@ -10,7 +10,7 @@ export const AdminDashboard: React.FC = () => {
 
   useEffect(() => {
     if (user?.role !== 'admin') {
-      navigation.navigate('Home');
+      navigation.navigate('AdminLogin');
       return;
     }
 

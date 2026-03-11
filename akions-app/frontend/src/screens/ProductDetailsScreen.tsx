@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, ScrollView, Image, TouchableOpacity, StyleSheet, Alert, Platform, Dimensions, TextInput, Modal } from 'react-native';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
+import { SEO } from '../components/SEO';
 import { Product } from '../types';
 import { useAuth } from '../context/AuthContext';
 import { API_URL } from '../config/api';
@@ -125,6 +126,13 @@ export const ProductDetailsScreen: React.FC<{ navigation: any; route: any }> = (
 
   return (
     <View style={styles.container}>
+      <SEO
+        title={product?.metaTitle || product?.title}
+        description={product?.metaDescription || product?.description?.substring(0, 160)}
+        keywords={product?.metaKeyword}
+        image={product?.image}
+        type="product"
+      />
       <Navbar />
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <View style={styles.inner}>
@@ -295,7 +303,7 @@ export const ProductDetailsScreen: React.FC<{ navigation: any; route: any }> = (
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000000',
+    backgroundColor: '#ffffff',
   },
   scrollContent: {
     paddingBottom: 32,
@@ -304,7 +312,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#000000',
+    backgroundColor: '#f9fafb',
   },
   loadingText: {
     color: '#9ca3af',
@@ -323,18 +331,22 @@ const styles = StyleSheet.create({
     marginBottom: 32,
     borderRadius: 16,
     overflow: 'hidden',
-    backgroundColor: '#1f2937',
+    backgroundColor: '#f3f4f6',
   },
   productImage: {
     width: '100%',
     height: '100%',
   },
   productInfo: {
-    backgroundColor: '#111827',
+    backgroundColor: '#ffffff',
     borderRadius: 16,
     padding: 32,
     borderWidth: 1,
-    borderColor: '#1f2937',
+    borderColor: '#e5e7eb',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 8,
   },
   headerRow: {
     flexDirection: 'row',
@@ -343,14 +355,14 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   categoryBadge: {
-    backgroundColor: '#1f2937',
+    backgroundColor: '#f3f4f6',
     paddingHorizontal: 16,
     paddingVertical: 8,
     borderRadius: 8,
   },
   categoryBadgeText: {
     fontSize: 12,
-    color: '#9ca3af',
+    color: '#6b7280',
     fontWeight: '600',
     textTransform: 'uppercase',
   },
@@ -362,7 +374,7 @@ const styles = StyleSheet.create({
   productTitle: {
     fontSize: Platform.OS === 'web' ? 36 : 28,
     fontWeight: '700',
-    color: '#ffffff',
+    color: '#111827',
     marginBottom: 12,
   },
   descriptionSection: {
@@ -371,12 +383,12 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 20,
     fontWeight: '700',
-    color: '#ffffff',
+    color: '#111827',
     marginBottom: 16,
   },
   descriptionText: {
     fontSize: 16,
-    color: '#d1d5db',
+    color: '#4b5563',
     lineHeight: 24,
   },
   featuresSection: {
@@ -398,7 +410,7 @@ const styles = StyleSheet.create({
   featureText: {
     flex: 1,
     fontSize: 16,
-    color: '#d1d5db',
+    color: '#4b5563',
     lineHeight: 24,
   },
   buyButton: {
@@ -419,31 +431,35 @@ const styles = StyleSheet.create({
   },
   modalOverlay: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
     justifyContent: 'center',
     alignItems: 'center',
     padding: 24,
   },
   modalContent: {
-    backgroundColor: '#111827',
+    backgroundColor: '#ffffff',
     borderRadius: 16,
     padding: 24,
     width: Platform.OS === 'web' ? 600 : '100%',
     maxWidth: 600,
     maxHeight: '90%',
     borderWidth: 1,
-    borderColor: '#1f2937',
+    borderColor: '#e5e7eb',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 16,
   },
   modalTitle: {
     fontSize: 24,
     fontWeight: '700',
-    color: '#ffffff',
+    color: '#111827',
     marginBottom: 8,
     textAlign: 'center',
   },
   modalSubtitle: {
     fontSize: 14,
-    color: '#9ca3af',
+    color: '#6b7280',
     marginBottom: 24,
     textAlign: 'center',
     lineHeight: 20,
@@ -457,17 +473,17 @@ const styles = StyleSheet.create({
   formLabel: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#ffffff',
+    color: '#111827',
     marginBottom: 8,
   },
   formInput: {
-    backgroundColor: '#1f2937',
+    backgroundColor: '#f3f4f6',
     borderWidth: 1,
-    borderColor: '#374151',
+    borderColor: '#e5e7eb',
     borderRadius: 8,
     padding: 12,
     fontSize: 16,
-    color: '#ffffff',
+    color: '#111827',
     minHeight: 44,
   },
   textArea: {

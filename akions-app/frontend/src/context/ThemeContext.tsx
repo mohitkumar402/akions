@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useColorScheme, Appearance } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { API_BASE } from '../config/api';
 
 type ThemeMode = 'light' | 'dark' | 'auto';
 
@@ -23,7 +24,33 @@ interface ThemeColors {
   footer: string;
 }
 
-const lightTheme: ThemeColors = {
+interface SiteSettings {
+  theme?: {
+    mode?: 'light' | 'dark';
+    primaryColor?: string;
+    secondaryColor?: string;
+    accentColor?: string;
+    backgroundColor?: string;
+    textColor?: string;
+    cardBackground?: string;
+  };
+  banners?: any[];
+  sections?: any;
+  footer?: any;
+  contactInfo?: any;
+  seo?: {
+    siteName?: string;
+    siteTitle?: string;
+    siteDescription?: string;
+    siteKeywords?: string;
+    ogImage?: string;
+    twitterHandle?: string;
+    googleAnalyticsId?: string;
+    robotsTxt?: string;
+  };
+}
+
+const defaultLightTheme: ThemeColors = {
   background: '#ffffff',
   surface: '#f9fafb',
   primary: '#2563eb',
@@ -42,7 +69,7 @@ const lightTheme: ThemeColors = {
   footer: '#1f2937',
 };
 
-const darkTheme: ThemeColors = {
+const defaultDarkTheme: ThemeColors = {
   background: '#111827',
   surface: '#1f2937',
   primary: '#3b82f6',
@@ -66,6 +93,8 @@ interface ThemeContextType {
   themeMode: ThemeMode;
   setThemeMode: (mode: ThemeMode) => void;
   isDark: boolean;
+  siteSettings: SiteSettings | null;
+  refreshSettings: () => Promise<void>;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
@@ -76,8 +105,48 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const systemColorScheme = useColorScheme();
   const [themeMode, setThemeModeState] = useState<ThemeMode>('auto');
   const [isDark, setIsDark] = useState(systemColorScheme === 'dark');
+  const [siteSettings, setSiteSettings] = useState<SiteSettings | null>(null);
+  const [customTheme, setCustomTheme] = useState<Partial<ThemeColors>>({});
 
-  // Load saved theme preference
+  // Fetch site settings from backend
+  const fetchSettings = async () => {
+    try {
+      const res = await fetch(`${API_BASE}/settings`);
+      if (res.ok) {
+        const data = await res.json();
+        setSiteSettings(data);
+        
+        // Apply theme settings from backend
+        if (data.theme) {
+          const backendTheme = data.theme;
+          // Trim color values to handle accidental spaces
+          const trimColor = (color: string | undefined) => color?.trim() || undefined;
+          setCustomTheme({
+            primary: trimColor(backendTheme.primaryColor),
+            secondary: trimColor(backendTheme.secondaryColor),
+            background: trimColor(backendTheme.backgroundColor),
+            text: trimColor(backendTheme.textColor),
+            card: trimColor(backendTheme.cardBackground),
+            button: trimColor(backendTheme.primaryColor),
+          });
+          
+          // If backend specifies theme mode, use it (unless user has local preference)
+          if (backendTheme.mode) {
+            const savedMode = await AsyncStorage.getItem(THEME_STORAGE_KEY);
+            if (!savedMode) {
+              setThemeModeState(backendTheme.mode);
+              setIsDark(backendTheme.mode === 'dark');
+            }
+          }
+        }
+        console.log('[Theme] Loaded settings from backend');
+      }
+    } catch (error) {
+      console.error('[Theme] Failed to fetch settings:', error);
+    }
+  };
+
+  // Load saved theme preference and fetch backend settings
   useEffect(() => {
     const loadTheme = async () => {
       try {
@@ -90,6 +159,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       }
     };
     loadTheme();
+    fetchSettings();
   }, []);
 
   // Listen to system theme changes
@@ -121,10 +191,16 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }
   };
 
-  const theme = isDark ? darkTheme : lightTheme;
+  // Merge default theme with custom backend colors
+  const baseTheme = isDark ? defaultDarkTheme : defaultLightTheme;
+  const theme: ThemeColors = { ...baseTheme, ...customTheme };
+
+  const refreshSettings = async () => {
+    await fetchSettings();
+  };
 
   return (
-    <ThemeContext.Provider value={{ theme, themeMode, setThemeMode, isDark }}>
+    <ThemeContext.Provider value={{ theme, themeMode, setThemeMode, isDark, siteSettings, refreshSettings }}>
       {children}
     </ThemeContext.Provider>
   );

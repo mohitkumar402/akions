@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { View, Text, ScrollView, TextInput, TouchableOpacity, StyleSheet, Alert, Platform, Dimensions, Modal } from 'react-native';
 import { Navbar } from '../components/Navbar';
+import { SEO } from '../components/SEO';
 import { Card } from '../components/Card';
 import { useAuth } from '../context/AuthContext';
 import { Product } from '../types';
@@ -20,7 +21,7 @@ const createStyles = (screenWidth: number) => {
   const isTablet = screenWidth >= 768 && screenWidth < 1024;
   
   return StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#000000' },
+  container: { flex: 1, backgroundColor: '#ffffff' },
   scrollContent: { paddingBottom: 32 },
   inner: { 
     paddingVertical: isMobile ? 16 : 32, 
@@ -32,7 +33,7 @@ const createStyles = (screenWidth: number) => {
   title: { 
     fontSize: isMobile ? 24 : isTablet ? 28 : 32, 
     fontWeight: '700', 
-    color: '#ffffff', 
+    color: '#111827', 
     marginBottom: isMobile ? 16 : 24, 
     textAlign: 'center',
     paddingHorizontal: isMobile ? 8 : 0,
@@ -46,16 +47,18 @@ const createStyles = (screenWidth: number) => {
   searchBar: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#1f2937',
+    backgroundColor: '#f3f4f6',
     borderRadius: 12,
     paddingHorizontal: isMobile ? 12 : 16,
     paddingVertical: isMobile ? 10 : 12,
     flex: isMobile ? 0 : (Platform.OS === 'web' ? 1 : 0),
     width: isMobile ? '100%' : (Platform.OS === 'web' ? 'auto' : '100%'),
     gap: isMobile ? 8 : 12,
+    borderWidth: 1,
+    borderColor: '#e5e7eb',
   },
-  searchIcon: { color: '#9ca3af', fontSize: isMobile ? 16 : 18 },
-  searchInput: { flex: 1, fontSize: isMobile ? 14 : 16, color: '#ffffff' },
+  searchIcon: { color: '#6b7280', fontSize: isMobile ? 16 : 18 },
+  searchInput: { flex: 1, fontSize: isMobile ? 14 : 16, color: '#111827' },
   filtersWrapper: {
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -65,20 +68,20 @@ const createStyles = (screenWidth: number) => {
     width: isMobile ? '100%' : 'auto',
   },
   filterItem: { flexDirection: 'row', alignItems: 'center', gap: 8 },
-  filterLabel: { color: '#9ca3af', fontWeight: '500', fontSize: 14 },
+  filterLabel: { color: '#6b7280', fontWeight: '500', fontSize: 14 },
   filterBox: {
-    backgroundColor: '#1f2937',
+    backgroundColor: '#ffffff',
     borderRadius: 8,
     paddingHorizontal: isMobile ? 12 : 16,
     paddingVertical: isMobile ? 8 : 10,
     borderWidth: 1,
-    borderColor: '#374151',
+    borderColor: '#e5e7eb',
     minWidth: isMobile ? 100 : 120,
     flex: isMobile ? 1 : 0,
     maxWidth: isMobile ? '32%' : undefined,
   },
   filterBoxText: {
-    color: '#ffffff',
+    color: '#374151',
     fontSize: isMobile ? 12 : 14,
     fontWeight: '500',
   },
@@ -96,8 +99,8 @@ const createStyles = (screenWidth: number) => {
     maxWidth: isMobile ? '100%' : (screenWidth > 1024 ? 380 : screenWidth > 768 ? 350 : '100%'),
   },
   cardFooterRow: { marginTop: 12, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
-  categoryBadge: { backgroundColor: '#1f2937', paddingHorizontal: 12, paddingVertical: 4, borderRadius: 8 },
-  categoryBadgeText: { fontSize: 11, color: '#9ca3af', fontWeight: '500' },
+  categoryBadge: { backgroundColor: '#f3f4f6', paddingHorizontal: 12, paddingVertical: 4, borderRadius: 8 },
+  categoryBadgeText: { fontSize: 11, color: '#6b7280', fontWeight: '500' },
   ratingText: { fontSize: 14, color: '#fbbf24', fontWeight: '600' },
   pagination: { 
     flexDirection: 'row', 
@@ -112,11 +115,11 @@ const createStyles = (screenWidth: number) => {
     paddingHorizontal: isMobile ? 8 : 12, 
     paddingVertical: isMobile ? 6 : 8, 
     borderRadius: 8, 
-    backgroundColor: '#1f2937',
+    backgroundColor: '#f3f4f6',
     minWidth: isMobile ? 36 : 44,
     alignItems: 'center',
   },
-  pageText: { color: '#9ca3af', fontSize: isMobile ? 12 : 14 },
+  pageText: { color: '#6b7280', fontSize: isMobile ? 12 : 14 },
   pageActive: { backgroundColor: '#2563eb' },
   pageActiveText: { color: '#ffffff', fontWeight: '600', fontSize: isMobile ? 12 : 14 },
   buyButton: { 
@@ -128,7 +131,7 @@ const createStyles = (screenWidth: number) => {
   buyButtonText: { color: '#ffffff', fontWeight: '600', fontSize: isMobile ? 13 : 14 },
   loading: { 
     textAlign: 'center', 
-    color: '#9ca3af', 
+    color: '#6b7280', 
     marginTop: isMobile ? 20 : 24, 
     fontSize: isMobile ? 14 : 16 
   },
@@ -139,7 +142,7 @@ const createStyles = (screenWidth: number) => {
     justifyContent: 'space-between',
     paddingHorizontal: isMobile ? 4 : 0,
   },
-  priceText: { fontSize: isMobile ? 16 : 18, fontWeight: '700', color: '#ffffff' },
+  priceText: { fontSize: isMobile ? 16 : 18, fontWeight: '700', color: '#111827' },
   filterBoxActive: {
     backgroundColor: '#2563eb',
     borderColor: '#3b82f6',
@@ -166,7 +169,7 @@ const createStyles = (screenWidth: number) => {
     paddingHorizontal: isMobile ? 16 : 0,
   },
   emptyText: {
-    color: '#9ca3af',
+    color: '#6b7280',
     fontSize: isMobile ? 16 : 18,
     marginBottom: isMobile ? 20 : 24,
     textAlign: 'center',
@@ -174,23 +177,27 @@ const createStyles = (screenWidth: number) => {
   },
   modalOverlay: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
     justifyContent: 'center',
     alignItems: 'center',
   },
   modalContent: {
-    backgroundColor: '#1f2937',
+    backgroundColor: '#ffffff',
     borderRadius: 16,
     padding: isMobile ? 20 : 24,
     width: Platform.OS === 'web' ? 400 : (isMobile ? '90%' : '80%'),
     maxHeight: '70%',
     borderWidth: 1,
-    borderColor: '#374151',
+    borderColor: '#e5e7eb',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 16,
   },
   modalTitle: {
     fontSize: isMobile ? 18 : 20,
     fontWeight: '700',
-    color: '#ffffff',
+    color: '#111827',
     marginBottom: isMobile ? 12 : 16,
   },
   modalOption: {
@@ -198,16 +205,16 @@ const createStyles = (screenWidth: number) => {
     paddingHorizontal: isMobile ? 14 : 16,
     borderRadius: 8,
     marginBottom: isMobile ? 6 : 8,
-    backgroundColor: '#111827',
+    backgroundColor: '#f3f4f6',
     borderWidth: 1,
-    borderColor: '#374151',
+    borderColor: '#e5e7eb',
   },
   modalOptionSelected: {
     backgroundColor: '#2563eb',
     borderColor: '#3b82f6',
   },
   modalOptionText: {
-    color: '#d1d5db',
+    color: '#4b5563',
     fontSize: isMobile ? 14 : 16,
   },
   modalOptionTextSelected: {
@@ -216,28 +223,40 @@ const createStyles = (screenWidth: number) => {
   },
   // Container boxes for better UI
   sectionContainer: {
-    backgroundColor: '#111827',
+    backgroundColor: '#ffffff',
     borderRadius: 12,
     padding: isMobile ? 16 : 24,
     marginBottom: isMobile ? 16 : 24,
     borderWidth: 1,
-    borderColor: '#1f2937',
+    borderColor: '#e5e7eb',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.03,
+    shadowRadius: 4,
   },
   searchContainer: {
-    backgroundColor: '#111827',
+    backgroundColor: '#ffffff',
     borderRadius: 12,
     padding: isMobile ? 12 : 16,
     marginBottom: isMobile ? 16 : 24,
     borderWidth: 1,
-    borderColor: '#1f2937',
+    borderColor: '#e5e7eb',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.03,
+    shadowRadius: 4,
   },
   filtersContainer: {
-    backgroundColor: '#111827',
+    backgroundColor: '#ffffff',
     borderRadius: 12,
     padding: isMobile ? 12 : 16,
     marginBottom: isMobile ? 16 : 24,
     borderWidth: 1,
-    borderColor: '#1f2937',
+    borderColor: '#e5e7eb',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.03,
+    shadowRadius: 4,
   },
   });
 };
@@ -442,6 +461,11 @@ export const MarketplaceScreen: React.FC<{ navigation: any }> = ({ navigation })
 
   return (
     <View style={styles.container}>
+      <SEO
+        title="Marketplace - Ready-Made Software Products"
+        description="Browse and purchase ready-made software products. Find the perfect solution for your business needs at our digital marketplace."
+        keywords="software marketplace, digital products, ready-made software, buy software, tech products"
+      />
       <Navbar />
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <View style={styles.inner}>

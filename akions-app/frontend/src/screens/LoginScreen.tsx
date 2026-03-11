@@ -317,7 +317,7 @@ Akions Website Contact Form
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000000',
+    backgroundColor: '#ffffff',
   },
   keyboardView: {
     flex: 1,
@@ -349,23 +349,23 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     textAlign: 'center',
-    color: '#9ca3af',
+    color: '#6b7280',
     fontSize: SCREEN_WIDTH < 768 ? 14 : 16,
     lineHeight: SCREEN_WIDTH < 768 ? 20 : 24,
     paddingHorizontal: SCREEN_WIDTH < 768 ? 8 : 0,
   },
   contactInfoContainer: {
-    backgroundColor: '#1f2937',
+    backgroundColor: '#f8fafc',
     borderRadius: 12,
     padding: 20,
     marginBottom: 32,
     borderWidth: 1,
-    borderColor: '#374151',
+    borderColor: '#e5e7eb',
   },
   contactTitle: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#ffffff',
+    color: '#111827',
     marginBottom: 12,
   },
   emailContainer: {
@@ -375,7 +375,7 @@ const styles = StyleSheet.create({
   },
   emailLabel: {
     fontSize: 16,
-    color: '#9ca3af',
+    color: '#6b7280',
     marginRight: 8,
   },
   emailAddress: {
@@ -385,11 +385,15 @@ const styles = StyleSheet.create({
     textDecorationLine: 'underline',
   },
   form: {
-    backgroundColor: '#111827',
+    backgroundColor: '#ffffff',
     borderRadius: 16,
     padding: SCREEN_WIDTH < 768 ? 20 : 32,
     borderWidth: 1,
-    borderColor: '#374151',
+    borderColor: '#e5e7eb',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 8,
   },
   inputContainer: {
     marginBottom: 20,
@@ -397,18 +401,18 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#ffffff',
+    color: '#111827',
     marginBottom: 8,
   },
   input: {
-    backgroundColor: '#1f2937',
+    backgroundColor: '#f3f4f6',
     borderRadius: 8,
     paddingHorizontal: 16,
     paddingVertical: 12,
     fontSize: 16,
-    color: '#ffffff',
+    color: '#111827',
     borderWidth: 1,
-    borderColor: '#374151',
+    borderColor: '#e5e7eb',
   },
   textArea: {
     minHeight: 120,

@@ -2,9 +2,11 @@ import React, { useEffect, useRef, useState, useMemo, lazy, Suspense } from 'rea
 import { View, Text, ScrollView, TouchableOpacity, Image, StyleSheet, Animated, Dimensions, Platform, FlatList, ActivityIndicator } from 'react-native';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
+import { SEO } from '../components/SEO';
 import { Card } from '../components/Card';
 import { Product, BlogPost, Internship } from '../types';
-import { API_URL } from '../config/api';
+import { API_URL, API_BASE as SERVER_BASE } from '../config/api';
+import { useTheme } from '../context/ThemeContext';
 
 const API_BASE = API_URL;
 
@@ -12,7 +14,7 @@ const API_BASE = API_URL;
 const createStyles = (screenWidth: number, screenHeight: number) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000000',
+    backgroundColor: '#ffffff',
   },
   scrollView: {
     flex: 1,
@@ -131,6 +133,36 @@ const createStyles = (screenWidth: number, screenHeight: number) => StyleSheet.c
     width: 24,
     backgroundColor: '#ffffff',
   },
+  scrollDownIndicator: {
+    position: 'absolute',
+    bottom: screenWidth < 768 ? 50 : 60,
+    alignSelf: 'center',
+    alignItems: 'center',
+    zIndex: 15,
+  },
+  scrollDownText: {
+    color: '#ffffff',
+    fontSize: 12,
+    fontWeight: '500',
+    marginBottom: 8,
+    textShadowColor: 'rgba(0, 0, 0, 0.5)',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 4,
+    letterSpacing: 1,
+    textTransform: 'uppercase',
+  },
+  scrollDownArrow: {
+    width: 30,
+    height: 30,
+    borderLeftWidth: 3,
+    borderBottomWidth: 3,
+    borderColor: '#ffffff',
+    transform: [{ rotate: '-45deg' }],
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+  },
   verticalsSection: {
     paddingVertical: Platform.OS === 'web' ? 40 : (screenWidth < 768 ? 24 : 32),
     paddingHorizontal: Platform.OS === 'web' ? 32 : (screenWidth < 768 ? 16 : 20),
@@ -147,13 +179,13 @@ const createStyles = (screenWidth: number, screenHeight: number) => StyleSheet.c
   sectionTitle: {
     fontSize: Platform.OS === 'web' ? (screenWidth > 1024 ? 32 : screenWidth > 768 ? 28 : 24) : 24,
     fontWeight: '700',
-    color: '#ffffff',
+    color: '#111827',
     textAlign: 'center',
     marginBottom: 12,
   },
   sectionSubtitle: {
     fontSize: Platform.OS === 'web' ? (screenWidth > 768 ? 18 : 16) : 16,
-    color: '#d1d5db',
+    color: '#4b5563',
     textAlign: 'center',
     marginBottom: screenWidth < 768 ? 24 : 32,
     maxWidth: 700,
@@ -186,22 +218,22 @@ const createStyles = (screenWidth: number, screenHeight: number) => StyleSheet.c
     maxWidth: '100%',
   },
   verticalCard: {
-    backgroundColor: '#1a1a1a',
-    borderRadius: 12,
+    backgroundColor: '#ffffff',
+    borderRadius: 16,
     padding: 20,
     width: '100%',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.5,
-    shadowRadius: 8,
+    shadowOpacity: 0.08,
+    shadowRadius: 12,
     elevation: 5,
     borderWidth: 1,
-    borderColor: '#333333',
+    borderColor: '#e5e7eb',
   },
   iconContainer: {
     width: 56,
     height: 56,
-    backgroundColor: '#2a2a2a',
+    backgroundColor: '#eff6ff',
     borderRadius: 12,
     justifyContent: 'center',
     alignItems: 'center',
@@ -213,12 +245,12 @@ const createStyles = (screenWidth: number, screenHeight: number) => StyleSheet.c
   cardTitle: {
     fontSize: Platform.OS === 'web' ? (screenWidth > 768 ? 24 : 20) : 20,
     fontWeight: '700',
-    color: '#ffffff',
+    color: '#111827',
     marginBottom: 12,
   },
   cardDescription: {
     fontSize: Platform.OS === 'web' ? (screenWidth > 768 ? 16 : 14) : 14,
-    color: '#d1d5db',
+    color: '#6b7280',
     lineHeight: 24,
   },
   allCardsContainer: {
@@ -325,7 +357,7 @@ const createStyles = (screenWidth: number, screenHeight: number) => StyleSheet.c
   },
   staticCardDescription: {
     fontSize: Platform.OS === 'web' ? (screenWidth > 768 ? 14 : 12) : 12,
-    color: '#d1d5db',
+    color: '#6b7280',
     lineHeight: 20,
     textAlign: 'center',
   },
@@ -366,7 +398,7 @@ const createStyles = (screenWidth: number, screenHeight: number) => StyleSheet.c
   previewSection: {
     paddingVertical: Platform.OS === 'web' ? 40 : (screenWidth < 768 ? 24 : 32),
     paddingHorizontal: Platform.OS === 'web' ? 32 : (screenWidth < 768 ? 16 : 20),
-    backgroundColor: '#000000',
+    backgroundColor: '#f9fafb',
     paddingTop: Platform.OS === 'web' ? 40 : (screenWidth < 768 ? 20 : 28),
   },
   previewContent: {
@@ -383,7 +415,7 @@ const createStyles = (screenWidth: number, screenHeight: number) => StyleSheet.c
   previewTitle: {
     fontSize: Platform.OS === 'web' ? (screenWidth > 1024 ? 32 : screenWidth > 768 ? 28 : 24) : 24,
     fontWeight: '700',
-    color: '#ffffff',
+    color: '#111827',
     letterSpacing: -0.5,
   },
   viewAllButton: {
@@ -408,15 +440,15 @@ const createStyles = (screenWidth: number, screenHeight: number) => StyleSheet.c
     maxWidth: 300,
   },
   aboutPreview: {
-    backgroundColor: '#111827',
-    borderRadius: 12,
+    backgroundColor: '#f8fafc',
+    borderRadius: 16,
     padding: 24,
     borderWidth: 1,
-    borderColor: '#1f2937',
+    borderColor: '#e5e7eb',
     marginBottom: 20,
   },
   aboutPreviewText: {
-    color: '#d1d5db',
+    color: '#4b5563',
     fontSize: Platform.OS === 'web' ? 16 : 14,
     lineHeight: Platform.OS === 'web' ? 26 : 22,
     marginBottom: 20,
@@ -428,7 +460,7 @@ const createStyles = (screenWidth: number, screenHeight: number) => StyleSheet.c
     marginTop: 24,
   },
   servicePreviewItem: {
-    backgroundColor: '#1f2937',
+    backgroundColor: '#ffffff',
     borderRadius: 12,
     padding: 16,
     ...(Platform.OS === 'web' 
@@ -436,7 +468,12 @@ const createStyles = (screenWidth: number, screenHeight: number) => StyleSheet.c
       : { flex: 1 }
     ),
     borderWidth: 1,
-    borderColor: '#374151',
+    borderColor: '#e5e7eb',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 4,
+    elevation: 2,
   },
   servicePreviewIcon: {
     fontSize: 32,
@@ -445,12 +482,12 @@ const createStyles = (screenWidth: number, screenHeight: number) => StyleSheet.c
   servicePreviewTitle: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#ffffff',
+    color: '#111827',
     marginBottom: 8,
   },
   servicePreviewDesc: {
     fontSize: 13,
-    color: '#9ca3af',
+    color: '#6b7280',
     lineHeight: 20,
   },
   emptyContainer: {
@@ -589,7 +626,7 @@ const createStyles = (screenWidth: number, screenHeight: number) => StyleSheet.c
     width: '100%',
     paddingVertical: Platform.OS === 'web' ? 60 : (screenWidth < 768 ? 32 : 48),
     paddingHorizontal: Platform.OS === 'web' ? 32 : (screenWidth < 768 ? 16 : 24),
-    backgroundColor: '#111827',
+    backgroundColor: '#f9fafb',
   },
   aboutUsContainer: {
     maxWidth: 1200,
@@ -604,7 +641,7 @@ const createStyles = (screenWidth: number, screenHeight: number) => StyleSheet.c
     width: screenWidth < 768 ? '100%' : '45%',
     borderRadius: 12,
     overflow: 'hidden',
-    backgroundColor: '#1f2937',
+    backgroundColor: '#e5e7eb',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
@@ -620,15 +657,15 @@ const createStyles = (screenWidth: number, screenHeight: number) => StyleSheet.c
     flex: screenWidth < 768 ? 1 : 0.55,
     width: screenWidth < 768 ? '100%' : '55%',
     padding: screenWidth < 768 ? 20 : 32,
-    backgroundColor: '#1f2937',
+    backgroundColor: '#ffffff',
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: '#374151',
+    borderColor: '#e5e7eb',
   },
   aboutUsTitle: {
     fontSize: screenWidth < 768 ? 28 : screenWidth > 1024 ? 36 : 32,
     fontWeight: '700',
-    color: '#ffffff',
+    color: '#111827',
     marginBottom: 12,
     lineHeight: screenWidth < 768 ? 36 : 44,
   },
@@ -640,7 +677,7 @@ const createStyles = (screenWidth: number, screenHeight: number) => StyleSheet.c
   },
   aboutUsDescription: {
     fontSize: screenWidth < 768 ? 14 : 16,
-    color: '#d1d5db',
+    color: '#4b5563',
     lineHeight: screenWidth < 768 ? 22 : 26,
     marginBottom: 24,
   },
@@ -700,7 +737,7 @@ const createStyles = (screenWidth: number, screenHeight: number) => StyleSheet.c
     width: '100%',
     paddingVertical: Platform.OS === 'web' ? 60 : (screenWidth < 768 ? 32 : 48),
     paddingHorizontal: Platform.OS === 'web' ? 32 : (screenWidth < 768 ? 16 : 24),
-    backgroundColor: '#0f172a',
+    backgroundColor: '#f3f4f6',
   },
   workWithUsContainer: {
     maxWidth: 1200,
@@ -715,7 +752,7 @@ const createStyles = (screenWidth: number, screenHeight: number) => StyleSheet.c
     width: screenWidth < 768 ? '100%' : '45%',
     borderRadius: 12,
     overflow: 'hidden',
-    backgroundColor: '#1e293b',
+    backgroundColor: '#e5e7eb',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
@@ -731,15 +768,15 @@ const createStyles = (screenWidth: number, screenHeight: number) => StyleSheet.c
     flex: screenWidth < 768 ? 1 : 0.55,
     width: screenWidth < 768 ? '100%' : '55%',
     padding: screenWidth < 768 ? 20 : 32,
-    backgroundColor: '#1e293b',
+    backgroundColor: '#ffffff',
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: '#334155',
+    borderColor: '#e5e7eb',
   },
   workWithUsTitle: {
     fontSize: screenWidth < 768 ? 28 : screenWidth > 1024 ? 36 : 32,
     fontWeight: '700',
-    color: '#ffffff',
+    color: '#111827',
     marginBottom: 12,
     lineHeight: screenWidth < 768 ? 36 : 44,
   },
@@ -751,7 +788,7 @@ const createStyles = (screenWidth: number, screenHeight: number) => StyleSheet.c
   },
   workWithUsDescription: {
     fontSize: screenWidth < 768 ? 14 : 16,
-    color: '#d1d5db',
+    color: '#4b5563',
     lineHeight: screenWidth < 768 ? 22 : 26,
     marginBottom: 24,
   },
@@ -771,11 +808,13 @@ const createStyles = (screenWidth: number, screenHeight: number) => StyleSheet.c
 
 export const HomeScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
   const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
+  const { theme, siteSettings } = useTheme();
   const styles = createStyles(SCREEN_WIDTH, SCREEN_HEIGHT);
   const card1Anim = useRef(new Animated.Value(0)).current;
   const card2Anim = useRef(new Animated.Value(0)).current;
   const card3Anim = useRef(new Animated.Value(0)).current;
   const footerAnim = useRef(new Animated.Value(0)).current;
+  const scrollDownAnim = useRef(new Animated.Value(0)).current;
   // All products from seedProducts.js
   const manualFeaturedProducts: Product[] = useMemo(() => [
     // Software Products
@@ -1410,8 +1449,8 @@ Understanding color psychology can help you make better design and marketing dec
   const scaleAnim = useRef(new Animated.Value(1)).current;
   const flatListRef = useRef<FlatList>(null);
 
-  // Carousel slides with 3 images
-  const carouselSlides = [
+  // Default carousel slides (fallback)
+  const defaultCarouselSlides = [
     {
       id: '1',
       image: require('../../assets/homepage header 1.png'),
@@ -1432,23 +1471,76 @@ Understanding color psychology can help you make better design and marketing dec
     },
   ];
 
+  // Use admin-configured banners if available, otherwise use defaults
+  const carouselSlides = useMemo(() => {
+    if (siteSettings?.banners && siteSettings.banners.length > 0) {
+      const activebanners = siteSettings.banners
+        .filter((b: any) => b.isActive)
+        .sort((a: any, b: any) => (a.order || 0) - (b.order || 0));
+      
+      // Process banners - convert relative paths to absolute URLs
+      const processedBanners = activebanners
+        .filter((b: any) => b.image)
+        .map((b: any) => {
+          let imageUrl = b.image;
+          // If it's a relative path, prepend the server base URL
+          if (imageUrl && !imageUrl.startsWith('http://') && !imageUrl.startsWith('https://')) {
+            imageUrl = `${SERVER_BASE}${imageUrl.startsWith('/') ? '' : '/'}${imageUrl}`;
+          }
+          return {
+            id: b.id,
+            image: imageUrl,
+            route: b.buttonRoute || 'Home',
+            title: b.title,
+            subtitle: b.subtitle,
+          };
+        });
+      
+      if (processedBanners.length > 0) {
+        return processedBanners;
+      }
+    }
+    return defaultCarouselSlides;
+  }, [siteSettings?.banners]);
+
   // Carousel slides are defined above
 
   useEffect(() => {
     // Load featured products and blogs
     loadFeaturedData();
     
-    // Auto-scroll carousel
+    // Auto-scroll carousel (use admin interval if set)
+    const carouselInterval = siteSettings?.bannerInterval || 4000;
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => {
         const nextIndex = (prevIndex + 1) % carouselSlides.length;
         flatListRef.current?.scrollToIndex({ index: nextIndex, animated: true });
         return nextIndex;
       });
-    }, 4000); // Change slide every 4 seconds
+    }, carouselInterval);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [siteSettings?.bannerInterval, carouselSlides.length]);
+
+  // Scroll down indicator bounce animation
+  useEffect(() => {
+    const bounceAnimation = Animated.loop(
+      Animated.sequence([
+        Animated.timing(scrollDownAnim, {
+          toValue: 1,
+          duration: 800,
+          useNativeDriver: true,
+        }),
+        Animated.timing(scrollDownAnim, {
+          toValue: 0,
+          duration: 800,
+          useNativeDriver: true,
+        }),
+      ])
+    );
+    bounceAnimation.start();
+    return () => bounceAnimation.stop();
+  }, [scrollDownAnim]);
 
   const loadFeaturedData = async () => {
     try {
@@ -1510,16 +1602,19 @@ Understanding color psychology can help you make better design and marketing dec
   const LazyCarouselImage = React.memo(({ item, hasError }: { item: typeof carouselSlides[0], hasError: boolean }) => {
     if (hasError) {
       return (
-        <View style={[styles.carouselImage, { backgroundColor: '#1f2937', justifyContent: 'center', alignItems: 'center' }]}>
+        <View style={[styles.carouselImage, { backgroundColor: '#e5e7eb', justifyContent: 'center', alignItems: 'center' }]}>
           <Text style={{ fontSize: 64, color: '#6b7280' }}>📷</Text>
           <Text style={{ color: '#9ca3af', marginTop: 8, fontSize: 14 }}>Image not available</Text>
         </View>
       );
     }
     
+    // Handle both require() objects and URL strings from admin settings
+    const imageSource = typeof item.image === 'string' ? { uri: item.image } : item.image;
+    
     return (
         <Image
-          source={item.image}
+          source={imageSource}
           style={styles.carouselImage}
           resizeMode="cover"
           progressiveRenderingEnabled={Platform.OS !== 'web'}
@@ -1612,6 +1707,13 @@ Understanding color psychology can help you make better design and marketing dec
 
   return (
     <View style={styles.container}>
+      <SEO
+        title={siteSettings?.seo?.siteTitle || siteSettings?.seo?.siteName || 'Ekions - Innovative Tech Solutions'}
+        description={siteSettings?.seo?.siteDescription || 'Discover innovative tech solutions, products, internships, and services at Ekions. Your trusted partner for digital transformation.'}
+        keywords={siteSettings?.seo?.siteKeywords || 'Ekions, tech solutions, digital products, internships, software services, AI, machine learning, web development'}
+        image={siteSettings?.seo?.ogImage}
+        siteName={siteSettings?.seo?.siteName || 'Ekions'}
+      />
       <Navbar />
       <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false} nestedScrollEnabled>
         {/* Carousel Hero Section - 3 Images */}
@@ -1646,6 +1748,29 @@ Understanding color psychology can help you make better design and marketing dec
             {...(Platform.OS !== 'web' && { nestedScrollEnabled: true })}
             style={styles.carouselFlatList}
           />
+          {/* Scroll Down Indicator */}
+          <Animated.View 
+            style={[
+              styles.scrollDownIndicator,
+              {
+                transform: [
+                  {
+                    translateY: scrollDownAnim.interpolate({
+                      inputRange: [0, 1],
+                      outputRange: [0, 10],
+                    }),
+                  },
+                ],
+                opacity: scrollDownAnim.interpolate({
+                  inputRange: [0, 0.5, 1],
+                  outputRange: [1, 0.6, 1],
+                }),
+              },
+            ]}
+          >
+            <Text style={styles.scrollDownText}>Scroll</Text>
+            <View style={styles.scrollDownArrow} />
+          </Animated.View>
           {/* Carousel Indicators */}
           <View style={styles.carouselIndicators}>
             {carouselSlides.map((_, index) => (
@@ -1668,7 +1793,7 @@ Understanding color psychology can help you make better design and marketing dec
         </View>
 
         {/* Three Core Verticals */}
-        <View style={[styles.verticalsSection, { backgroundColor: '#000000' }]}>
+        <View style={[styles.verticalsSection, { backgroundColor: '#ffffff' }]}>
           <View style={styles.verticalsContent}>
             <Text style={styles.sectionTitle}>
               Ekions: Three Core Verticals
@@ -1713,9 +1838,9 @@ Understanding color psychology can help you make better design and marketing dec
                         onPress={() => navigation.navigate(vertical.route)}
                         style={[
                           styles.rotatingCard,
-                          index === 0 && styles.cardColor1,
-                          index === 1 && styles.cardColor2,
-                          index === 2 && styles.cardColor3,
+                          index === 0 && { backgroundColor: theme.primary },
+                          index === 1 && { backgroundColor: siteSettings?.theme?.secondaryColor || '#7c3aed' },
+                          index === 2 && { backgroundColor: siteSettings?.theme?.accentColor || '#059669' },
                         ]}
                         activeOpacity={0.9}
                       >
@@ -1755,7 +1880,7 @@ Understanding color psychology can help you make better design and marketing dec
                 Discover exciting internship opportunities across various domains including software development, marketing, design, and data analysis. Join our program to gain real-world experience and build your career with industry-leading projects.
               </Text>
               <TouchableOpacity
-                style={styles.aboutUsButton}
+                style={[styles.aboutUsButton, { backgroundColor: theme.primary }]}
                 onPress={() => navigation.navigate('Internships')}
                 activeOpacity={0.8}
               >
@@ -1786,7 +1911,7 @@ Understanding color psychology can help you make better design and marketing dec
                 We excel in mobile app development, web development, cloud infrastructure, backend systems, and comprehensive training programs. Our expertise spans modern frameworks, cloud platforms, and cutting-edge technologies to deliver scalable and innovative solutions.
               </Text>
               <TouchableOpacity
-                style={styles.aboutUsButton}
+                style={[styles.aboutUsButton, { backgroundColor: theme.primary }]}
                 onPress={() => navigation.navigate('Marketplace')}
                 activeOpacity={0.8}
               >
@@ -1819,7 +1944,7 @@ Understanding color psychology can help you make better design and marketing dec
                 Discover our latest articles covering technology trends, development insights, and industry best practices. Explore our blog to stay updated with the latest in software development, design, and innovation.
               </Text>
               <TouchableOpacity
-                style={styles.aboutUsButton}
+                style={[styles.aboutUsButton, { backgroundColor: theme.primary }]}
                 onPress={() => navigation.navigate('ExploreBlog')}
                 activeOpacity={0.8}
               >
@@ -1854,7 +1979,7 @@ Understanding color psychology can help you make better design and marketing dec
                 becomes an opportunity for growth and excellence.
               </Text>
               <TouchableOpacity
-                style={styles.aboutUsButton}
+                style={[styles.aboutUsButton, { backgroundColor: theme.primary }]}
                 onPress={() => navigation.navigate('About')}
                 activeOpacity={0.8}
               >
@@ -1901,7 +2026,7 @@ Understanding color psychology can help you make better design and marketing dec
                 We're looking for passionate individuals who want to make a difference.
               </Text>
               <TouchableOpacity
-                style={styles.workWithUsButton}
+                style={[styles.workWithUsButton, { backgroundColor: theme.primary }]}
                 onPress={() => navigation.navigate('Contact')}
                 activeOpacity={0.8}
               >
@@ -1917,7 +2042,7 @@ Understanding color psychology can help you make better design and marketing dec
             <View style={styles.previewHeader}>
               <Text style={styles.previewTitle}>Our Services</Text>
               <TouchableOpacity
-                style={styles.viewAllButton}
+                style={[styles.viewAllButton, { backgroundColor: theme.primary }]}
                 onPress={() => navigation.navigate('Services')}
               >
                 <Text style={styles.viewAllText}>View All</Text>

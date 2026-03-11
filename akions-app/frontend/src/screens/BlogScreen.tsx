@@ -2,16 +2,17 @@ import React from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Platform, Dimensions, Image } from 'react-native';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
+import { SEO } from '../components/SEO';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
 const createStyles = (screenWidth: number) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000000',
+    backgroundColor: '#ffffff',
   },
   sectionWrapper: {
-    backgroundColor: '#000000',
+    backgroundColor: '#f9fafb',
     paddingVertical: Platform.OS === 'web' ? 96 : 64,
     paddingHorizontal: 24,
   },
@@ -73,7 +74,7 @@ const createStyles = (screenWidth: number) => StyleSheet.create({
   },
   description: {
     fontSize: screenWidth < 768 ? 14 : 16,
-    color: '#d1d5db',
+    color: '#4b5563',
     lineHeight: screenWidth < 768 ? 22 : 26,
     marginBottom: 32,
   },
@@ -109,6 +110,11 @@ export const BlogScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <SEO
+        title="Blog - Tech Insights & News"
+        description="Explore our blog for the latest tech insights, industry news, and expert perspectives on software development, AI, and digital transformation."
+        keywords="tech blog, software development blog, AI insights, tech news, industry updates, digital transformation"
+      />
       <Navbar />
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.sectionWrapper}>
