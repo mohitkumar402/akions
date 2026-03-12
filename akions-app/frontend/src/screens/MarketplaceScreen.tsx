@@ -21,10 +21,29 @@ const createStyles = (screenWidth: number) => {
   const isTablet = screenWidth >= 768 && screenWidth < 1024;
   
   return StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#ffffff' },
+  container: { flex: 1, backgroundColor: '#f0f4f8' },
+  heroSection: {
+    backgroundColor: '#1e3a5f',
+    paddingVertical: isMobile ? 32 : 48,
+    paddingHorizontal: isMobile ? 16 : 24,
+    marginBottom: isMobile ? -20 : -32,
+  },
+  heroTitle: {
+    fontSize: isMobile ? 28 : 40,
+    fontWeight: '800',
+    color: '#ffffff',
+    textAlign: 'center',
+    marginBottom: 8,
+    letterSpacing: -0.5,
+  },
+  heroSubtitle: {
+    fontSize: isMobile ? 14 : 16,
+    color: '#94a3b8',
+    textAlign: 'center',
+  },
   scrollContent: { paddingBottom: 32 },
   inner: { 
-    paddingVertical: isMobile ? 16 : 32, 
+    paddingVertical: isMobile ? 32 : 48, 
     paddingHorizontal: isMobile ? 12 : isTablet ? 20 : 24, 
     maxWidth: 1200, 
     alignSelf: 'center', 
@@ -33,7 +52,7 @@ const createStyles = (screenWidth: number) => {
   title: { 
     fontSize: isMobile ? 24 : isTablet ? 28 : 32, 
     fontWeight: '700', 
-    color: '#111827', 
+    color: '#1e3a5f', 
     marginBottom: isMobile ? 16 : 24, 
     textAlign: 'center',
     paddingHorizontal: isMobile ? 8 : 0,
@@ -47,7 +66,7 @@ const createStyles = (screenWidth: number) => {
   searchBar: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#f3f4f6',
+    backgroundColor: '#ffffff',
     borderRadius: 12,
     paddingHorizontal: isMobile ? 12 : 16,
     paddingVertical: isMobile ? 10 : 12,
@@ -55,10 +74,14 @@ const createStyles = (screenWidth: number) => {
     width: isMobile ? '100%' : (Platform.OS === 'web' ? 'auto' : '100%'),
     gap: isMobile ? 8 : 12,
     borderWidth: 1,
-    borderColor: '#e5e7eb',
+    borderColor: '#e2e8f0',
+    shadowColor: '#1e3a5f',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.06,
+    shadowRadius: 8,
   },
-  searchIcon: { color: '#6b7280', fontSize: isMobile ? 16 : 18 },
-  searchInput: { flex: 1, fontSize: isMobile ? 14 : 16, color: '#111827' },
+  searchIcon: { color: '#64748b', fontSize: isMobile ? 16 : 18 },
+  searchInput: { flex: 1, fontSize: isMobile ? 14 : 16, color: '#1e293b' },
   filtersWrapper: {
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -68,20 +91,24 @@ const createStyles = (screenWidth: number) => {
     width: isMobile ? '100%' : 'auto',
   },
   filterItem: { flexDirection: 'row', alignItems: 'center', gap: 8 },
-  filterLabel: { color: '#6b7280', fontWeight: '500', fontSize: 14 },
+  filterLabel: { color: '#64748b', fontWeight: '600', fontSize: 14 },
   filterBox: {
     backgroundColor: '#ffffff',
-    borderRadius: 8,
+    borderRadius: 10,
     paddingHorizontal: isMobile ? 12 : 16,
     paddingVertical: isMobile ? 8 : 10,
     borderWidth: 1,
-    borderColor: '#e5e7eb',
+    borderColor: '#e2e8f0',
     minWidth: isMobile ? 100 : 120,
     flex: isMobile ? 1 : 0,
     maxWidth: isMobile ? '32%' : undefined,
+    shadowColor: '#1e3a5f',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.04,
+    shadowRadius: 4,
   },
   filterBoxText: {
-    color: '#374151',
+    color: '#475569',
     fontSize: isMobile ? 12 : 14,
     fontWeight: '500',
   },
@@ -99,9 +126,9 @@ const createStyles = (screenWidth: number) => {
     maxWidth: isMobile ? '100%' : (screenWidth > 1024 ? 380 : screenWidth > 768 ? 350 : '100%'),
   },
   cardFooterRow: { marginTop: 12, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
-  categoryBadge: { backgroundColor: '#f3f4f6', paddingHorizontal: 12, paddingVertical: 4, borderRadius: 8 },
-  categoryBadgeText: { fontSize: 11, color: '#6b7280', fontWeight: '500' },
-  ratingText: { fontSize: 14, color: '#fbbf24', fontWeight: '600' },
+  categoryBadge: { backgroundColor: '#e0f2fe', paddingHorizontal: 12, paddingVertical: 4, borderRadius: 8 },
+  categoryBadgeText: { fontSize: 11, color: '#0369a1', fontWeight: '600' },
+  ratingText: { fontSize: 14, color: '#f59e0b', fontWeight: '600' },
   pagination: { 
     flexDirection: 'row', 
     justifyContent: 'center', 
@@ -115,15 +142,17 @@ const createStyles = (screenWidth: number) => {
     paddingHorizontal: isMobile ? 8 : 12, 
     paddingVertical: isMobile ? 6 : 8, 
     borderRadius: 8, 
-    backgroundColor: '#f3f4f6',
+    backgroundColor: '#ffffff',
+    borderWidth: 1,
+    borderColor: '#e2e8f0',
     minWidth: isMobile ? 36 : 44,
     alignItems: 'center',
   },
-  pageText: { color: '#6b7280', fontSize: isMobile ? 12 : 14 },
-  pageActive: { backgroundColor: '#2563eb' },
+  pageText: { color: '#64748b', fontSize: isMobile ? 12 : 14 },
+  pageActive: { backgroundColor: '#1e3a5f', borderColor: '#1e3a5f' },
   pageActiveText: { color: '#ffffff', fontWeight: '600', fontSize: isMobile ? 12 : 14 },
   buyButton: { 
-    backgroundColor: '#2563eb', 
+    backgroundColor: '#1e3a5f', 
     paddingHorizontal: isMobile ? 16 : 20, 
     paddingVertical: isMobile ? 8 : 10, 
     borderRadius: 8 
@@ -142,10 +171,10 @@ const createStyles = (screenWidth: number) => {
     justifyContent: 'space-between',
     paddingHorizontal: isMobile ? 4 : 0,
   },
-  priceText: { fontSize: isMobile ? 16 : 18, fontWeight: '700', color: '#111827' },
+  priceText: { fontSize: isMobile ? 16 : 18, fontWeight: '700', color: '#1e3a5f' },
   filterBoxActive: {
-    backgroundColor: '#2563eb',
-    borderColor: '#3b82f6',
+    backgroundColor: '#1e3a5f',
+    borderColor: '#1e3a5f',
   },
   clearFiltersButton: {
     backgroundColor: '#ef4444',
@@ -169,7 +198,7 @@ const createStyles = (screenWidth: number) => {
     paddingHorizontal: isMobile ? 16 : 0,
   },
   emptyText: {
-    color: '#6b7280',
+    color: '#64748b',
     fontSize: isMobile ? 16 : 18,
     marginBottom: isMobile ? 20 : 24,
     textAlign: 'center',
@@ -188,33 +217,33 @@ const createStyles = (screenWidth: number) => {
     width: Platform.OS === 'web' ? 400 : (isMobile ? '90%' : '80%'),
     maxHeight: '70%',
     borderWidth: 1,
-    borderColor: '#e5e7eb',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.1,
-    shadowRadius: 16,
+    borderColor: '#e2e8f0',
+    shadowColor: '#1e3a5f',
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.15,
+    shadowRadius: 24,
   },
   modalTitle: {
     fontSize: isMobile ? 18 : 20,
     fontWeight: '700',
-    color: '#111827',
+    color: '#1e3a5f',
     marginBottom: isMobile ? 12 : 16,
   },
   modalOption: {
     paddingVertical: isMobile ? 10 : 12,
     paddingHorizontal: isMobile ? 14 : 16,
-    borderRadius: 8,
+    borderRadius: 10,
     marginBottom: isMobile ? 6 : 8,
-    backgroundColor: '#f3f4f6',
+    backgroundColor: '#f8fafc',
     borderWidth: 1,
-    borderColor: '#e5e7eb',
+    borderColor: '#e2e8f0',
   },
   modalOptionSelected: {
-    backgroundColor: '#2563eb',
-    borderColor: '#3b82f6',
+    backgroundColor: '#1e3a5f',
+    borderColor: '#1e3a5f',
   },
   modalOptionText: {
-    color: '#4b5563',
+    color: '#475569',
     fontSize: isMobile ? 14 : 16,
   },
   modalOptionTextSelected: {
@@ -224,39 +253,34 @@ const createStyles = (screenWidth: number) => {
   // Container boxes for better UI
   sectionContainer: {
     backgroundColor: '#ffffff',
-    borderRadius: 12,
+    borderRadius: 16,
     padding: isMobile ? 16 : 24,
     marginBottom: isMobile ? 16 : 24,
-    borderWidth: 1,
-    borderColor: '#e5e7eb',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.03,
-    shadowRadius: 4,
+    borderWidth: 0,
+    shadowColor: '#1e3a5f',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.08,
+    shadowRadius: 12,
   },
   searchContainer: {
     backgroundColor: '#ffffff',
-    borderRadius: 12,
-    padding: isMobile ? 12 : 16,
+    borderRadius: 16,
+    padding: isMobile ? 16 : 20,
     marginBottom: isMobile ? 16 : 24,
-    borderWidth: 1,
-    borderColor: '#e5e7eb',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.03,
-    shadowRadius: 4,
+    shadowColor: '#1e3a5f',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.08,
+    shadowRadius: 12,
   },
   filtersContainer: {
     backgroundColor: '#ffffff',
-    borderRadius: 12,
-    padding: isMobile ? 12 : 16,
+    borderRadius: 16,
+    padding: isMobile ? 16 : 20,
     marginBottom: isMobile ? 16 : 24,
-    borderWidth: 1,
-    borderColor: '#e5e7eb',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.03,
-    shadowRadius: 4,
+    shadowColor: '#1e3a5f',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.08,
+    shadowRadius: 12,
   },
   });
 };
@@ -468,22 +492,23 @@ export const MarketplaceScreen: React.FC<{ navigation: any }> = ({ navigation })
       />
       <Navbar />
       <ScrollView contentContainerStyle={styles.scrollContent}>
-        <View style={styles.inner}>
-          {/* Title Section */}
-          <View style={styles.sectionContainer}>
-            <Text style={styles.title}>Ready-Made Software Products</Text>
-          </View>
+        {/* Hero Section */}
+        <View style={styles.heroSection}>
+          <Text style={styles.heroTitle}>Marketplace</Text>
+          <Text style={styles.heroSubtitle}>Discover premium software solutions for your business</Text>
+        </View>
 
+        <View style={styles.inner}>
           {/* Search Section */}
           <View style={styles.searchContainer}>
             <View style={styles.searchBar}>
               <Text style={styles.searchIcon}>🔍</Text>
               <TextInput
                 style={styles.searchInput}
-                placeholder="Search products"
+                placeholder="Search products..."
                 value={searchQuery}
                 onChangeText={setSearchQuery}
-                placeholderTextColor="#9ca3af"
+                placeholderTextColor="#94a3b8"
               />
             </View>
           </View>
@@ -495,16 +520,16 @@ export const MarketplaceScreen: React.FC<{ navigation: any }> = ({ navigation })
                 style={[styles.filterBox, selectedCategory !== 'All' && styles.filterBoxActive]}
                 onPress={() => setShowCategoryModal(true)}
               >
-                <Text style={styles.filterBoxText}>
-                  {selectedCategory === 'All' ? 'Category' : selectedCategory} ▼
+                <Text style={[styles.filterBoxText, selectedCategory !== 'All' && { color: '#ffffff' }]}>
+                  {selectedCategory === 'All' ? '📁 Category' : selectedCategory} ▼
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity 
                 style={[styles.filterBox, selectedRating !== 'All' && styles.filterBoxActive]}
                 onPress={() => setShowRatingModal(true)}
               >
-                <Text style={styles.filterBoxText}>
-                  {selectedRating === 'All' ? 'Rating' : selectedRating} ▼
+                <Text style={[styles.filterBoxText, selectedRating !== 'All' && { color: '#ffffff' }]}>
+                  {selectedRating === 'All' ? '⭐ Rating' : selectedRating} ▼
                 </Text>
               </TouchableOpacity>
             </View>
